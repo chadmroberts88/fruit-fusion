@@ -13,7 +13,7 @@ function Board({ gridSize, tiles }) {
         gridTemplateRows: `repeat(${gridSize}, 10vmin)`,
     }
 
-    const tileColors = ["none", "red", "orange", "yellow", "green", "blue", "purple"]
+    const tileColors = ["none", "red", "orange", "yellow", "green", "blue", "purple", "black"]
 
 
     // Add Cell and Tile Components

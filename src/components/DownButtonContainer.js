@@ -1,7 +1,7 @@
 import React from 'react'
 import DownButton from './DownButton'
 
-function DownButtonContainer({ gridSize, shiftTiles }) {
+function DownButtonContainer({ gridSize, handleTiles }) {
 
     const downButtons = [];
     const containerStyles = {
@@ -9,7 +9,7 @@ function DownButtonContainer({ gridSize, shiftTiles }) {
     }
 
     for (let i = 0; i < gridSize; i++) {
-        downButtons.push(<DownButton key={i} id={`down-${i}`} shiftTiles={shiftTiles} />)
+        downButtons.push(<DownButton key={i} id={`down-${i}`} handleTiles={handleTiles} />)
     };
 
     return (

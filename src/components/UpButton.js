@@ -1,10 +1,10 @@
 import React from 'react'
 import { BsCaretUpFill } from 'react-icons/bs'
 
-function UpButton({ id, shiftTiles, addTiles }) {
+function UpButton({ id, handleTiles, addTiles }) {
     return (
         <button id={id} className="arrow-button" onClick={() => {
-            shiftTiles(id);
+            handleTiles(id);
         }}><BsCaretUpFill /></button>
     )
 }

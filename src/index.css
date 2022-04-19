@@ -4,6 +4,7 @@
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
+  font-family: 'Titan One', cursive;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
 }
@@ -93,30 +94,52 @@ body {
   /* transition: 100ms ease-in-out; */
 }
 
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.score,
+.level {
+  color: white;
+  font-size: calc(10px + 2vmin);
+}
+
 .red {
-  background-color: red;
+  background-image: url("./images/red.png");
+  background-size: cover;
 }
 
 .orange {
-  background-color: orange;
+  background-image: url("./images/orange.png");
+  background-size: cover;
 }
 
 .yellow {
-  background-color: yellow;
+  background-image: url("./images/yellow.png");
+  background-size: cover;
 }
 
 .green {
-  background-color: green;
+  background-image: url("./images/green.png");
+  background-size: cover;
 }
 
 .blue {
-  background-color: blue;
+  background-image: url("./images/blue.png");
+  background-size: cover;
 }
 
 .purple {
-  background-color: purple;
+  background-image: url("./images/purple.png");
+  background-size: cover;
 }
 
+.black {
+  background-image: url("./images/black.png");
+  background-size: cover;
+}
 
 @keyframes show {
   0% {

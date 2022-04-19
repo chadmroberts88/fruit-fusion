@@ -1,7 +1,7 @@
 import React from 'react'
 import RightButton from './RightButton'
 
-function RightButtonContainer({ gridSize, shiftTiles }) {
+function RightButtonContainer({ gridSize, handleTiles }) {
 
     const rightButtons = [];
     const containerStyles = {
@@ -9,7 +9,7 @@ function RightButtonContainer({ gridSize, shiftTiles }) {
     }
 
     for (let i = 0; i < gridSize; i++) {
-        rightButtons.push(<RightButton key={i} id={`right-${i}`} shiftTiles={shiftTiles} />)
+        rightButtons.push(<RightButton key={i} id={`right-${i}`} handleTiles={handleTiles} />)
     };
 
     return (

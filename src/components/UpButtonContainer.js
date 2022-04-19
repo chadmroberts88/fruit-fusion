@@ -1,7 +1,7 @@
 import React from 'react'
 import UpButton from './UpButton'
 
-function UpButtonContainer({ gridSize, shiftTiles, addTiles }) {
+function UpButtonContainer({ gridSize, handleTiles }) {
 
     const upButtons = [];
     const containerStyles = {
@@ -9,7 +9,7 @@ function UpButtonContainer({ gridSize, shiftTiles, addTiles }) {
     }
 
     for (let i = 0; i < gridSize; i++) {
-        upButtons.push(<UpButton key={i} id={`up-${i}`} shiftTiles={shiftTiles} addTiles={addTiles} />)
+        upButtons.push(<UpButton key={i} id={`up-${i}`} handleTiles={handleTiles} />)
     };
 
     return (

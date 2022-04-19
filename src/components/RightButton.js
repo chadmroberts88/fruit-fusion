@@ -1,10 +1,10 @@
 import React from 'react'
 import { BsCaretRightFill } from 'react-icons/bs'
 
-function RightButton({ id, shiftTiles }) {
+function RightButton({ id, handleTiles }) {
     return (
         <button id={id} className="arrow-button" onClick={() => {
-            shiftTiles(id);
+            handleTiles(id);
         }}><BsCaretRightFill /></button>
     )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import LeftButton from './LeftButton'
 
-function LeftButtonContainer({ gridSize, shiftTiles }) {
+function LeftButtonContainer({ gridSize, handleTiles }) {
 
     const leftButtons = [];
     const containerStyles = {
@@ -9,7 +9,7 @@ function LeftButtonContainer({ gridSize, shiftTiles }) {
     }
 
     for (let i = 0; i < gridSize; i++) {
-        leftButtons.push(<LeftButton key={i} id={`left-${i}`} shiftTiles={shiftTiles} />)
+        leftButtons.push(<LeftButton key={i} id={`left-${i}`} handleTiles={handleTiles} />)
     };
 
     return (

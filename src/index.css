@@ -106,38 +106,100 @@ body {
   font-size: calc(10px + 2vmin);
 }
 
-.red {
-  background-image: url("./images/red.png");
+.red-0 {
+  background-image: url("./images/red-0.png");
   background-size: cover;
 }
 
-.orange {
-  background-image: url("./images/orange.png");
+.red-1 {
+  background-image: url("./images/red-1.png");
   background-size: cover;
 }
 
-.yellow {
-  background-image: url("./images/yellow.png");
+.red-2 {
+  background-image: url("./images/red-2.png");
   background-size: cover;
 }
 
-.green {
-  background-image: url("./images/green.png");
+.orange-0 {
+  background-image: url("./images/orange-0.png");
   background-size: cover;
 }
 
-.blue {
-  background-image: url("./images/blue.png");
+.orange-1 {
+  background-image: url("./images/orange-1.png");
   background-size: cover;
 }
 
-.purple {
-  background-image: url("./images/purple.png");
+.orange-2 {
+  background-image: url("./images/orange-2.png");
   background-size: cover;
 }
 
-.black {
-  background-image: url("./images/black.png");
+.yellow-0 {
+  background-image: url("./images/yellow-0.png");
+  background-size: cover;
+}
+
+.yellow-1 {
+  background-image: url("./images/yellow-1.png");
+  background-size: cover;
+}
+
+.yellow-2 {
+  background-image: url("./images/yellow-2.png");
+  background-size: cover;
+}
+
+.green-0 {
+  background-image: url("./images/green-0.png");
+  background-size: cover;
+}
+
+.green-1 {
+  background-image: url("./images/green-1.png");
+  background-size: cover;
+}
+
+.green-2 {
+  background-image: url("./images/green-2.png");
+  background-size: cover;
+}
+
+.blue-0 {
+  background-image: url("./images/blue-0.png");
+  background-size: cover;
+}
+
+.blue-1 {
+  background-image: url("./images/blue-1.png");
+  background-size: cover;
+}
+
+.blue-2 {
+  background-image: url("./images/blue-2.png");
+  background-size: cover;
+}
+
+.purple-0 {
+  background-image: url("./images/purple-0.png");
+  background-size: cover;
+}
+
+.purple-1 {
+  background-image: url("./images/purple-1.png");
+  background-size: cover;
+}
+
+.purple-2 {
+  background-image: url("./images/purple-2.png");
+  background-size: cover;
+}
+
+.basket-0,
+.basket-1,
+.basket-2 {
+  background-image: url("./images/basket.png");
   background-size: cover;
 }
 

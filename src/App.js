@@ -143,7 +143,7 @@ function App() {
             }
 
             if (tempArr[i][n].colorCode < 6) {
-              tempScore = tempScore + (tempArr[i][n].colorCode * 10 * tempLevel);
+              tempScore = tempScore + ((tempArr[i][n].colorCode + 1) * 10 * tempLevel);
               tempArr[i][n].colorCode += 1;
               tempArr[i + 1][n] = 0;
               tileMoved = true;
@@ -191,7 +191,7 @@ function App() {
             }
 
             if (tempArr[i][n].colorCode < 6) {
-              tempScore = tempScore + (tempArr[i][n].colorCode * 10 * tempLevel);
+              tempScore = tempScore + ((tempArr[i][n].colorCode + 1) * 10 * tempLevel);
               tempArr[i][n].colorCode += 1;
               tempArr[i - 1][n] = 0;
               tileMoved = true;
@@ -239,7 +239,7 @@ function App() {
             }
 
             if (tempArr[n][i].colorCode < 6) {
-              tempScore = tempScore + (tempArr[n][i].colorCode * 10 * tempLevel);
+              tempScore = tempScore + ((tempArr[n][i].colorCode + 1) * 10 * tempLevel);
               tempArr[n][i].colorCode += 1;
               tempArr[n][i + 1] = 0;
               tileMoved = true;
@@ -287,7 +287,7 @@ function App() {
             }
 
             if (tempArr[n][i].colorCode < 6) {
-              tempScore = tempScore + (tempArr[n][i].colorCode * 10 * tempLevel);
+              tempScore = tempScore + ((tempArr[n][i].colorCode + 1) * 10 * tempLevel);
               tempArr[n][i].colorCode += 1;
               tempArr[n][i - 1] = 0;
               tileMoved = true;

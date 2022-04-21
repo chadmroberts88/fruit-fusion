@@ -1,7 +1,11 @@
 {
   "files": {
     "main.css": "/fruit-fusion/static/css/main.d174274a.css",
-    "main.js": "/fruit-fusion/static/js/main.208ef715.js",
+    "main.js": "/fruit-fusion/static/js/main.7032611a.js",
+    "static/media/gameOver.wav": "/fruit-fusion/static/media/gameOver.88943cf495fcb8f1fe26.wav",
+    "static/media/addPoint.wav": "/fruit-fusion/static/media/addPoint.b222ebf03a29c11b61f0.wav",
+    "static/media/newLevel.wav": "/fruit-fusion/static/media/newLevel.3e2b8a36c21e21afa1a5.wav",
+    "static/media/moveTiles.wav": "/fruit-fusion/static/media/moveTiles.3032e3363bcc125fa5a0.wav",
     "static/media/green-2.png": "/fruit-fusion/static/media/green-2.beed4b825a93edc4c03f.png",
     "static/media/basket.png": "/fruit-fusion/static/media/basket.2c53461ab381561c1212.png",
     "static/media/yellow-0.png": "/fruit-fusion/static/media/yellow-0.2cccfbad97ecd8ce1105.png",
@@ -11,10 +15,10 @@
     "static/media/blue-0.png": "/fruit-fusion/static/media/blue-0.28ee0034cf275044e8cc.png",
     "index.html": "/fruit-fusion/index.html",
     "main.d174274a.css.map": "/fruit-fusion/static/css/main.d174274a.css.map",
-    "main.208ef715.js.map": "/fruit-fusion/static/js/main.208ef715.js.map"
+    "main.7032611a.js.map": "/fruit-fusion/static/js/main.7032611a.js.map"
   },
   "entrypoints": [
     "static/css/main.d174274a.css",
-    "static/js/main.208ef715.js"
+    "static/js/main.7032611a.js"
   ]
 }

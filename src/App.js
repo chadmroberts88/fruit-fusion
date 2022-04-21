@@ -4,15 +4,18 @@ import { useEffect } from 'react';
 import Header from './components/Header';
 import GameWrapper from './components/GameWrapper';
 import Menu from './components/Menu';
+import moveTiles from './sounds/moveTiles.wav';
+import addPoint from './sounds/addPoint.wav';
+import newLevel from './sounds/newLevel.wav';
+import gameOver from './sounds/gameOver.wav';
 
 function App() {
 
   const gridSize = 5;
-  const moveTilesSound = new Audio('/moveTiles.wav');
-  const addPointSound = new Audio('/addPoint.wav');
-  const newLevelSound = new Audio('/newLevel.wav');
-  // const errorSound = new Audio('/error.wav');
-  const gameOverSound = new Audio('/gameOver.wav');
+  const moveTilesSound = new Audio(moveTiles);
+  const addPointSound = new Audio(addPoint);
+  const newLevelSound = new Audio(newLevel);
+  const gameOverSound = new Audio(gameOver);
 
   // Hooks
 

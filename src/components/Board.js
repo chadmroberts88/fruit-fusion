@@ -13,7 +13,7 @@ function Board({ gridSize, tiles }) {
         gridTemplateRows: `repeat(${gridSize}, 10vmin)`,
     }
 
-    const tileColors = ["none", "red", "orange", "yellow", "green", "blue", "purple", "black"]
+    const tileColors = ["red", "orange", "yellow", "green", "blue", "purple", "basket"]
 
 
     // Add Cell and Tile Components
@@ -25,7 +25,7 @@ function Board({ gridSize, tiles }) {
     for (let i = 0; i < gridSize; i++) {
         for (let j = 0; j < gridSize; j++) {
             if (tiles[i][j] !== 0) {
-                tileComponents.push(<Tile key={tiles[i][j].id} x={i} y={j} color={tileColors[tiles[i][j].colorCode]} />);
+                tileComponents.push(<Tile key={tiles[i][j].id} x={i} y={j} color={`${tileColors[tiles[i][j].colorCode]}-${tiles[i][j].typeCode}`} />);
             }
         }
     }

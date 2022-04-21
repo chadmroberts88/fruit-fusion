@@ -18,7 +18,7 @@ const headerStyles = {
 }
 
 Header.defaultProps = {
-    title: "Color Clash"
+    title: "Fruit Fusion"
 }
 
 export default Header

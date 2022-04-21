@@ -57,7 +57,8 @@ function App() {
         const newTile = {};
 
         newTile.id = tempIds;
-        newTile.colorCode = probability > 0.4 ? 1 : 2;
+        newTile.colorCode = probability > 0.4 ? 0 : 1;
+        newTile.typeCode = Math.floor(Math.random() * 3);
         tempIds++;
 
         tempArr[x][y] = newTile;
@@ -136,12 +137,12 @@ function App() {
         if (tempArr[i][n] !== 0) {
           if (tempArr[i][n].colorCode === tempArr[i + 1][n].colorCode) {
 
-            if (tempArr[i][n].colorCode === 6) {
+            if (tempArr[i][n].colorCode === 5) {
               tempLevel++;
               newLevelSound.play();
             }
 
-            if (tempArr[i][n].colorCode < 7) {
+            if (tempArr[i][n].colorCode < 6) {
               tempScore = tempScore + (tempArr[i][n].colorCode * 10 * tempLevel);
               tempArr[i][n].colorCode += 1;
               tempArr[i + 1][n] = 0;
@@ -184,12 +185,12 @@ function App() {
         if (tempArr[i][n] !== 0) {
           if (tempArr[i][n].colorCode === tempArr[i - 1][n].colorCode) {
 
-            if (tempArr[i][n].colorCode === 6) {
+            if (tempArr[i][n].colorCode === 5) {
               tempLevel++;
               newLevelSound.play();
             }
 
-            if (tempArr[i][n].colorCode < 7) {
+            if (tempArr[i][n].colorCode < 6) {
               tempScore = tempScore + (tempArr[i][n].colorCode * 10 * tempLevel);
               tempArr[i][n].colorCode += 1;
               tempArr[i - 1][n] = 0;
@@ -232,12 +233,12 @@ function App() {
         if (tempArr[n][i] !== 0) {
           if (tempArr[n][i].colorCode === tempArr[n][i + 1].colorCode) {
 
-            if (tempArr[n][i].colorCode === 6) {
+            if (tempArr[n][i].colorCode === 5) {
               tempLevel++;
               newLevelSound.play();
             }
 
-            if (tempArr[n][i].colorCode < 7) {
+            if (tempArr[n][i].colorCode < 6) {
               tempScore = tempScore + (tempArr[n][i].colorCode * 10 * tempLevel);
               tempArr[n][i].colorCode += 1;
               tempArr[n][i + 1] = 0;
@@ -280,12 +281,12 @@ function App() {
         if (tempArr[n][i] !== 0) {
           if (tempArr[n][i].colorCode === tempArr[n][i - 1].colorCode) {
 
-            if (tempArr[n][i].colorCode === 6) {
+            if (tempArr[n][i].colorCode === 5) {
               tempLevel++;
               newLevelSound.play();
             }
 
-            if (tempArr[n][i].colorCode < 7) {
+            if (tempArr[n][i].colorCode < 6) {
               tempScore = tempScore + (tempArr[n][i].colorCode * 10 * tempLevel);
               tempArr[n][i].colorCode += 1;
               tempArr[n][i - 1] = 0;
@@ -333,8 +334,8 @@ function App() {
       const newTile = {};
 
       newTile.id = tempIds;
-
-      newTile.colorCode = probability > 0.4 ? 1 : 2;
+      newTile.colorCode = probability > 0.4 ? 0 : 1;
+      newTile.typeCode = Math.floor(Math.random() * 3);
       tempIds++;
 
       tempArr[x][y] = newTile;
@@ -354,7 +355,7 @@ function App() {
       for (let j = 0; j < gridSize; j++) {
         if (tempArr[i][j] !== 0 && tempArr[i + 1][j] !== 0) {
           if (tempArr[i][j].colorCode === tempArr[i + 1][j].colorCode) {
-            if (tempArr[i][j].colorCode !== 7) {
+            if (tempArr[i][j].colorCode !== 6) {
               pairAvailable = true;
             }
           }
@@ -366,7 +367,7 @@ function App() {
       for (let j = 0; j < gridSize - 1; j++) {
         if (tempArr[i][j] !== 0 && tempArr[i][j + 1] !== 0) {
           if (tempArr[i][j].colorCode === tempArr[i][j + 1].colorCode) {
-            if (tempArr[i][j].colorCode !== 7) {
+            if (tempArr[i][j].colorCode !== 6) {
               pairAvailable = true;
             }
           }
@@ -376,6 +377,7 @@ function App() {
 
     if (!blankCellAvailable && !pairAvailable) {
       gameOverSound.play();
+      console.log("Game Over");
     }
 
     setTiles(tempArr);

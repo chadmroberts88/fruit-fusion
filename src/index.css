@@ -38,8 +38,6 @@ body {
 #down-button-container {
   display: grid;
   width: 100%;
-  /* height: 10vmin; */
-  /* background-color: aqua; */
   justify-content: center;
   align-items: center;
   column-gap: 1vmin;
@@ -49,8 +47,6 @@ body {
 #right-button-container {
   display: grid;
   height: 100%;
-  /* width: 10vmin; */
-  /* background-color: aqua; */
   justify-items: center;
   align-content: center;
   row-gap: 1vmin;

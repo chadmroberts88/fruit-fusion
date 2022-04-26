@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Cell() {
+const Cell = () => {
     return (
         <div className="cell"></div>
     )

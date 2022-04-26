@@ -1,7 +1,7 @@
 import React from 'react'
-import DownButton from './DownButton'
+import DownButton from '../buttons/DownButton'
 
-function DownButtonContainer({ gridSize, handleTiles }) {
+const DownButtonContainer = ({ gridSize, handleTiles }) => {
 
     const downButtons = [];
     const containerStyles = {

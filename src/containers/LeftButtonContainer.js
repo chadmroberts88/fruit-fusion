@@ -1,7 +1,7 @@
 import React from 'react'
-import LeftButton from './LeftButton'
+import LeftButton from '../buttons/LeftButton'
 
-function LeftButtonContainer({ gridSize, handleTiles }) {
+const LeftButtonContainer = ({ gridSize, handleTiles }) => {
 
     const leftButtons = [];
     const containerStyles = {

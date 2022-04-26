@@ -1,7 +1,7 @@
 import React from 'react'
-import UpButton from './UpButton'
+import UpButton from '../buttons/UpButton'
 
-function UpButtonContainer({ gridSize, handleTiles }) {
+const UpButtonContainer = ({ gridSize, handleTiles }) => {
 
     const upButtons = [];
     const containerStyles = {

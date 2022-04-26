@@ -1,5 +1,17 @@
-import React from 'react'
-import UpButton from '../buttons/UpButton'
+import React from 'react';
+import { BsCaretUpFill } from 'react-icons/bs';
+import styled from 'styled-components';
+
+const StyledUpButton = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: pink;
+    font-size: 8vmin;
+    background-color: transparent;
+    border: none;
+    animation: heartbeat 15s ease-in-out infinite both;
+`;
 
 const UpButtonContainer = ({ gridSize, handleTiles }) => {
 
@@ -9,7 +21,8 @@ const UpButtonContainer = ({ gridSize, handleTiles }) => {
     }
 
     for (let i = 0; i < gridSize; i++) {
-        upButtons.push(<UpButton key={i} id={`up-${i}`} handleTiles={handleTiles} />)
+        const id = `up-${i}`;
+        upButtons.push(<StyledUpButton key={i} id={id} onClick={() => { handleTiles(id); }}><BsCaretUpFill /></StyledUpButton>)
     };
 
     return (

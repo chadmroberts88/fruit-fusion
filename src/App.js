@@ -2,20 +2,33 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Header from './components/Header';
-import GameWrapper from './components/GameWrapper';
 import Menu from './components/Menu';
 import moveTiles from './sounds/moveTiles.wav';
 import addPoint from './sounds/addPoint.wav';
 import newLevel from './sounds/newLevel.wav';
 import gameOver from './sounds/gameOver.wav';
+import GameContainer from './containers/GameContainer';
+import Cell from './components/Cell';
+import Tile from './components/Tile';
 
-function App() {
+const App = () => {
 
   const gridSize = 5;
   const moveTilesSound = new Audio(moveTiles);
   const addPointSound = new Audio(addPoint);
   const newLevelSound = new Audio(newLevel);
   const gameOverSound = new Audio(gameOver);
+
+  const setInitalTiles = () => {
+    let tempArr = [];
+    for (let i = 0; i < gridSize; i++) {
+      tempArr[i] = [];
+      for (let j = 0; j < gridSize; j++) {
+        tempArr[i][j] = 0
+      }
+    }
+    return tempArr;
+  }
 
   // Hooks
 
@@ -24,13 +37,11 @@ function App() {
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
 
-  const [newGame, setNewGame] = useState(true);
-  const [newTileCounter, setNewTileCounter] = useState(0);
   useEffect(() => { addTiles(2); }, []);
 
   // Set Board Layout
 
-  function addTiles(qty) {
+  const addTiles = (qty) => {
 
     let tempArr = [];
     let tempIds = tileIds;
@@ -72,44 +83,17 @@ function App() {
     setTileIds(tempIds);
   }
 
+
   // Functions
 
-  function setInitalTiles() {
-    let tempArr = [];
-    for (let i = 0; i < gridSize; i++) {
-      tempArr[i] = [];
-      for (let j = 0; j < gridSize; j++) {
-        tempArr[i][j] = 0
-      }
-    }
-    return tempArr;
-  }
-
-  function removeTile(tileId) {
-    let tempArr = [];
-
-    for (let i = 0; i < gridSize; i++) {
-      tempArr[i] = [];
-
-      for (let j = 0; j < gridSize; j++) {
-        tempArr[i][j] = tiles[i][j];
-
-        if (tempArr[i][j].id === tileId) {
-          tempArr[i][j] = 0;
-        }
-      }
-    }
-
-    setTiles(tempArr);
-  }
-
-  function handleTiles(buttonId) {
+  const handleTiles = (buttonId) => {
     const direction = buttonId.split("-", 1);
     const reg = /\d+/g;
     const result = buttonId.match(reg);
     const n = parseInt(result[0]);
 
     let tempArr = [];
+    let line = [];
     let tempIds = tileIds;
     let tileMoved = false;
     let tempScore = score;
@@ -122,195 +106,86 @@ function App() {
       }
     }
 
-    if (direction[0] === "left") {
-
+    if (direction[0] === "left" || direction[0] === "right") {
       for (let i = 0; i < gridSize; i++) {
-        for (let j = i + 1; j < gridSize; j++) {
-          if (tempArr[i][n] === 0) {
-            if (tempArr[j][n] !== 0) {
-              tempArr[i][n] = tempArr[j][n];
-              tempArr[j][n] = 0;
-              tileMoved = true;
-            }
-          }
-        }
+        line[i] = tempArr[i][n];
       }
 
-      for (let i = 0; i < gridSize - 1; i++) {
-        if (tempArr[i][n] !== 0) {
-          if (tempArr[i][n].colorCode === tempArr[i + 1][n].colorCode) {
+      if (direction[0] === "right") {
+        line.reverse();
+      }
+    }
 
-            if (tempArr[i][n].colorCode === 5) {
-              tempLevel++;
-              newLevelSound.play();
-            }
-
-            if (tempArr[i][n].colorCode < 6) {
-              tempScore = tempScore + ((tempArr[i][n].colorCode + 1) * 10 * tempLevel);
-              tempArr[i][n].colorCode += 1;
-              tempArr[i + 1][n] = 0;
-              tileMoved = true;
-              addPointSound.play();
-            }
-
-          }
-        }
+    if (direction[0] === "up" || direction[0] === "down") {
+      for (let i = 0; i < gridSize; i++) {
+        line[i] = tempArr[n][i];
       }
 
-      for (let i = 0; i < gridSize; i++) {
-        for (let j = i + 1; j < gridSize; j++) {
-          if (tempArr[i][n] === 0) {
-            if (tempArr[j][n] !== 0) {
-              tempArr[i][n] = tempArr[j][n];
-              tempArr[j][n] = 0;
-              tileMoved = true;
-            }
-          }
+      if (direction[0] === "down") {
+        line.reverse();
+      }
+    }
+
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = i + 1; j < gridSize; j++) {
+        if (line[i] === 0 && line[j] !== 0) {
+          line[i] = line[j];
+          line[j] = 0;
+          tileMoved = true;
         }
       }
     }
 
-    if (direction[0] === "right") {
+    for (let i = 0; i < gridSize - 1; i++) {
+      if (line[i] !== 0) {
+        if (line[i].colorCode === line[i + 1].colorCode) {
 
-      for (let i = gridSize - 1; i > 0; i--) {
-        for (let j = i - 1; j >= 0; j--) {
-          if (tempArr[i][n] === 0) {
-            if (tempArr[j][n] !== 0) {
-              tempArr[i][n] = tempArr[j][n];
-              tempArr[j][n] = 0;
-              tileMoved = true;
-            }
+          if (line[i].colorCode === 5) {
+            tempLevel++;
+            newLevelSound.play();
           }
-        }
-      }
 
-      for (let i = gridSize - 1; i > 0; i--) {
-        if (tempArr[i][n] !== 0) {
-          if (tempArr[i][n].colorCode === tempArr[i - 1][n].colorCode) {
-
-            if (tempArr[i][n].colorCode === 5) {
-              tempLevel++;
-              newLevelSound.play();
-            }
-
-            if (tempArr[i][n].colorCode < 6) {
-              tempScore = tempScore + ((tempArr[i][n].colorCode + 1) * 10 * tempLevel);
-              tempArr[i][n].colorCode += 1;
-              tempArr[i - 1][n] = 0;
-              tileMoved = true;
-              addPointSound.play();
-            }
-
+          if (line[i].colorCode < 6) {
+            tempScore = tempScore + ((line[i].colorCode + 1) * 10 * tempLevel);
+            line[i].colorCode += 1;
+            line[i + 1] = 0;
+            tileMoved = true;
+            addPointSound.play();
           }
-        }
-      }
 
-      for (let i = gridSize - 1; i > 0; i--) {
-        for (let j = i - 1; j >= 0; j--) {
-          if (tempArr[i][n] === 0) {
-            if (tempArr[j][n] !== 0) {
-              tempArr[i][n] = tempArr[j][n];
-              tempArr[j][n] = 0;
-              tileMoved = true;
-            }
-          }
         }
       }
     }
 
-    if (direction[0] === "up") {
-
-      for (let i = 0; i < gridSize; i++) {
-        for (let j = i + 1; j < gridSize; j++) {
-          if (tempArr[n][i] === 0) {
-            if (tempArr[n][j] !== 0) {
-              tempArr[n][i] = tempArr[n][j];
-              tempArr[n][j] = 0;
-              tileMoved = true;
-            }
-          }
-        }
-      }
-
-      for (let i = 0; i < gridSize - 1; i++) {
-        if (tempArr[n][i] !== 0) {
-          if (tempArr[n][i].colorCode === tempArr[n][i + 1].colorCode) {
-
-            if (tempArr[n][i].colorCode === 5) {
-              tempLevel++;
-              newLevelSound.play();
-            }
-
-            if (tempArr[n][i].colorCode < 6) {
-              tempScore = tempScore + ((tempArr[n][i].colorCode + 1) * 10 * tempLevel);
-              tempArr[n][i].colorCode += 1;
-              tempArr[n][i + 1] = 0;
-              tileMoved = true;
-              addPointSound.play();
-            }
-
-          }
-        }
-      }
-
-      for (let i = 0; i < gridSize; i++) {
-        for (let j = i + 1; j < gridSize; j++) {
-          if (tempArr[n][i] === 0) {
-            if (tempArr[n][j] !== 0) {
-              tempArr[n][i] = tempArr[n][j];
-              tempArr[n][j] = 0;
-              tileMoved = true;
-            }
-          }
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = i + 1; j < gridSize; j++) {
+        if (line[i] === 0 && line[j] !== 0) {
+          line[i] = line[j];
+          line[j] = 0;
+          tileMoved = true;
         }
       }
     }
 
-    if (direction[0] === "down") {
+    if (direction[0] === "left" || direction[0] === "right") {
 
-      for (let i = gridSize - 1; i > 0; i--) {
-        for (let j = i - 1; j >= 0; j--) {
-          if (tempArr[n][i] === 0) {
-            if (tempArr[n][j] !== 0) {
-              tempArr[n][i] = tempArr[n][j];
-              tempArr[n][j] = 0;
-              tileMoved = true;
-            }
-          }
-        }
+      if (direction[0] === "right") {
+        line.reverse();
       }
 
-      for (let i = gridSize - 1; i > 0; i--) {
-        if (tempArr[n][i] !== 0) {
-          if (tempArr[n][i].colorCode === tempArr[n][i - 1].colorCode) {
+      for (let i = 0; i < gridSize; i++) {
+        tempArr[i][n] = line[i];
+      }
+    }
 
-            if (tempArr[n][i].colorCode === 5) {
-              tempLevel++;
-              newLevelSound.play();
-            }
+    if (direction[0] === "up" || direction[0] === "down") {
 
-            if (tempArr[n][i].colorCode < 6) {
-              tempScore = tempScore + ((tempArr[n][i].colorCode + 1) * 10 * tempLevel);
-              tempArr[n][i].colorCode += 1;
-              tempArr[n][i - 1] = 0;
-              tileMoved = true;
-              addPointSound.play();
-            }
-
-          }
-        }
+      if (direction[0] === "down") {
+        line.reverse();
       }
 
-      for (let i = gridSize - 1; i > 0; i--) {
-        for (let j = i - 1; j >= 0; j--) {
-          if (tempArr[n][i] === 0) {
-            if (tempArr[n][j] !== 0) {
-              tempArr[n][i] = tempArr[n][j];
-              tempArr[n][j] = 0;
-              tileMoved = true;
-            }
-          }
-        }
+      for (let i = 0; i < gridSize; i++) {
+        tempArr[n][i] = line[i];
       }
     }
 
@@ -389,6 +264,24 @@ function App() {
     setLevel(tempLevel);
   }
 
+  // Add Cell and Tile Components
+
+  const cellComponents = [];
+  const tileComponents = [];
+  const tileColors = ["red", "orange", "yellow", "green", "blue", "purple", "basket"]
+
+
+  for (let i = 0; i < gridSize * gridSize; i++) {
+    cellComponents.push(<Cell key={i} />);
+  }
+
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      if (tiles[i][j] !== 0) {
+        tileComponents.push(<Tile key={tiles[i][j].id} x={i} y={j} color={`${tileColors[tiles[i][j].colorCode]}-${tiles[i][j].typeCode}`} />);
+      }
+    }
+  }
 
   // Return
 
@@ -396,7 +289,7 @@ function App() {
     <div className="App">
       <Header />
       <Menu score={score} level={level} />
-      <GameWrapper gridSize={gridSize} tiles={tiles} handleTiles={handleTiles} />
+      <GameContainer gridSize={gridSize} cellComponents={cellComponents} tileComponents={tileComponents} handleTiles={handleTiles} />
     </div >
   )
 

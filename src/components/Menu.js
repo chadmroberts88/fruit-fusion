@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Menu({ score, level }) {
+const Menu = ({ score, level }) => {
     return (
         <div className='menu'>
             <div className='level'>Level: {level}</div>

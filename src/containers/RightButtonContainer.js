@@ -1,7 +1,7 @@
 import React from 'react'
-import RightButton from './RightButton'
+import RightButton from '../buttons/RightButton'
 
-function RightButtonContainer({ gridSize, handleTiles }) {
+const RightButtonContainer = ({ gridSize, handleTiles }) => {
 
     const rightButtons = [];
     const containerStyles = {

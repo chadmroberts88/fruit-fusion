@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Tile({ x, y, color }) {
+const Tile = ({ x, y, color }) => {
 
     const tileStyles = {
         left: `calc(${x} * 11vmin)`,

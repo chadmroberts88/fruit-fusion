@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Spacer() {
+const Spacer = () => {
     return (
         <div></div>
     )

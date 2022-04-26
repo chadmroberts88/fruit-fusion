@@ -1,20 +1,20 @@
 import React from 'react';
-import Spacer from './Spacer';
+import Spacer from '../components/Spacer';
 import UpButtonContainer from './UpButtonContainer';
 import LeftButtonContainer from './LeftButtonContainer';
 import RightButtonContainer from './RightButtonContainer';
 import DownButtonContainer from './DownButtonContainer';
-import Board from './Board';
+import Board from '../components/Board';
 
-function GameWrapper({ gridSize, tiles, handleTiles }) {
+const GameContainer = ({ gridSize, cellComponents, tileComponents, handleTiles }) => {
 
     return (
-        <div id="game-wrapper">
+        <div id="game-container">
             <Spacer />
             <UpButtonContainer gridSize={gridSize} handleTiles={handleTiles} />
             <Spacer />
             <LeftButtonContainer gridSize={gridSize} handleTiles={handleTiles} />
-            <Board gridSize={gridSize} tiles={tiles} />
+            <Board gridSize={gridSize} cellComponents={cellComponents} tileComponents={tileComponents} />
             <RightButtonContainer gridSize={gridSize} handleTiles={handleTiles} />
             <Spacer />
             <DownButtonContainer gridSize={gridSize} handleTiles={handleTiles} />
@@ -23,4 +23,4 @@ function GameWrapper({ gridSize, tiles, handleTiles }) {
     )
 }
 
-export default GameWrapper
+export default GameContainer

@@ -1,9 +1,12 @@
-import React from 'react'
+import { React, memo } from 'react'
 
 const Cell = () => {
+
+    console.log("cell rendered");
+
     return (
         <div className="cell"></div>
     )
 }
 
-export default Cell
+export default memo(Cell)

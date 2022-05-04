@@ -1,9 +1,9 @@
-import React from 'react'
+import { React, memo } from 'react'
 
 const Spacer = () => {
     return (
-        <div></div>
+        <div className="spacer"></div>
     )
 }
 
-export default Spacer
+export default memo(Spacer)

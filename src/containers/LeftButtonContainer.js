@@ -1,15 +1,15 @@
-import React from 'react'
-import LeftButton from '../buttons/LeftButton'
+import { React, memo } from 'react'
+import LeftButton from '../components/LeftButton'
 
-const LeftButtonContainer = ({ gridSize, handleTiles }) => {
+const LeftButtonContainer = ({ gridSize, isNewGame, setIsNewGame, setButtonId }) => {
 
-    const leftButtons = [];
     const containerStyles = {
         gridTemplateRows: `repeat(${gridSize}, 10vmin)`
     }
 
+    const leftButtons = [];
     for (let i = 0; i < gridSize; i++) {
-        leftButtons.push(<LeftButton key={i} id={`left-${i}`} handleTiles={handleTiles} />)
+        leftButtons.push(<LeftButton key={i} id={`left-${i}`} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />)
     };
 
     return (
@@ -19,4 +19,4 @@ const LeftButtonContainer = ({ gridSize, handleTiles }) => {
     )
 }
 
-export default LeftButtonContainer
+export default memo(LeftButtonContainer)

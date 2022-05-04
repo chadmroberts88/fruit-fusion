@@ -1,15 +1,16 @@
-import React from 'react'
-import RightButton from '../buttons/RightButton'
+import { React, memo } from 'react'
+import RightButton from '../components/RightButton'
 
-const RightButtonContainer = ({ gridSize, handleTiles }) => {
+const RightButtonContainer = ({ gridSize, isNewGame, setIsNewGame, setButtonId }) => {
 
-    const rightButtons = [];
     const containerStyles = {
         gridTemplateRows: `repeat(${gridSize}, 10vmin)`
     }
 
+    const rightButtons = [];
+
     for (let i = 0; i < gridSize; i++) {
-        rightButtons.push(<RightButton key={i} id={`right-${i}`} handleTiles={handleTiles} />)
+        rightButtons.push(<RightButton key={i} id={`right-${i}`} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />)
     };
 
     return (
@@ -19,4 +20,4 @@ const RightButtonContainer = ({ gridSize, handleTiles }) => {
     )
 }
 
-export default RightButtonContainer
+export default memo(RightButtonContainer)

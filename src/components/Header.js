@@ -1,24 +1,22 @@
 import React from 'react'
+import styled from 'styled-components'
 
-const Header = (props) => {
+const StyledHeader = styled.h1`
+        color: yellowgreen;
+        font-size: calc(30px + 5vmin);
+        font-family: 'Titan One', cursive;
+        margin: "0px 0px 0px;
+        text-shadow: 2px 2px 0 #000;
+        text-align: center;
+`;
+
+const Header = () => {
+
     return (
-        <div>
-            <h1 style={headerStyles}>{props.title}</h1>
+        <div className='title'>
+            <StyledHeader>Fruit Fusion</StyledHeader>
         </div>
     )
-}
-
-const headerStyles = {
-    color: "aqua",
-    fontSize: "calc(30px + 5vmin)",
-    fontFamily: "'Titan One', cursive",
-    margin: "20px 0px",
-    textShadow: "2px 2px 0 #000",
-    textAlign: "center"
-}
-
-Header.defaultProps = {
-    title: "Fruit Fusion"
 }
 
 export default Header

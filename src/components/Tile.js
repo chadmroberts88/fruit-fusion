@@ -1,6 +1,8 @@
-import React from 'react'
+import { React, memo } from 'react'
 
 const Tile = ({ x, y, color }) => {
+
+    console.log("tile renderd");
 
     const tileStyles = {
         left: `calc(${x} * 11vmin)`,
@@ -12,4 +14,4 @@ const Tile = ({ x, y, color }) => {
     )
 }
 
-export default Tile
+export default memo(Tile)

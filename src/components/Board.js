@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useMemo } from 'react'
+import { React } from 'react'
 import styled from 'styled-components'
 import Cell from './Cell'
 import Tile from './Tile'

@@ -1,7 +1,7 @@
 import { React, memo } from 'react'
 import UpButton from '../components/UpButton'
 
-const UpButtonContainer = ({ gridSize, isNewGame, setIsNewGame, setButtonId }) => {
+const UpButtonContainer = ({ gridSize, handleGameClick }) => {
 
     const containerStyles = {
         gridTemplateColumns: `repeat(${gridSize}, 10vmin)`
@@ -10,7 +10,8 @@ const UpButtonContainer = ({ gridSize, isNewGame, setIsNewGame, setButtonId }) =
     const upButtons = [];
 
     for (let i = 0; i < gridSize; i++) {
-        upButtons.push(<UpButton key={i} id={`up-${i}`} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />)
+        upButtons.push(<UpButton key={i} id={`up-${i}`} handleGameClick={handleGameClick} />)
+
     };
 
     return (

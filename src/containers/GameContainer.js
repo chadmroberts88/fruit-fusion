@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useMemo } from 'react'
+import { React, useState, useCallback } from 'react'
 import Spacer from '../components/Spacer'
 import UpButtonContainer from './UpButtonContainer'
 import LeftButtonContainer from './LeftButtonContainer'
@@ -10,70 +10,55 @@ import addPoint from '../sounds/addPoint.wav'
 import newLevel from '../sounds/newLevel.wav'
 import gameOver from '../sounds/gameOver.wav'
 
-const GameContainer = ({ gridSize, isNewGame, setIsNewGame, score, setScore, level, setLevel }) => {
+const GameContainer = ({ isNewGame, setIsNewGame, score, setScore, level, setLevel }) => {
+
+    const gridSize = 5;
 
     const moveTilesSound = new Audio(moveTiles);
     const addPointSound = new Audio(addPoint);
     const newLevelSound = new Audio(newLevel);
     const gameOverSound = new Audio(gameOver);
 
-    const [buttonId, setButtonId] = useState('none');
-
-    const setInitialTiles = () => {
-        let tempArr = [];
+    const initializeTiles = () => {
+        let initialTiles = [];
         for (let i = 0; i < gridSize; i++) {
-            tempArr[i] = [];
+            initialTiles[i] = [];
             for (let j = 0; j < gridSize; j++) {
-                tempArr[i][j] = 0
+                initialTiles[i][j] = 0
             }
         }
-        return tempArr;
+        return initialTiles;
     }
 
-
-    // Hooks
-
-
+    const [tiles, setTiles] = useState(initializeTiles());
     const [tileIds, setTileIds] = useState(0);
-    const [tiles, setTiles] = useState(setInitialTiles());
 
-    useEffect(() => { addTiles(2); }, []);
-
-
-    const updateTiles = () => {
-
-        const tempTiles = tiles;
-
-        if (isNewGame) {
-            console.log("Add two tiles");
-        } else {
-            console.log("Handle Button Click");
-        }
-
-        return tempTiles;
-    }
-
-    const updatedTiles = useMemo(() => updateTiles(), []);
-
-    // Set Board Layout
-
-    const addTiles = (qty) => {
-
-        let tempArr = [];
-        let tempIds = tileIds;
-        const blankCells = [];
-
+    const copyTiles = () => {
+        let copiedTiles = [];
         for (let i = 0; i < gridSize; i++) {
-            tempArr[i] = [];
+            copiedTiles[i] = [];
             for (let j = 0; j < gridSize; j++) {
-                tempArr[i][j] = tiles[i][j];
+                copiedTiles[i][j] = tiles[i][j];
             }
         }
+        return copiedTiles;
+    }
+
+    let currentTiles = copyTiles();
+    let currentTileIds = tileIds;
+
+
+    const addToCurrentTiles = (qty) => {
 
         for (let q = 0; q < qty; q++) {
+
+            let blankCells = [];
+
+            // get blanks cells
+
             for (let i = 0; i < gridSize; i++) {
                 for (let j = 0; j < gridSize; j++) {
-                    if (tempArr[i][j] === 0) {
+                    if (currentTiles[i][j] === 0) {
                         blankCells.push({ x: i, y: j });
                     }
                 }
@@ -86,177 +71,31 @@ const GameContainer = ({ gridSize, isNewGame, setIsNewGame, score, setScore, lev
                 const probability = Math.random();
                 const newTile = {};
 
-                newTile.id = tempIds;
+                newTile.id = currentTileIds;
                 newTile.colorCode = probability > 0.4 ? 0 : 1;
                 newTile.typeCode = Math.floor(Math.random() * 3);
-                tempIds++;
+                currentTileIds++;
 
-                tempArr[x][y] = newTile;
+                currentTiles[x][y] = newTile;
             }
         }
 
-        setTiles(tempArr);
-        setTileIds(tempIds);
+        setTiles(currentTiles);
+        setTileIds(currentTileIds);
+
     }
 
-
-    // Functions
-
-    const handleTiles = (buttonId) => {
-
-        let tempArr = [];
-        let line = [];
-        let tempIds = tileIds;
-        let tileMoved = false;
-        let tempScore = score;
-        let tempLevel = level;
-
-        // console.log(buttonId);
-        const direction = buttonId.split("-", 1);
-        const reg = /\d+/g;
-        const result = buttonId.match(reg);
-        const n = parseInt(result[0]);
-
-
-
-        for (let i = 0; i < gridSize; i++) {
-            tempArr[i] = [];
-            for (let j = 0; j < gridSize; j++) {
-                tempArr[i][j] = tiles[i][j];
-            }
-        }
-
-        if (direction[0] === "left" || direction[0] === "right") {
-            for (let i = 0; i < gridSize; i++) {
-                line[i] = tempArr[i][n];
-            }
-
-            if (direction[0] === "right") {
-                line.reverse();
-            }
-        }
-
-        if (direction[0] === "up" || direction[0] === "down") {
-            for (let i = 0; i < gridSize; i++) {
-                line[i] = tempArr[n][i];
-            }
-
-            if (direction[0] === "down") {
-                line.reverse();
-            }
-        }
-
-        for (let i = 0; i < gridSize; i++) {
-            for (let j = i + 1; j < gridSize; j++) {
-                if (line[i] === 0 && line[j] !== 0) {
-                    line[i] = line[j];
-                    line[j] = 0;
-                    tileMoved = true;
-                }
-            }
-        }
-
-        for (let i = 0; i < gridSize - 1; i++) {
-            if (line[i] !== 0) {
-                if (line[i].colorCode === line[i + 1].colorCode) {
-
-                    if (line[i].colorCode === 5) {
-                        tempLevel++;
-                        newLevelSound.play();
-                    }
-
-                    if (line[i].colorCode < 6) {
-                        tempScore = tempScore + ((line[i].colorCode + 1) * 10 * tempLevel);
-                        line[i].colorCode += 1;
-                        line[i + 1] = 0;
-                        tileMoved = true;
-                        addPointSound.play();
-                    }
-
-                }
-            }
-        }
-
-        for (let i = 0; i < gridSize; i++) {
-            for (let j = i + 1; j < gridSize; j++) {
-                if (line[i] === 0 && line[j] !== 0) {
-                    line[i] = line[j];
-                    line[j] = 0;
-                    tileMoved = true;
-                }
-            }
-        }
-
-        if (direction[0] === "left" || direction[0] === "right") {
-
-            if (direction[0] === "right") {
-                line.reverse();
-            }
-
-            for (let i = 0; i < gridSize; i++) {
-                tempArr[i][n] = line[i];
-            }
-        }
-
-        if (direction[0] === "up" || direction[0] === "down") {
-
-            if (direction[0] === "down") {
-                line.reverse();
-            }
-
-            for (let i = 0; i < gridSize; i++) {
-                tempArr[n][i] = line[i];
-            }
-        }
-
-        // Get all blank cells
-
-        const blankCells = [];
-        let blankCellAvailable = true;
-
-        for (let i = 0; i < gridSize; i++) {
-            for (let j = 0; j < gridSize; j++) {
-                if (tempArr[i][j] === 0) {
-                    blankCells.push({ x: i, y: j });
-                }
-            }
-        }
-
-        // If blank cell, add tile
-
-        if (tileMoved && blankCells.length > 0) {
-            // const randomIndex = Math.floor(Math.random() * blankCells.length);
-            // const x = blankCells[randomIndex].x;
-            // const y = blankCells[randomIndex].y;
-            // const probability = Math.random();
-            // const newTile = {};
-
-            // newTile.id = tempIds;
-            // newTile.colorCode = probability > 0.4 ? 0 : 1;
-            // newTile.typeCode = Math.floor(Math.random() * 3);
-            // tempIds++;
-
-            // tempArr[x][y] = newTile;
-
-            addTiles(1);
-
-            moveTilesSound.play();
-
-            if (blankCells.length === 1) {
-                blankCellAvailable = false;
-            }
-
-        }
-
-        // Check for game over
+    const checkForGameover = () => {
 
         let pairAvailable = false;
+        let gameOver = false;
+        let blankCells = [];
 
         for (let i = 0; i < gridSize - 1; i++) { // check rows for pairs
             for (let j = 0; j < gridSize; j++) {
-                if (tempArr[i][j] !== 0 && tempArr[i + 1][j] !== 0) {
-                    if (tempArr[i][j].colorCode === tempArr[i + 1][j].colorCode) {
-                        if (tempArr[i][j].colorCode !== 6) {
+                if (currentTiles[i][j] !== 0 && currentTiles[i + 1][j] !== 0) {
+                    if (currentTiles[i][j].colorCode === currentTiles[i + 1][j].colorCode) {
+                        if (currentTiles[i][j].colorCode !== 6) {
                             pairAvailable = true;
                         }
                     }
@@ -266,9 +105,9 @@ const GameContainer = ({ gridSize, isNewGame, setIsNewGame, score, setScore, lev
 
         for (let i = 0; i < gridSize; i++) { // check columns for pairs
             for (let j = 0; j < gridSize - 1; j++) {
-                if (tempArr[i][j] !== 0 && tempArr[i][j + 1] !== 0) {
-                    if (tempArr[i][j].colorCode === tempArr[i][j + 1].colorCode) {
-                        if (tempArr[i][j].colorCode !== 6) {
+                if (currentTiles[i][j] !== 0 && currentTiles[i][j + 1] !== 0) {
+                    if (currentTiles[i][j].colorCode === currentTiles[i][j + 1].colorCode) {
+                        if (currentTiles[i][j].colorCode !== 6) {
                             pairAvailable = true;
                         }
                     }
@@ -276,32 +115,183 @@ const GameContainer = ({ gridSize, isNewGame, setIsNewGame, score, setScore, lev
             }
         }
 
-        if (!blankCellAvailable && !pairAvailable) {
+        for (let i = 0; i < gridSize; i++) { // get blank cells
+            for (let j = 0; j < gridSize; j++) {
+                if (currentTiles[i][j] === 0) {
+                    blankCells.push({ x: i, y: j });
+                }
+            }
+        }
+
+        if (blankCells.length === 0 && !pairAvailable) { // if there are no blank cells and no pairs availabe, game over
             gameOverSound.play();
+            gameOver = true;
             console.log("Game Over");
         }
 
+        return gameOver;
 
-        setTiles(tempArr);
-        setTileIds(tempIds);
-        setScore(tempScore);
-        setLevel(tempLevel);
     }
+
+    const handleNewGame = (isNewGame) => {
+        currentTiles = initializeTiles();
+        addToCurrentTiles(2);
+        setIsNewGame(false);
+        setScore(0);
+        setLevel(1);
+    }
+
+    const handleGameClick = useCallback((buttonId) => {
+
+        if (buttonId !== 'none') {
+            let line = [];
+            let tileMoved = false;
+            let blankCells = [];
+            let currentScore = score;
+            let currentLevel = level;
+
+            const direction = buttonId.split("-", 1);
+            const reg = /\d+/g;
+            const result = buttonId.match(reg);
+            const n = parseInt(result[0]);
+
+            // get line (row or col) from the currentTiles array
+
+            if (direction[0] === "left" || direction[0] === "right") {
+                for (let i = 0; i < gridSize; i++) {
+                    line[i] = currentTiles[i][n];
+                }
+
+                if (direction[0] === "right") {
+                    line.reverse();
+                }
+            }
+
+            if (direction[0] === "up" || direction[0] === "down") {
+                for (let i = 0; i < gridSize; i++) {
+                    line[i] = currentTiles[n][i];
+                }
+
+                if (direction[0] === "down") {
+                    line.reverse();
+                }
+            }
+
+            // shift all tiles to end
+
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = i + 1; j < gridSize; j++) {
+                    if (line[i] === 0 && line[j] !== 0) {
+                        line[i] = line[j];
+                        line[j] = 0;
+                        tileMoved = true;
+                    }
+                }
+            }
+
+            // combine tile pairs
+
+            for (let i = 0; i < gridSize - 1; i++) {
+                if (line[i] !== 0) {
+                    if (line[i].colorCode === line[i + 1].colorCode) {
+
+                        if (line[i].colorCode === 5) {
+                            currentLevel++;
+                            newLevelSound.play();
+                        }
+
+                        if (line[i].colorCode < 6) {
+                            currentScore = currentScore + ((line[i].colorCode + 1) * 10 * currentLevel);
+                            line[i].colorCode += 1;
+                            line[i + 1] = 0;
+                            tileMoved = true;
+                            addPointSound.play();
+                        }
+
+                    }
+                }
+            }
+
+            // shift all tiles to end
+
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = i + 1; j < gridSize; j++) {
+                    if (line[i] === 0 && line[j] !== 0) {
+                        line[i] = line[j];
+                        line[j] = 0;
+                        tileMoved = true;
+                    }
+                }
+            }
+
+            // copy line back to currentTiles array
+
+            if (direction[0] === "left" || direction[0] === "right") {
+
+                if (direction[0] === "right") {
+                    line.reverse();
+                }
+
+                for (let i = 0; i < gridSize; i++) {
+                    currentTiles[i][n] = line[i];
+                }
+            }
+
+            if (direction[0] === "up" || direction[0] === "down") {
+
+                if (direction[0] === "down") {
+                    line.reverse();
+                }
+
+                for (let i = 0; i < gridSize; i++) {
+                    currentTiles[n][i] = line[i];
+                }
+            }
+
+            // if a tile moved, play sound, set tiles, score, and level
+
+            if (tileMoved) {
+                moveTilesSound.play();
+                setTiles(currentTiles);
+                setScore(currentScore);
+                setLevel(currentLevel);
+
+
+                // get blanks cells
+
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        if (currentTiles[i][j] === 0) {
+                            blankCells.push({ x: i, y: j });
+                        }
+                    }
+                }
+
+                // if there is a blank cell and a tile moved, add a tile
+
+                if (blankCells.length > 0 && tileMoved) {
+                    addToCurrentTiles(1);
+                }
+
+                setIsNewGame(checkForGameover());
+            }
+        }
+    }, [])
 
     return (
         <div id="game-container">
             <Spacer />
-            <UpButtonContainer gridSize={gridSize} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />
+            <UpButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />
             <Spacer />
-            <LeftButtonContainer gridSize={gridSize} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />
+            <LeftButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />
             <Board gridSize={gridSize} tiles={tiles} />
-            <RightButtonContainer gridSize={gridSize} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />
+            <RightButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />
             <Spacer />
-            <DownButtonContainer gridSize={gridSize} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />
-            <Spacer />
+            <DownButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />
+            <button onClick={() => { handleNewGame(); }}>New Game</button>
         </div>
     )
 }
 
 
-export default GameContainer;
+export default GameContainer

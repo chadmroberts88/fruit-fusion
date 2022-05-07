@@ -1,7 +1,7 @@
 import { React, memo } from 'react'
 import RightButton from '../components/RightButton'
 
-const RightButtonContainer = ({ gridSize, isNewGame, setIsNewGame, setButtonId }) => {
+const RightButtonContainer = ({ gridSize, handleGameClick }) => {
 
     const containerStyles = {
         gridTemplateRows: `repeat(${gridSize}, 10vmin)`
@@ -10,7 +10,7 @@ const RightButtonContainer = ({ gridSize, isNewGame, setIsNewGame, setButtonId }
     const rightButtons = [];
 
     for (let i = 0; i < gridSize; i++) {
-        rightButtons.push(<RightButton key={i} id={`right-${i}`} isNewGame={isNewGame} setIsNewGame={setIsNewGame} setButtonId={setButtonId} />)
+        rightButtons.push(<RightButton key={i} id={`right-${i}`} handleGameClick={handleGameClick} />)
     };
 
     return (

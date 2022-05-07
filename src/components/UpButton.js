@@ -13,17 +13,9 @@ const StyledUpButton = styled.button`
     animation: heartbeat 15s ease-in-out infinite both;
 `;
 
-const UpButton = ({ id, isNewGame, setIsNewGame, setButtonId }) => {
-
-    const handleClick = () => {
-        setButtonId(id);
-        let newGame = isNewGame;
-        if (newGame) { newGame = false; }
-        setIsNewGame(newGame);
-    }
-
+const UpButton = ({ id, handleGameClick }) => {
     return (
-        <StyledUpButton id={id} onClick={() => { handleClick(); }}><BsCaretUpFill /></StyledUpButton>
+        <StyledUpButton id={id} onClick={() => { handleGameClick(id); }} ><BsCaretUpFill /></StyledUpButton>
     )
 }
 

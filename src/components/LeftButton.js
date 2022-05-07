@@ -1,6 +1,6 @@
 import { React, memo } from 'react'
 import { BsCaretLeftFill } from 'react-icons/bs'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const StyledLeftButton = styled.button`
         display: flex;
@@ -13,17 +13,9 @@ const StyledLeftButton = styled.button`
         animation: heartbeat 15s ease-in-out infinite both;
     `;
 
-const LeftButton = ({ id, isNewGame, setIsNewGame, setButtonId }) => {
-
-    const handleClick = () => {
-        setButtonId(id);
-        let newGame = isNewGame;
-        if (newGame) { newGame = false; }
-        setIsNewGame(newGame);
-    }
-
+const LeftButton = ({ id, handleGameClick }) => {
     return (
-        <StyledLeftButton id={id} onClick={() => { handleClick(); }}><BsCaretLeftFill /></StyledLeftButton>
+        <StyledLeftButton id={id} onClick={() => { handleGameClick(id); }}><BsCaretLeftFill /></StyledLeftButton>
     )
 }
 

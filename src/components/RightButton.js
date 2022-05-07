@@ -13,17 +13,9 @@ const StyledRightButton = styled.button`
         animation: heartbeat 15s ease-in-out infinite both;
     `;
 
-const RightButton = ({ id, isNewGame, setIsNewGame, setButtonId }) => {
-
-    const handleClick = () => {
-        setButtonId(id);
-        let newGame = isNewGame;
-        if (newGame) { newGame = false; }
-        setIsNewGame(newGame);
-    }
-
+const RightButton = ({ id, handleGameClick }) => {
     return (
-        <StyledRightButton id={id} onClick={() => { handleClick(); }}><BsCaretRightFill /></StyledRightButton>
+        <StyledRightButton id={id} onClick={() => { handleGameClick(id); }}><BsCaretRightFill /></StyledRightButton>
     )
 }
 

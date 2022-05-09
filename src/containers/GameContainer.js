@@ -1,4 +1,4 @@
-import { React, useState, useCallback } from 'react'
+import { React, useCallback, useMemo, useState } from 'react'
 import Spacer from '../components/Spacer'
 import UpButtonContainer from './UpButtonContainer'
 import LeftButtonContainer from './LeftButtonContainer'
@@ -32,6 +32,7 @@ const GameContainer = ({ isNewGame, setIsNewGame, score, setScore, level, setLev
 
     const [tiles, setTiles] = useState(initializeTiles());
     const [tileIds, setTileIds] = useState(0);
+    const [buttonId, setButtonId] = useState('none');
 
     const copyTiles = () => {
         let copiedTiles = [];
@@ -141,7 +142,7 @@ const GameContainer = ({ isNewGame, setIsNewGame, score, setScore, level, setLev
         setLevel(1);
     }
 
-    const handleGameClick = useCallback((buttonId) => {
+    const handleGameClick = (buttonId) => {
 
         if (buttonId !== 'none') {
             let line = [];
@@ -276,7 +277,10 @@ const GameContainer = ({ isNewGame, setIsNewGame, score, setScore, level, setLev
                 setIsNewGame(checkForGameover());
             }
         }
-    }, [])
+
+        setButtonId(buttonId);
+    }
+
 
     return (
         <div id="game-container">
@@ -284,7 +288,7 @@ const GameContainer = ({ isNewGame, setIsNewGame, score, setScore, level, setLev
             <UpButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />
             <Spacer />
             <LeftButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />
-            <Board gridSize={gridSize} tiles={tiles} />
+            <Board gridSize={gridSize} tiles={tiles} buttonId={buttonId} />
             <RightButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />
             <Spacer />
             <DownButtonContainer gridSize={gridSize} handleGameClick={handleGameClick} />

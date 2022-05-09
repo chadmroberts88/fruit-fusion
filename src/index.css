@@ -43,7 +43,7 @@ body {
   row-gap: 1vmin;
 }
 
-.arrow-button {
+/* .arrow-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +52,7 @@ body {
   background-color: transparent;
   border: none;
   animation: heartbeat 15s ease-in-out infinite both;
-}
+} */
 
 /* #board {
   display: grid;
@@ -63,12 +63,12 @@ body {
   position: relative;
 } */
 
-.cell {
+/* .cell {
   background-color: lightgrey;
   border-radius: 1vmin;
-}
+} */
 
-.tile {
+/* .tile {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -76,10 +76,10 @@ body {
   width: 10vmin;
   height: 10vmin;
   border-radius: 1vmin;
-  /* animation: show 100ms ease-in-out; */
-  transition: left 500ms ease-in-out, top 500ms ease-in-out;
-  /* transition: 500ms; */
-}
+  animation: show 1000ms ease-in-out;
+  transition: transform 500ms ease-in-out;
+  transition: 500ms;
+} */
 
 .dashboard {
   display: flex;

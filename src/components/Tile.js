@@ -1,16 +1,22 @@
-import { React, memo } from 'react'
+import { React, memo, useEffect } from 'react'
+import styled from 'styled-components'
+import { motion } from 'framer-motion'
+
+const StyledTile = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10vmin;
+  height: 10vmin;
+  border-radius: 1vmin;
+`;
 
 const Tile = ({ x, y, color }) => {
-
-    console.log("tile renderd");
-
-    const tileStyles = {
-        left: `calc(${x} * 11vmin)`,
-        top: `calc(${y} * 11vmin)`,
-    }
-
     return (
-        <div className={`tile ${color}`} style={tileStyles}></div>
+        <motion.div initial={false} animate={{ x: `calc(${x}*11vmin)`, y: `calc(${y}*11vmin)` }}>
+            <StyledTile className={`tile ${color}`} xPos={x} yPos={y}></StyledTile>
+        </motion.div >
     )
 }
 

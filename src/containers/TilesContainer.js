@@ -11,7 +11,7 @@ const StyledTilesContainer = styled.div`
     height: calc(${props => props.gridSize} * 10vmin + (${props => props.gridSize} - 1) * 1vmin);
 `;
 
-const TilesContainer = ({ gridSize, tiles, buttonId }) => {
+const TilesContainer = ({ gridSize, tiles }) => {
 
     const tileColors = ["red", "orange", "yellow", "green", "blue", "purple", "basket"]
     const tileComponents = [];

@@ -1,14 +1,22 @@
 import { React } from 'react'
 import Dashboard from './Dashboard'
 import GameContainer from '../containers/GameContainer'
+import styled from 'styled-components'
 
-const GamePanel = ({ isNewGame, setIsNewGame, score, setScore, level, setLevel, best, setBest }) => {
+const StyledGamePanel = styled.div`
+    /* background-color: #333232; */
+    height: 84vmin;
+    width: 76vmin;
+    padding: 1vmin;
+    border-radius: 10px;
+`;
 
+const GamePanel = ({ gridSize, tiles, score, level, best, handleGameClick }) => {
     return (
-        <div className="game-panel">
+        <StyledGamePanel id="game-panel">
             <Dashboard score={score} level={level} best={best} />
-            <GameContainer isNewGame={isNewGame} setIsNewGame={setIsNewGame} score={score} setScore={setScore} level={level} setLevel={setLevel} />
-        </div>
+            <GameContainer gridSize={gridSize} tiles={tiles} handleGameClick={handleGameClick} />
+        </StyledGamePanel>
     )
 }
 

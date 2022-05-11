@@ -1,21 +1,21 @@
 import React from 'react'
+import styled from 'styled-components'
+import DashboardSection from './DashboardSection';
+
+const StyledDashboard = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 10%;
+`;
 
 const Dashboard = ({ score, level, best }) => {
     return (
-        <div className='dashboard'>
-            <div className='dashboard-section'>
-                <h2>- SCORE -</h2>
-                <h3>{score}</h3>
-            </div>
-            <div className='dashboard-section'>
-                <h2>- LEVEL -</h2>
-                <h3>{level}</h3>
-            </div>
-            <div className='dashboard-section'>
-                <h2>- BEST -</h2>
-                <h3>{best}</h3>
-            </div>
-        </div>
+        <StyledDashboard id='dashboard'>
+            <DashboardSection heading={"- SCORE -"} stat={score}></DashboardSection>
+            <DashboardSection heading={"- LEVEL -"} stat={level}></DashboardSection>
+            <DashboardSection heading={"- BEST -"} stat={best}></DashboardSection>
+        </StyledDashboard>
     )
 }
 

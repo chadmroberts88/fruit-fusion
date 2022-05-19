@@ -2,21 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledInputField = styled.input`
-    height: 7vmin;
-    width: 38vmin;
-    margin: 1vmin;
+    height: 5vmin;
+    width: 100%;
     padding: 2vmin;
     border: 2px solid #a2a2a2;
     color: black;
     font-family: 'Arimo', sans-serif;
-    font-size: 3vmin;
+    font-size: 2.5vmin;
     border-radius: 10px;
     text-align: center;
 
     ::placeholder {
         color: #a2a2a2;
         font-family: 'Arimo', sans-serif;
-        font-size: 3vmin;
+        font-size: 2.5vmin;
     }
 
     :focus {
@@ -24,9 +23,9 @@ const StyledInputField = styled.input`
     }
 `;
 
-const InputField = ({ placeholderText }) => {
+const InputField = ({ placeholder }) => {
     return (
-        <StyledInputField placeholder={placeholderText}>
+        <StyledInputField placeholder={placeholder}>
         </StyledInputField>
     )
 }

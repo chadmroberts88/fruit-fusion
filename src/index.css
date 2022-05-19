@@ -32,9 +32,12 @@ h2 {
   font-weight: bold;
 }
 
-h3 {
+h3,
+label {
   color: orange;
   font-size: 3.5vmin;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 h4 {

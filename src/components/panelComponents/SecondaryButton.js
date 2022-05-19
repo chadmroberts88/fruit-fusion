@@ -19,10 +19,10 @@ const StyledSecondaryButton = styled.button`
 
 `;
 
-const SecondaryButton = ({ buttonText, handleClick, path }) => {
+const SecondaryButton = ({ text, handleClick, path }) => {
     return (
         <StyledSecondaryButton onClick={() => { handleClick(path); }}>
-            {buttonText}
+            {text}
         </StyledSecondaryButton>
     )
 }

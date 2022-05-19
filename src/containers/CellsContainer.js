@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Cell from '../components/Cell';
+import Cell from '../components/game/Cell';
 
 const StyledCellsContainer = styled.div`
     display: grid;

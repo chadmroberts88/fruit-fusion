@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Tile from '../components/Tile'
+import Tile from '../components/game/Tile'
 
 const StyledTilesContainer = styled.div`
     position: absolute;

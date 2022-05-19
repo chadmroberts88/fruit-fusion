@@ -4,15 +4,15 @@ import styled from 'styled-components'
 const StyledPanelBody = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     height: 75%;
 `;
 
-const PanelBody = ({ content }) => {
+const PanelBody = (props) => {
     return (
-        <StyledPanelBody className='panel-body'>
-            {content}
+        <StyledPanelBody>
+            {props.children}
         </StyledPanelBody>
     )
 }

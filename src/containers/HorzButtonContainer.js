@@ -1,6 +1,6 @@
 import { React, memo } from 'react'
 import styled from 'styled-components'
-import GameButton from '../components/GameButton'
+import GameButton from '../components/game/GameButton'
 
 const StyledHorzButtonContainer = styled.div`
     display: grid;

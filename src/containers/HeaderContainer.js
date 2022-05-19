@@ -1,7 +1,7 @@
 import React from 'react'
 import TitleContainer from './TitleContainer'
-import MenuButton from '../components/MenuButton'
-import ProfileButton from '../components/ProfileButton'
+import MenuButton from '../components/header/MenuButton'
+import ProfileButton from '../components/header/ProfileButton'
 import styled from 'styled-components'
 import HeaderButtonContainer from './HeaderButtonContainer'
 

@@ -1,7 +1,7 @@
-import { keyframes } from '@emotion/react';
 import { React, memo } from 'react'
 import { BsCaretUpFill, BsCaretDownFill, BsCaretRightFill, BsCaretLeftFill } from 'react-icons/bs'
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { keyframes } from 'styled-components'
 
 const heartbeat = keyframes`
   from {

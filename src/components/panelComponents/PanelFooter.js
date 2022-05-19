@@ -9,10 +9,10 @@ const StyledPanelFooter = styled.div`
     height: 15%;
 `;
 
-const PanelFooter = ({ content }) => {
+const PanelFooter = (props) => {
     return (
         <StyledPanelFooter className='panel-footer'>
-            {content}
+            {props.children}
         </StyledPanelFooter>
     )
 }

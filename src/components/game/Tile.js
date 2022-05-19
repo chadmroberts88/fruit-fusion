@@ -1,4 +1,4 @@
-import { React, memo, useEffect } from 'react'
+import { React, memo } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
@@ -19,63 +19,63 @@ const Tile = ({ x, y, color }) => {
 
     switch (color) {
         case 'red-0':
-            imageUrl = require('../images/red-0.png');
+            imageUrl = require('../../images/red-0.png');
             break;
         case 'red-1':
-            imageUrl = require('../images/red-1.png');
+            imageUrl = require('../../images/red-1.png');
             break;
         case 'red-2':
-            imageUrl = require('../images/red-2.png');
+            imageUrl = require('../../images/red-2.png');
             break;
         case 'orange-0':
-            imageUrl = require('../images/orange-0.png');
+            imageUrl = require('../../images/orange-0.png');
             break;
         case 'orange-1':
-            imageUrl = require('../images/orange-1.png');
+            imageUrl = require('../../images/orange-1.png');
             break;
         case 'orange-2':
-            imageUrl = require('../images/orange-2.png');
+            imageUrl = require('../../images/orange-2.png');
             break;
         case 'yellow-0':
-            imageUrl = require('../images/yellow-0.png');
+            imageUrl = require('../../images/yellow-0.png');
             break;
         case 'yellow-1':
-            imageUrl = require('../images/yellow-1.png');
+            imageUrl = require('../../images/yellow-1.png');
             break;
         case 'yellow-2':
-            imageUrl = require('../images/yellow-2.png');
+            imageUrl = require('../../images/yellow-2.png');
             break;
         case 'green-0':
-            imageUrl = require('../images/green-0.png');
+            imageUrl = require('../../images/green-0.png');
             break;
         case 'green-1':
-            imageUrl = require('../images/green-1.png');
+            imageUrl = require('../../images/green-1.png');
             break;
         case 'green-2':
-            imageUrl = require('../images/green-2.png');
+            imageUrl = require('../../images/green-2.png');
             break;
         case 'blue-0':
-            imageUrl = require('../images/blue-0.png');
+            imageUrl = require('../../images/blue-0.png');
             break;
         case 'blue-1':
-            imageUrl = require('../images/blue-0.png');
+            imageUrl = require('../../images/blue-0.png');
             break;
         case 'blue-2':
-            imageUrl = require('../images/blue-2.png');
+            imageUrl = require('../../images/blue-2.png');
             break;
         case 'purple-0':
-            imageUrl = require('../images/purple-0.png');
+            imageUrl = require('../../images/purple-0.png');
             break;
         case 'purple-1':
-            imageUrl = require('../images/purple-1.png');
+            imageUrl = require('../../images/purple-1.png');
             break;
         case 'purple-2':
-            imageUrl = require('../images/purple-2.png');
+            imageUrl = require('../../images/purple-2.png');
             break;
         case 'basket-0':
         case 'basket-1':
         case 'basket-2':
-            imageUrl = require('../images/basket.png');
+            imageUrl = require('../../images/basket.png');
             break;
         default:
             imageUrl = '';

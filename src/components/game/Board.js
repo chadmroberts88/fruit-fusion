@@ -1,7 +1,7 @@
 import { React } from 'react'
 import styled from 'styled-components'
-import CellsContainer from '../containers/CellsContainer'
-import TilesContainer from '../containers/TilesContainer'
+import CellsContainer from '../../containers/CellsContainer'
+import TilesContainer from '../../containers/TilesContainer'
 
 const StyledBoard = styled.div`
     position: relative;

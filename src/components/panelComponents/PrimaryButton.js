@@ -19,10 +19,11 @@ const StyledPrimaryButton = styled.button`
 
 `;
 
-const PrimaryButton = ({ buttonText, handleClick, path }) => {
+const PrimaryButton = ({ text, handleClick, path }) => {
+
     return (
         <StyledPrimaryButton onClick={() => { handleClick(path); }}>
-            {buttonText}
+            {text}
         </StyledPrimaryButton>
     )
 }

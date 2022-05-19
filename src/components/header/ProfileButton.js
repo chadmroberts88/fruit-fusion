@@ -17,9 +17,15 @@ const StyledProfileButton = styled.button`
 const ProfileButton = () => {
 
     const navigate = useNavigate();
+    let path = '/';
+    let loggedIn = true;
+
+    if (loggedIn) {
+        path = '/account';
+    }
 
     return (
-        <StyledProfileButton onClick={() => { navigate('/'); }}>
+        <StyledProfileButton onClick={() => { navigate(path); }}>
             <FaUserCircle />
         </StyledProfileButton>
     )

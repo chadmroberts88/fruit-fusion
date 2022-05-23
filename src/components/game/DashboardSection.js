@@ -2,10 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledDashboardSection = styled.div`
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: center;
-    justify-content: center;
+    justify-items: center;
+    border: 1px solid #a2a2a2;
+    border-radius: 10px;
+    padding: 1vmin;
 `;
 
 const DashboardSection = ({ heading, stat }) => {

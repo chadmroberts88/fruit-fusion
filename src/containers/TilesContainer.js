@@ -7,8 +7,8 @@ const StyledTilesContainer = styled.div`
     top: 0px;
     left: 0px;
     margin: 2vmin;
-    width: calc(${props => props.gridSize} * 10vmin + (${props => props.gridSize} - 1) * 1vmin);
-    height: calc(${props => props.gridSize} * 10vmin + (${props => props.gridSize} - 1) * 1vmin);
+    width: calc(${props => props.gridSize} * 12vmin + (${props => props.gridSize} - 1) * 1vmin);
+    height: calc(${props => props.gridSize} * 12vmin + (${props => props.gridSize} - 1) * 1vmin);
 `;
 
 const TilesContainer = ({ gridSize, tiles }) => {

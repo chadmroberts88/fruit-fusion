@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
 
 const Link = styled.div`
     color: #a2a2a2;
@@ -9,7 +8,8 @@ const Link = styled.div`
     font-weight: bold;
     text-align: center;
     margin: 1vmin;
-    grid-column: 1 / span 2;
+    width: fit-content;
+    height: fit-content;
     justify-self: center;
     cursor: pointer;
 
@@ -22,7 +22,7 @@ const Link = styled.div`
 const Option = ({ text, handleClick }) => {
 
     return (
-        <Link onClick={() => { }}>
+        <Link onClick={() => { handleClick(); }}>
             {text}
         </Link>
     )

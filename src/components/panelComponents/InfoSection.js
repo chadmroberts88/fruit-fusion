@@ -1,14 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import ToggleSwitch from './ToggleSwitch'
 
 const Section = styled.div`
     display: grid;
     grid-template-columns: 50% 50%;
-    row-gap: 2vmin;
+    row-gap: 3vmin;
     align-items: center;
-    width: 60vmin;
-    margin: 1vmin;
+    width: 60%;
+    overflow: hidden;
 `;
 
 const InfoSection = ({ info }) => {

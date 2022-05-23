@@ -1,11 +1,11 @@
-import React from 'react'
+import { React } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import PanelHeader from '../panelComponents/PanelHeader'
 import PanelFooter from '../panelComponents/PanelFooter'
 import PanelBody from '../panelComponents/PanelBody'
-import GameInstructions from '../panelComponents/GameInstructions'
 import SecondaryButton from '../panelComponents/SecondaryButton'
-import { useNavigate } from 'react-router-dom'
+import CreateAccountForm from '../panelComponents/CreateAccountForm'
 import PanelFrame from '../panelComponents/PanelFrame'
 
 const Content = styled.div`
@@ -15,27 +15,27 @@ const Content = styled.div`
     height: 100%;
 `;
 
-const HowToPlayPanel = () => {
+const CreateAccountPanel = () => {
 
     const navigate = useNavigate();
 
-    const navigateToMenu = () => {
-        navigate('/menu');
+    const navigateToAccount = () => {
+        navigate('/account');
     }
 
     return (
-        <PanelFrame id="how-to-play-panel">
-            <PanelHeader text={'How to Play'} />
+        <PanelFrame id="account-panel">
+            <PanelHeader text={"Create Account"} />
             <PanelBody>
                 <Content>
-                    <GameInstructions />
+                    <CreateAccountForm />
                 </Content>
             </PanelBody>
             <PanelFooter>
-                <SecondaryButton text={'Back'} handleClick={navigateToMenu} />
+                <SecondaryButton text={"Back"} handleClick={navigateToAccount} />
             </PanelFooter>
         </PanelFrame>
     )
 }
 
-export default HowToPlayPanel
+export default CreateAccountPanel

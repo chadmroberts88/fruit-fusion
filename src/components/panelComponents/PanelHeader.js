@@ -5,7 +5,8 @@ const StyledPanelHeader = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 10%;
+    width: 100%;
+    height: 12%;
 `;
 
 const PanelHeader = ({ text }) => {

@@ -10,7 +10,7 @@ const StyledSecondaryButton = styled.button`
     border-radius: 10px;
     font-size: 2.5vmin;
     font-weight: bold;
-    margin: 2vmin;
+    /* margin: 2vmin; */
     cursor: pointer;
 
     :hover {
@@ -19,9 +19,9 @@ const StyledSecondaryButton = styled.button`
 
 `;
 
-const SecondaryButton = ({ text, handleClick, path }) => {
+const SecondaryButton = ({ text, handleClick }) => {
     return (
-        <StyledSecondaryButton onClick={() => { handleClick(path); }}>
+        <StyledSecondaryButton onClick={() => { handleClick(); }}>
             {text}
         </StyledSecondaryButton>
     )

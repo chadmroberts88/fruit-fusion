@@ -6,10 +6,9 @@ import styled from 'styled-components'
 import HeaderButtonContainer from './HeaderButtonContainer'
 
 const StyledHeaderContainer = styled.div`
-    display: grid;
-    grid-template-columns: 13% 74% 13%;
-    height: 12vh;
-    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `;
 
 const HeaderContainer = () => {

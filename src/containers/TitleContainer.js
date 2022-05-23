@@ -6,15 +6,13 @@ const StyledTitleContainer = styled.div`
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    height: 100%;
-    padding: 1vmin;
 `;
 
 const StyledImg = styled.img`
     display: inline-block;
-    height: 10vmin;
-    width: 10vmin;
-    padding: 1vmin;
+    height: 7vmin;
+    width: 7vmin;
+    margin: 0 1vmin;
     content: url(${props => props.imageUrl});
 `;
 
@@ -25,9 +23,9 @@ const TitleContainer = () => {
 
     return (
         <StyledTitleContainer id='title'>
-            <StyledImg imageUrl={leftImageUrl} alt="bananas"></StyledImg>
+            {/* <StyledImg imageUrl={leftImageUrl} alt="bananas"></StyledImg> */}
             <h1>Fruit Fusion</h1>
-            <StyledImg imageUrl={rightImageUrl} alt="cherries"></StyledImg>
+            {/* <StyledImg imageUrl={rightImageUrl} alt="cherries"></StyledImg> */}
         </StyledTitleContainer>
     )
 }

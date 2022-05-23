@@ -6,15 +6,15 @@ const Section = styled.div`
     display: grid;
     grid-template-columns: 75% 25%;
     align-items: center;
-    width: 50vmin;
-    margin: 2vmin;
+    width: 60%;
+    margin: 2%;
 `;
 
-const ToggleSection = ({ label, toggleId }) => {
+const ToggleSection = ({ label, toggleId, isChecked, handleToggle }) => {
     return (
         <Section>
             <h3>{label}</h3>
-            <ToggleSwitch toggleId={toggleId} />
+            <ToggleSwitch toggleId={toggleId} isChecked={isChecked} handleToggle={handleToggle} />
         </Section>
     )
 }

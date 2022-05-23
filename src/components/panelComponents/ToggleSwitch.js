@@ -29,7 +29,7 @@ const ToggleLabel = styled.label`
 `;
 
 const ToggleInput = styled.input.attrs({
-    type: 'checkbox'
+  type: 'checkbox'
 })`
   opacity: 0;
   z-index: 1;
@@ -50,13 +50,13 @@ const ToggleInput = styled.input.attrs({
   }
 `;
 
-const ToggleSwitch = ({ toggleId }) => {
-    return (
-        <ToggleWrapper>
-            <ToggleInput id={toggleId} defaultChecked={true} />
-            <ToggleLabel id={`${toggleId}-label`} htmlFor={toggleId} />
-        </ToggleWrapper>
-    )
+const ToggleSwitch = ({ toggleId, isChecked, handleToggle }) => {
+  return (
+    <ToggleWrapper>
+      <ToggleInput id={toggleId} checked={isChecked} onChange={(event) => handleToggle(event.currentTarget.checked)} />
+      <ToggleLabel id={`${toggleId}-label`} htmlFor={toggleId} />
+    </ToggleWrapper>
+  )
 }
 
 export default ToggleSwitch

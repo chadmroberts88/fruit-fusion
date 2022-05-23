@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Section = styled.div`
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-items: center;
-    height: fit-content;
+    grid-column: 1 / span 2;
 `;
 
 const OptionsSection = (props) => {

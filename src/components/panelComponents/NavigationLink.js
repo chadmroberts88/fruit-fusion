@@ -9,6 +9,8 @@ const Link = styled.a`
     font-weight: bold;
     text-align: center;
     margin: 1vmin;
+    width: fit-content;
+    height: fit-content;
     cursor: pointer;
 
     :hover {

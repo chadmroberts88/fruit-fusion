@@ -4,7 +4,7 @@ import GameButton from '../components/game/GameButton'
 
 const StyledHorzButtonContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(${props => props.numCols}, 10vmin);
+    grid-template-columns: repeat(${props => props.numCols}, 12vmin);
     width: 100%;
     justify-content: center;
     align-items: center;

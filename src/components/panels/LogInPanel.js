@@ -1,47 +1,45 @@
-import React from 'react'
+import { React, useContext } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import PanelHeader from '../panelComponents/PanelHeader'
 import PanelFooter from '../panelComponents/PanelFooter'
 import PanelBody from '../panelComponents/PanelBody'
-import InputField from '../panelComponents/InputField'
-import PrimaryButton from '../panelComponents/PrimaryButton'
-import NavigationLink from '../panelComponents/NavigationLink'
 import SecondaryButton from '../panelComponents/SecondaryButton'
-import OptionsSection from '../panelComponents/OptionsSection'
+import PanelFrame from '../panelComponents/PanelFrame'
+import LogInForm from '../panelComponents/LogInForm'
+import { GameContext } from '../../helper/Context'
 
-const Panel = styled.div`
-    background-color: #333232;
-    height: 84vmin;
-    width: 76vmin;
-    padding: 1vmin;
-    border-radius: 10px;
+const Content = styled.div`
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    height: 100%;
 `;
 
 const LogInPanel = () => {
 
     const navigate = useNavigate();
 
-    const options = [
-        {
-            text: "Create Account",
-            path: '/game'
-        }
-    ]
+    const { setIsNewGame } = useContext(GameContext);
+    const { gameInProgress } = useContext(GameContext);
+
+    const navigateToGame = () => {
+        if (!gameInProgress) { setIsNewGame(true); }
+        navigate('/game');
+    }
 
     return (
-        <Panel id="log-in-panel">
+        <PanelFrame id="log-in-panel">
             <PanelHeader text={"Log In"} />
             <PanelBody>
-                <InputField placeholderText={"Username"} />
-                <InputField placeholderText={"Password"} />
-                <PrimaryButton text={"Log In"} handleClick={navigate} />
-                <OptionsSection options={options} />
+                <Content>
+                    <LogInForm />
+                </Content>
             </PanelBody>
             <PanelFooter>
-                <SecondaryButton text={"Play as Anonymous"} handleClick={navigate} path='/menu' />
+                <SecondaryButton text={"Play without Account"} handleClick={navigateToGame} />
             </PanelFooter>
-        </Panel>
+        </PanelFrame>
     )
 }
 

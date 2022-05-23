@@ -1,16 +1,16 @@
-import { React, memo } from 'react'
+import { React, useState, memo } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
 const StyledTile = styled.img`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10vmin;
-  height: 10vmin;
-  border-radius: 1vmin;
-  content: url(${props => props.imageUrl});
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12vmin;
+    height: 12vmin;
+    border-radius: 1vmin;
+    content: url(${props => props.imageUrl});
 `;
 
 const Tile = ({ x, y, color }) => {
@@ -82,7 +82,7 @@ const Tile = ({ x, y, color }) => {
     }
 
     return (
-        <motion.div initial={false} animate={{ x: `calc(${x}*11vmin)`, y: `calc(${y}*11vmin)` }}>
+        <motion.div initial={false} animate={{ x: `calc(${x}*13vmin)`, y: `calc(${y}*13vmin)` }}>
             <StyledTile className={`tile`} imageUrl={imageUrl}></StyledTile>
         </motion.div >
     )

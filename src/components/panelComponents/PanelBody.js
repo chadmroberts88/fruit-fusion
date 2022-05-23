@@ -2,11 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledPanelBody = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 75%;
+    height: 74%;
+    width: 100%;
 `;
 
 const PanelBody = (props) => {

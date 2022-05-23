@@ -2,12 +2,22 @@ import { React, useContext } from 'react'
 import styled from 'styled-components'
 import DashboardSection from './DashboardSection'
 import { GameContext } from '../../helper/Context'
+import MenuButton from '../header/MenuButton';
+import ProfileButton from '../header/ProfileButton';
 
 const StyledDashboard = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 2%;
     align-items: center;
-    justify-content: space-around;
-    height: 10%;
+
+    @media screen and (orientation:portrait) {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        column-gap: 2%;
+    }
+
 `;
 
 const Dashboard = () => {

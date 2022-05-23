@@ -7,14 +7,14 @@ import { Routes, Route } from 'react-router-dom'
 import HowToPlayPanel from '../components/panels/HowToPlayPanel'
 import AccountPanel from '../components/panels/AccountPanel'
 import { GameContext } from '../helper/Context'
-import UpdateAccountPanel from '../components/panels/UpdateAccountPanel'
+import CreateAccountPanel from '../components/panels/CreateAccountPanel'
+import AboutPanel from '../components/panels/AboutPanel'
+import LeaderboardPanel from '../components/panels/LeaderboardPanel'
 
 const StyledPanelContainer = styled.div`
-    height: 84vh;
-    width: 100vw;
-    margin: 2vh 0 2vh 0;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
     align-items: center;
 `;
 
@@ -27,6 +27,8 @@ const PanelContainer = () => {
     const [isNewGame, setIsNewGame] = useState(false);
     const [tiles, setTiles] = useState(initializeTiles);
     const [tileIds, setTileIds] = useState(0);
+    const [soundOn, setSoundOn] = useState(true);
+    const [gameInProgress, setGameInProgress] = useState(false);
 
     function initializeTiles() {
         let initialTiles = [];
@@ -40,14 +42,16 @@ const PanelContainer = () => {
     }
 
     return (
-        <GameContext.Provider value={{ score, setScore, level, setLevel, best, setBest, isNewGame, setIsNewGame, tiles, setTiles, tileIds, setTileIds }}>
+        <GameContext.Provider value={{ score, setScore, level, setLevel, best, setBest, isNewGame, setIsNewGame, tiles, setTiles, tileIds, setTileIds, soundOn, setSoundOn, gameInProgress, setGameInProgress }}>
             <StyledPanelContainer id="panel-container">
                 <Routes>
                     <Route path='/' element={<LogInPanel />} />
                     <Route path='/account' element={<AccountPanel />} />
-                    <Route path='/update-account' element={<UpdateAccountPanel />} />
+                    <Route path='/create-account' element={<CreateAccountPanel />} />
                     <Route path='/menu' element={<MenuPanel />} />
                     <Route path='/how-to-play' element={<HowToPlayPanel />} />
+                    <Route path='/about' element={<AboutPanel />} />
+                    <Route path='/leaderboard' element={<LeaderboardPanel />} />
                     <Route path='/game' element={<GamePanel initializeTiles={initializeTiles} />} />
                     <Route path='*' />
                 </Routes>

@@ -1,16 +1,17 @@
-import { React, useContext, useEffect } from 'react'
+import { React, useContext, useState, useEffect } from 'react'
 import Spacer from '../components/game/Spacer'
 import styled from 'styled-components'
 import HorzButtonContainer from './HorzButtonContainer'
 import VertButtonContainer from './VertButtonContainer'
 import Board from '../components/game/Board'
+import Modal from '../components/modal/Modal'
 import { GameContext } from '../helper/Context'
 import moveTiles from '../sounds/moveTiles.wav'
 import addPoint from '../sounds/addPoint.wav'
 import newLevel from '../sounds/newLevel.wav'
 import gameOver from '../sounds/gameOver.wav'
 
-const StyledGameContainer = styled.div`
+const Container = styled.div`
     display: grid;
     align-items: center;
     justify-content: center;
@@ -19,288 +20,349 @@ const StyledGameContainer = styled.div`
     overflow: hidden;
 `;
 
+const ModalImage = styled.img`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45vmin;
+    height: 27vmin;
+    content: url(${props => props.imageUrl});
+`;
+
+const ModalStats = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 3vmin 0;
+`;
+
+const StatsSection = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
 const GameContainer = ({ initializeTiles }) => {
 
-    const { score, setScore } = useContext(GameContext);
-    const { level, setLevel } = useContext(GameContext);
-    const { best, setBest } = useContext(GameContext);
-    const { isNewGame, setIsNewGame } = useContext(GameContext);
-    const { tiles, setTiles } = useContext(GameContext);
-    const { tileIds, setTileIds } = useContext(GameContext);
+	const { score, setScore } = useContext(GameContext);
+	const { level, setLevel } = useContext(GameContext);
+	const { best, setBest } = useContext(GameContext);
+	const { isNewGame, setIsNewGame } = useContext(GameContext);
+	const { tiles, setTiles } = useContext(GameContext);
+	const { tileIds, setTileIds } = useContext(GameContext);
+	const { soundOn } = useContext(GameContext);
+	const { setGameInProgress } = useContext(GameContext);
 
-    const gridSize = 5;
-    const moveTilesSound = new Audio(moveTiles);
-    const addPointSound = new Audio(addPoint);
-    const newLevelSound = new Audio(newLevel);
-    const gameOverSound = new Audio(gameOver);
+	const [modalOpen, setModalOpen] = useState(false);
 
-    const copyTiles = () => {
-        let copiedTiles = [];
-        for (let i = 0; i < gridSize; i++) {
-            copiedTiles[i] = [];
-            for (let j = 0; j < gridSize; j++) {
-                copiedTiles[i][j] = tiles[i][j];
-            }
-        }
-        return copiedTiles;
-    }
+	const modalImageUrl = require('../images/game-over.png');
 
-    let currentTiles = copyTiles();
-    let currentTileIds = tileIds;
+	const gridSize = 5;
+	const moveTilesSound = new Audio(moveTiles);
+	const addPointSound = new Audio(addPoint);
+	const newLevelSound = new Audio(newLevel);
+	const gameOverSound = new Audio(gameOver);
 
-    const addToCurrentTiles = (qty) => {
+	const copyTiles = () => {
+		let copiedTiles = [];
+		for (let i = 0; i < gridSize; i++) {
+			copiedTiles[i] = [];
+			for (let j = 0; j < gridSize; j++) {
+				copiedTiles[i][j] = tiles[i][j];
+			}
+		}
+		return copiedTiles;
+	}
 
-        for (let q = 0; q < qty; q++) {
+	let currentTiles = copyTiles();
+	let currentTileIds = tileIds;
 
-            let blankCells = [];
+	const addToCurrentTiles = (qty) => {
 
-            // get blanks cells
+		for (let q = 0; q < qty; q++) {
 
-            for (let i = 0; i < gridSize; i++) {
-                for (let j = 0; j < gridSize; j++) {
-                    if (currentTiles[i][j] === 0) {
-                        blankCells.push({ x: i, y: j });
-                    }
-                }
-            }
+			let blankCells = [];
 
-            if (blankCells.length > 0) {
-                const randomIndex = Math.floor(Math.random() * blankCells.length);
-                const x = blankCells[randomIndex].x;
-                const y = blankCells[randomIndex].y;
-                const probability = Math.random();
-                const newTile = {};
+			// get blanks cells
 
-                newTile.id = currentTileIds;
-                newTile.colorCode = probability > 0.4 ? 0 : 1;
-                newTile.typeCode = Math.floor(Math.random() * 3);
-                currentTileIds++;
+			for (let i = 0; i < gridSize; i++) {
+				for (let j = 0; j < gridSize; j++) {
+					if (currentTiles[i][j] === 0) {
+						blankCells.push({ x: i, y: j });
+					}
+				}
+			}
 
-                currentTiles[x][y] = newTile;
-            }
-        }
+			if (blankCells.length > 0) {
+				const randomIndex = Math.floor(Math.random() * blankCells.length);
+				const x = blankCells[randomIndex].x;
+				const y = blankCells[randomIndex].y;
+				const probability = Math.random();
+				const newTile = {};
 
-        setTiles(currentTiles);
-        setTileIds(currentTileIds);
+				newTile.id = currentTileIds;
+				newTile.colorCode = probability > 0.4 ? 0 : 1;
+				newTile.typeCode = Math.floor(Math.random() * 3);
+				currentTileIds++;
 
-    }
+				currentTiles[x][y] = newTile;
+			}
+		}
 
-    const checkForGameover = () => {
+		setTiles(currentTiles);
+		setTileIds(currentTileIds);
 
-        let pairAvailable = false;
-        let gameOver = false;
-        let blankCells = [];
+	}
 
-        for (let i = 0; i < gridSize - 1; i++) { // check rows for pairs
-            for (let j = 0; j < gridSize; j++) {
-                if (currentTiles[i][j] !== 0 && currentTiles[i + 1][j] !== 0) {
-                    if (currentTiles[i][j].colorCode === currentTiles[i + 1][j].colorCode) {
-                        if (currentTiles[i][j].colorCode !== 6) {
-                            pairAvailable = true;
-                        }
-                    }
-                }
-            }
-        }
+	const checkForGameover = () => {
 
-        for (let i = 0; i < gridSize; i++) { // check columns for pairs
-            for (let j = 0; j < gridSize - 1; j++) {
-                if (currentTiles[i][j] !== 0 && currentTiles[i][j + 1] !== 0) {
-                    if (currentTiles[i][j].colorCode === currentTiles[i][j + 1].colorCode) {
-                        if (currentTiles[i][j].colorCode !== 6) {
-                            pairAvailable = true;
-                        }
-                    }
-                }
-            }
-        }
+		let pairAvailable = false;
+		let blankCells = [];
 
-        for (let i = 0; i < gridSize; i++) { // get blank cells
-            for (let j = 0; j < gridSize; j++) {
-                if (currentTiles[i][j] === 0) {
-                    blankCells.push({ x: i, y: j });
-                }
-            }
-        }
+		for (let i = 0; i < gridSize - 1; i++) { // check rows for pairs
+			for (let j = 0; j < gridSize; j++) {
+				if (currentTiles[i][j] !== 0 && currentTiles[i + 1][j] !== 0) {
+					if (currentTiles[i][j].colorCode === currentTiles[i + 1][j].colorCode) {
+						if (currentTiles[i][j].colorCode !== 6) {
+							pairAvailable = true;
+						}
+					}
+				}
+			}
+		}
 
-        if (blankCells.length === 0 && !pairAvailable) { // if there are no blank cells and no pairs availabe, game over
-            gameOverSound.play();
-            gameOver = true;
-            console.log("Game Over");
-        }
+		for (let i = 0; i < gridSize; i++) { // check columns for pairs
+			for (let j = 0; j < gridSize - 1; j++) {
+				if (currentTiles[i][j] !== 0 && currentTiles[i][j + 1] !== 0) {
+					if (currentTiles[i][j].colorCode === currentTiles[i][j + 1].colorCode) {
+						if (currentTiles[i][j].colorCode !== 6) {
+							pairAvailable = true;
+						}
+					}
+				}
+			}
+		}
 
-        return gameOver;
+		for (let i = 0; i < gridSize; i++) { // get blank cells
+			for (let j = 0; j < gridSize; j++) {
+				if (currentTiles[i][j] === 0) {
+					blankCells.push({ x: i, y: j });
+				}
+			}
+		}
 
-    }
+		if (blankCells.length === 0 && !pairAvailable) { // if there are no blank cells and no pairs availabe, game over
+			if (soundOn) {
+				gameOverSound.play();
+			}
+			openModal();
+		}
 
-    const handleGameClick = (buttonId) => {
+	}
 
-        if (buttonId !== 'none') {
-            let line = [];
-            let tileMoved = false;
-            let blankCells = [];
-            let currentScore = score;
-            let currentLevel = level;
-            let currentBest = best;
+	const handleGameClick = (buttonId) => {
 
-            const direction = buttonId.split("-", 1);
-            const reg = /\d+/g;
-            const result = buttonId.match(reg);
-            const n = parseInt(result[0]);
+		if (buttonId !== 'none') {
+			let line = [];
+			let tileMoved = false;
+			let blankCells = [];
+			let currentScore = score;
+			let currentLevel = level;
+			let currentBest = best;
 
-            // get line (row or col) from the currentTiles array
+			const direction = buttonId.split("-", 1);
+			const reg = /\d+/g;
+			const result = buttonId.match(reg);
+			const n = parseInt(result[0]);
 
-            if (direction[0] === "left" || direction[0] === "right") {
-                for (let i = 0; i < gridSize; i++) {
-                    line[i] = currentTiles[i][n];
-                }
+			// get line (row or col) from the currentTiles array
 
-                if (direction[0] === "right") {
-                    line.reverse();
-                }
-            }
+			if (direction[0] === "left" || direction[0] === "right") {
+				for (let i = 0; i < gridSize; i++) {
+					line[i] = currentTiles[i][n];
+				}
 
-            if (direction[0] === "up" || direction[0] === "down") {
-                for (let i = 0; i < gridSize; i++) {
-                    line[i] = currentTiles[n][i];
-                }
+				if (direction[0] === "right") {
+					line.reverse();
+				}
+			}
 
-                if (direction[0] === "down") {
-                    line.reverse();
-                }
-            }
+			if (direction[0] === "up" || direction[0] === "down") {
+				for (let i = 0; i < gridSize; i++) {
+					line[i] = currentTiles[n][i];
+				}
 
-            // shift all tiles to end
+				if (direction[0] === "down") {
+					line.reverse();
+				}
+			}
 
-            for (let i = 0; i < gridSize; i++) {
-                for (let j = i + 1; j < gridSize; j++) {
-                    if (line[i] === 0 && line[j] !== 0) {
-                        line[i] = line[j];
-                        line[j] = 0;
-                        tileMoved = true;
-                    }
-                }
-            }
+			// shift all tiles to end
 
-            // combine tile pairs
+			for (let i = 0; i < gridSize; i++) {
+				for (let j = i + 1; j < gridSize; j++) {
+					if (line[i] === 0 && line[j] !== 0) {
+						line[i] = line[j];
+						line[j] = 0;
+						tileMoved = true;
+					}
+				}
+			}
 
-            for (let i = 0; i < gridSize - 1; i++) {
-                if (line[i] !== 0) {
-                    if (line[i].colorCode === line[i + 1].colorCode) {
+			// combine tile pairs
 
-                        if (line[i].colorCode === 5) {
-                            currentLevel++;
-                            newLevelSound.play();
-                        }
+			for (let i = 0; i < gridSize - 1; i++) {
+				if (line[i] !== 0) {
+					if (line[i].colorCode === line[i + 1].colorCode) {
 
-                        if (line[i].colorCode < 6) {
-                            currentScore = currentScore + ((line[i].colorCode + 1) * 10 * currentLevel);
-                            if (currentScore > currentBest) {
-                                currentBest = currentScore;
-                            }
-                            line[i].colorCode += 1;
-                            line[i + 1] = 0;
-                            tileMoved = true;
-                            addPointSound.play();
-                        }
+						if (line[i].colorCode === 5) {
+							currentLevel++;
+							if (soundOn) {
+								newLevelSound.play();
+							}
+						}
 
-                    }
-                }
-            }
+						if (line[i].colorCode < 6) {
+							currentScore = currentScore + ((line[i].colorCode + 1) * 10 * currentLevel);
+							if (currentScore > currentBest) {
+								currentBest = currentScore;
+							}
+							line[i].colorCode += 1;
+							line[i + 1] = 0;
+							tileMoved = true;
+							if (soundOn) {
+								addPointSound.play();
+							}
+						}
 
-            // shift all tiles to end
+					}
+				}
+			}
 
-            for (let i = 0; i < gridSize; i++) {
-                for (let j = i + 1; j < gridSize; j++) {
-                    if (line[i] === 0 && line[j] !== 0) {
-                        line[i] = line[j];
-                        line[j] = 0;
-                        tileMoved = true;
-                    }
-                }
-            }
+			// shift all tiles to end
 
-            // copy line back to currentTiles array
+			for (let i = 0; i < gridSize; i++) {
+				for (let j = i + 1; j < gridSize; j++) {
+					if (line[i] === 0 && line[j] !== 0) {
+						line[i] = line[j];
+						line[j] = 0;
+						tileMoved = true;
+					}
+				}
+			}
 
-            if (direction[0] === "left" || direction[0] === "right") {
+			// copy line back to currentTiles array
 
-                if (direction[0] === "right") {
-                    line.reverse();
-                }
+			if (direction[0] === "left" || direction[0] === "right") {
 
-                for (let i = 0; i < gridSize; i++) {
-                    currentTiles[i][n] = line[i];
-                }
-            }
+				if (direction[0] === "right") {
+					line.reverse();
+				}
 
-            if (direction[0] === "up" || direction[0] === "down") {
+				for (let i = 0; i < gridSize; i++) {
+					currentTiles[i][n] = line[i];
+				}
+			}
 
-                if (direction[0] === "down") {
-                    line.reverse();
-                }
+			if (direction[0] === "up" || direction[0] === "down") {
 
-                for (let i = 0; i < gridSize; i++) {
-                    currentTiles[n][i] = line[i];
-                }
-            }
+				if (direction[0] === "down") {
+					line.reverse();
+				}
 
-            // if a tile moved, play sound, set tiles, score, and level
+				for (let i = 0; i < gridSize; i++) {
+					currentTiles[n][i] = line[i];
+				}
+			}
 
-            if (tileMoved) {
-                moveTilesSound.play();
-                setTiles(currentTiles);
-                setScore(currentScore);
-                setLevel(currentLevel);
-                setBest(currentBest);
+			// if a tile moved, play sound, set tiles, score, and level
 
-                // get blanks cells
+			if (tileMoved) {
+				if (soundOn) {
+					moveTilesSound.play();
+				}
+				setTiles(currentTiles);
+				setScore(currentScore);
+				setLevel(currentLevel);
+				setBest(currentBest);
 
-                for (let i = 0; i < gridSize; i++) {
-                    for (let j = 0; j < gridSize; j++) {
-                        if (currentTiles[i][j] === 0) {
-                            blankCells.push({ x: i, y: j });
-                        }
-                    }
-                }
+				// get blanks cells
 
-                // if there is a blank cell and a tile moved, add a tile
+				for (let i = 0; i < gridSize; i++) {
+					for (let j = 0; j < gridSize; j++) {
+						if (currentTiles[i][j] === 0) {
+							blankCells.push({ x: i, y: j });
+						}
+					}
+				}
 
-                if (blankCells.length > 0 && tileMoved) {
-                    addToCurrentTiles(1);
-                }
+				// if there is a blank cell and a tile moved, add a tile
 
-                setIsNewGame(checkForGameover());
-            }
-        }
-    }
+				if (blankCells.length > 0 && tileMoved) {
+					addToCurrentTiles(1);
+				}
 
-    const handleNewGame = () => {
-        currentTiles = initializeTiles();
-        currentTileIds = 0;
-        setIsNewGame(false);
-        setScore(0);
-        setLevel(1);
-        addToCurrentTiles(2);
-    }
+				checkForGameover();
+			}
+		}
+	}
 
-    useEffect(() => {
-        if (isNewGame) {
-            handleNewGame();
-        }
-    });
+	const handleNewGame = () => {
+		currentTiles = initializeTiles();
+		currentTileIds = 0;
+		setIsNewGame(false);
+		setScore(0);
+		setLevel(1);
+		addToCurrentTiles(2);
+		setGameInProgress(true);
+	}
 
-    return (
-        <StyledGameContainer id="game-container">
-            <Spacer />
-            <HorzButtonContainer gridSize={gridSize} buttonDir={'up'} handleGameClick={handleGameClick} />
-            <Spacer />
-            <VertButtonContainer gridSize={gridSize} buttonDir={'left'} handleGameClick={handleGameClick} />
-            <Board gridSize={gridSize} tiles={tiles} />
-            <VertButtonContainer gridSize={gridSize} buttonDir={'right'} handleGameClick={handleGameClick} />
-            <Spacer />
-            <HorzButtonContainer gridSize={gridSize} buttonDir={'down'} handleGameClick={handleGameClick} />
-        </StyledGameContainer>
-    )
+	const openModal = () => {
+		setModalOpen(true);
+	}
+
+	const closeModal = () => {
+		setIsNewGame(true);
+		setModalOpen(false);
+	}
+
+	useEffect(() => {
+		if (isNewGame) {
+			handleNewGame();
+		}
+	});
+
+	return (
+		<>
+			<Container id="game-container">
+				<Spacer />
+				<HorzButtonContainer gridSize={gridSize} buttonDir={'up'} handleGameClick={handleGameClick} />
+				<Spacer />
+				<VertButtonContainer gridSize={gridSize} buttonDir={'left'} handleGameClick={handleGameClick} />
+				<Board gridSize={gridSize} tiles={tiles} />
+				<VertButtonContainer gridSize={gridSize} buttonDir={'right'} handleGameClick={handleGameClick} />
+				<Spacer />
+				<HorzButtonContainer gridSize={gridSize} buttonDir={'down'} handleGameClick={handleGameClick} />
+			</Container>
+			<Modal headerText={"GAME OVER"} modalOpen={modalOpen} closeModal={closeModal}>
+				<ModalImage imageUrl={modalImageUrl} />
+				<ModalStats>
+					<StatsSection>
+						<h3>- Score -</h3>
+						<h4>{score}</h4>
+					</StatsSection>
+					<StatsSection>
+						<h3>- Level - </h3>
+						<h4>{level}</h4>
+					</StatsSection>
+					<StatsSection>
+						<h3>- Best -</h3>
+						<h4>{best}</h4>
+					</StatsSection>
+				</ModalStats>
+			</Modal>
+		</>
+	)
 }
 
 export default GameContainer

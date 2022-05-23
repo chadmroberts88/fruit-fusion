@@ -6,7 +6,8 @@ const StyledPanelFooter = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 15%;
+    width: 100%;
+    height: 14%;
 `;
 
 const PanelFooter = (props) => {

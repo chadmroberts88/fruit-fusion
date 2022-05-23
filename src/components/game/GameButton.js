@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { keyframes } from 'styled-components'
 
 const heartbeat = keyframes`
-  from {
+from {
     transform: scale(1);
     transform-origin: center center;
     animation-timing-function: ease-out;

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Link = styled.div`
-    color: #a2a2a2;
+    color: #d35b40;
     font-family: 'Arimo', sans-serif;
     font-size: 3vmin;
     font-weight: bold;
@@ -14,18 +14,18 @@ const Link = styled.div`
     cursor: pointer;
 
     :hover {
-        color: lightgrey;
+		color: #e86a4e;
     }
 
 `;
 
 const Option = ({ text, handleClick }) => {
 
-    return (
-        <Link onClick={() => { handleClick(); }}>
-            {text}
-        </Link>
-    )
+	return (
+		<Link onClick={() => { handleClick(); }}>
+			{text}
+		</Link>
+	)
 }
 
 export default Option

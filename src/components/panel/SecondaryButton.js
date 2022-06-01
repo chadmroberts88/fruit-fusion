@@ -3,14 +3,13 @@ import styled from 'styled-components'
 
 const StyledSecondaryButton = styled.button`
     height: 6vmin;
-    width: 30vmin;
+    width: 26vmin;
     background-color: #a2a2a2;
     color: black;
     border: none;
     border-radius: 10px;
     font-size: 2.5vmin;
     font-weight: bold;
-    /* margin: 2vmin; */
     cursor: pointer;
 
     :hover {
@@ -20,11 +19,11 @@ const StyledSecondaryButton = styled.button`
 `;
 
 const SecondaryButton = ({ text, handleClick }) => {
-    return (
-        <StyledSecondaryButton onClick={() => { handleClick(); }}>
-            {text}
-        </StyledSecondaryButton>
-    )
+	return (
+		<StyledSecondaryButton onClick={() => { handleClick(); }}>
+			{text}
+		</StyledSecondaryButton>
+	)
 }
 
 export default SecondaryButton

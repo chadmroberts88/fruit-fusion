@@ -10,7 +10,7 @@ const Entry = styled.div`
 
 const Banner = styled.div`
     display: grid;
-    grid-template-columns: 16% 32% 22% 18%;
+    grid-template-columns: 18% 16% 32% 22%;
     column-gap: 4%;
     align-items: center;
     justify-items: center;
@@ -34,7 +34,7 @@ const Photo = styled.img`
     height: 7vmin;
 `;
 
-const LeaderboardEntry = ({ image, username, score, level }) => {
+const LeaderboardEntry = ({ image, username, score }) => {
 
 	return (
 		<Entry>
@@ -43,13 +43,13 @@ const LeaderboardEntry = ({ image, username, score, level }) => {
 					<Photo src={image} />
 				</BannerSection>
 				<BannerSection>
+					<span style={{ color: "white" }}>{'rank'}</span>
+				</BannerSection>
+				<BannerSection>
 					<span style={{ color: "white" }}>{username}</span>
 				</BannerSection>
 				<BannerSection>
 					<span style={{ color: "white" }}>{score}</span>
-				</BannerSection>
-				<BannerSection>
-					<span style={{ color: "white" }}>{level}</span>
 				</BannerSection>
 			</Banner>
 		</Entry>

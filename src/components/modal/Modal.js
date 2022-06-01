@@ -1,7 +1,8 @@
 import { React, useContext } from 'react'
+import { UserDataContext } from '../../helper/Context'
 import styled from 'styled-components'
-import SecondaryButton from '../panelComponents/SecondaryButton';
-import { UIContext } from '../../helper/Context'
+
+import SecondaryButton from '../panel/SecondaryButton';
 
 const Background = styled.div`
     width: 100vw;
@@ -52,12 +53,12 @@ const Footer = styled.div`
 
 const Modal = ({ headerText, modalOpen, closeModal, children }) => {
 
-	const { darkModeOn } = useContext(UIContext);
+	const { darkModeOn } = useContext(UserDataContext);
 
 	return (
 		<> {modalOpen ?
 			<Background bgColor={darkModeOn ? "rgba(0, 0, 0, 0.8)" : "rgba(255, 255, 255, 0.8)"} >
-				<Container bgColor={darkModeOn ? "#333232" : "#ffeddd"}>
+				<Container bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
 					<Header>
 						<h2>{headerText}</h2>
 					</Header>

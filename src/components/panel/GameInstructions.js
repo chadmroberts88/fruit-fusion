@@ -2,12 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Instructions = styled.div`
-    width: 90%;
-    height: 100%;
-    overflow: hidden scroll;
-    border: 1px solid #a2a2a2;
-    border-radius: 10px;
-    padding: 2vmin;
     text-align: center;
 `;
 
@@ -98,7 +92,10 @@ const GameInstructions = () => {
 				<span>or</span>
 				<Image imageUrl={eggplant} alt="apple"></Image>
 			</ImageSection>
-			<p>Once you have made it through all six colors you will have collected a basket of fruit and will move to the next level. Points earned for each fusion are <strong>multiplied by your current level</strong>, so try to collect as many fruit baskets as you can. <strong>Baskets of fruit cannot be fused.</strong></p>
+			<p>Once you have made it through all six colors you will
+				have collected a basket of fruit and your <strong>points multiplier </strong>
+				will increase. The more baskets of fruit you collect, the more points you can earn!
+				<strong> Baskets of fruit cannot be fused.</strong></p>
 			<p>Good luck!</p>
 		</Instructions>
 	)

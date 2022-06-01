@@ -1,23 +1,20 @@
-import React from 'react'
-import styled from 'styled-components'
-import { FaBars } from 'react-icons/fa'
+import { React, memo } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 
 const Button = styled.button`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 6vmin;
-    width: 10vmin;
-    height: 10vmin;
-    color: #a2a2a2;
-    background-color: transparent;
-    border: none;
-    margin: 2vmin;
     cursor: pointer;
+	width: 100%;
+	height: 100%;
+	background-color: #d35b40;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 2.5vmin;
+    font-weight: bold;
 
     :hover {
-        color: lightgrey;
+        background-color: #e86a4e;
     }
 
 `;
@@ -28,9 +25,9 @@ const MenuButton = () => {
 
 	return (
 		<Button onClick={() => { navigate('/menu'); }}>
-			<FaBars />
+			Menu
 		</Button>
 	)
 }
 
-export default MenuButton
+export default memo(MenuButton)

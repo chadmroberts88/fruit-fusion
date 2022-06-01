@@ -20,22 +20,22 @@ body {
 
 h1 {
 	color: yellowgreen;
-	font-size: 10vmin;
+	font-size: 4vmin;
 	font-family: 'Titan One', cursive;
-	text-shadow: 2px 2px 0 #000;
+	text-shadow: 1px 1px 0 #000;
 	text-align: center;
 }
 
 h2 {
 	color: #d35b40;
 	font-size: 5vmin;
-	font-weight: bold;
+	margin-bottom: 1vmin;
 }
 
 h3,
 label {
 	color: orange;
-	font-size: 3.5vmin;
+	font-size: 3vmin;
 	font-weight: bold;
 	text-transform: uppercase;
 }

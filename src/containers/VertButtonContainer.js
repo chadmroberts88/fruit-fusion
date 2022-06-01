@@ -1,29 +1,40 @@
-import { React, memo } from 'react'
+import { React, memo, useContext } from 'react'
+import { UserDataContext, GamePlayContext } from '../helper/Context'
 import styled from 'styled-components'
 import GameButton from '../components/game/GameButton'
 
-const StyledVertButtonContainer = styled.div`
+const Container = styled.div`
     display: grid;
-    grid-template-rows: repeat(${props => props.numRows}, 12vmin);
-    height: 100%;
-    justify-items: center;
-    align-content: center;
-    row-gap: 1vmin;
+    grid-template-rows: repeat(${props => props.gridSize}, ${props => props.cellSize});
+    grid-template-columns: 6vmin;
+	row-gap: ${props => props.gapSize};
+	margin: 2vmin 0;
 `;
 
-const VertButtonContainer = ({ gridSize, buttonDir, handleGameClick }) => {
+const VertButtonContainer = ({ buttonDir }) => {
 
-    const buttons = [];
+	const { useSwipeOn } = useContext(UserDataContext);
+	const { gridSize, cellSize, gapSize } = useContext(GamePlayContext);
 
-    for (let i = 0; i < gridSize; i++) {
-        buttons.push(<GameButton key={`${buttonDir}-${i}`} id={`${buttonDir}-${i}`} buttonDir={buttonDir} handleGameClick={handleGameClick} />)
-    };
+	const buttons = [];
 
-    return (
-        <StyledVertButtonContainer className="vert-button-container" numRows={gridSize}>
-            {buttons}
-        </StyledVertButtonContainer>
-    )
+	for (let i = 0; i < gridSize; i++) {
+		buttons.push(<GameButton key={`${buttonDir}-${i}`} id={`${buttonDir}-${i}`} buttonDir={buttonDir} />)
+	};
+
+	if (useSwipeOn) {
+		return (
+			<div>
+			</div>
+		)
+	} else {
+
+		return (
+			<Container className="vert-button-container" gridSize={gridSize} cellSize={cellSize} gapSize={gapSize}>
+				{buttons}
+			</Container>
+		)
+	}
 }
 
 export default memo(VertButtonContainer)

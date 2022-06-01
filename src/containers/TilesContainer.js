@@ -1,34 +1,38 @@
-import React from 'react'
+import { React, memo, useContext } from 'react'
+import { GamePlayContext } from '../helper/Context';
 import styled from 'styled-components'
-import Tile from '../components/game/Tile'
+import BoardTile from '../components/game/BoardTile'
 
-const StyledTilesContainer = styled.div`
+const Container = styled.div`
     position: absolute;
     top: 0px;
     left: 0px;
-    margin: 2vmin;
-    width: calc(${props => props.gridSize} * 12vmin + (${props => props.gridSize} - 1) * 1vmin);
-    height: calc(${props => props.gridSize} * 12vmin + (${props => props.gridSize} - 1) * 1vmin);
+    width: calc(${props => props.gridSize} * ${props => props.cellSize} + (${props => props.gridSize} - 1) * ${props => props.gapSize});
+    height: calc(${props => props.gridSize} * ${props => props.cellSize} + (${props => props.gridSize} - 1) * ${props => props.gapSize});
+	pointer-events: none;
+	margin: 2vmin;
 `;
 
-const TilesContainer = ({ gridSize, tiles }) => {
+const TilesContainer = ({ tiles }) => {
 
-    const tileColors = ["red", "orange", "yellow", "green", "blue", "purple", "basket"]
-    const tileComponents = [];
+	const { gridSize, cellSize, gapSize } = useContext(GamePlayContext);
 
-    for (let i = 0; i < gridSize; i++) {
-        for (let j = 0; j < gridSize; j++) {
-            if (tiles[i][j] !== 0) {
-                tileComponents.push(<Tile key={tiles[i][j].id} x={i} y={j} color={`${tileColors[tiles[i][j].colorCode]}-${tiles[i][j].typeCode}`} />);
-            }
-        }
-    }
+	const tileColors = ["red", "orange", "yellow", "green", "blue", "purple", "basket"]
+	const tileComponents = [];
 
-    return (
-        <StyledTilesContainer id="tiles-container" gridSize={gridSize}>
-            {tileComponents}
-        </StyledTilesContainer>
-    )
+	for (let i = 0; i < gridSize; i++) {
+		for (let j = 0; j < gridSize; j++) {
+			if (tiles[i][j] !== 0) {
+				tileComponents.push(<BoardTile key={tiles[i][j].id} x={i} y={j} color={`${tileColors[tiles[i][j].colorCode]}-${tiles[i][j].typeCode}`} />);
+			}
+		}
+	}
+
+	return (
+		<Container id="tiles-container" gridSize={gridSize} cellSize={cellSize} gapSize={gapSize}>
+			{tileComponents}
+		</Container>
+	)
 }
 
-export default TilesContainer
+export default memo(TilesContainer)

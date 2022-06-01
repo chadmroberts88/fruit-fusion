@@ -6,15 +6,15 @@ const StyledPanelHeader = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 12%;
+    height: 14%;
 `;
 
 const PanelHeader = ({ text }) => {
-    return (
-        <StyledPanelHeader className='panel-header'>
-            <h2>{text}</h2>
-        </StyledPanelHeader>
-    )
+	return (
+		<StyledPanelHeader className='panel-header'>
+			<h2>{text}</h2>
+		</StyledPanelHeader>
+	)
 }
 
 export default PanelHeader

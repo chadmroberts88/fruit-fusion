@@ -1,74 +1,80 @@
-import { React, memo } from 'react'
-import { BsCaretUpFill, BsCaretDownFill, BsCaretRightFill, BsCaretLeftFill } from 'react-icons/bs'
-import styled from 'styled-components';
+import { React, memo, useContext } from 'react'
+import styled from 'styled-components'
 import { keyframes } from 'styled-components'
+import { GamePlayContext } from '../../helper/Context';
 
 const heartbeat = keyframes`
-from {
-    transform: scale(1);
-    transform-origin: center center;
-    animation-timing-function: ease-out;
-  }
+	from {
+		transform: scale(1);
+		transform-origin: center center;
+		animation-timing-function: ease-out;
+	}
 
-  1% {
-    transform: scale(0.91);
-    animation-timing-function: ease-in;
-  }
+	1% {
+		transform: scale(0.91);
+		animation-timing-function: ease-in;
+	}
 
-  2% {
-    transform: scale(0.98);
-    animation-timing-function: ease-out;
-  }
+	2% {
+		transform: scale(0.98);
+		animation-timing-function: ease-out;
+	}
 
-  3% {
-    transform: scale(0.87);
-    animation-timing-function: ease-in;
-  }
+	3% {
+		transform: scale(0.87);
+		animation-timing-function: ease-in;
+	}
 
-  4%,
-  100% {
-    transform: scale(1);
-    animation-timing-function: ease-out;
-  }
+	4%,
+	100% {
+		transform: scale(1);
+		animation-timing-function: ease-out;
+	}
 `;
 
-const StyledGameButton = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #D35B40;
-    font-size: 8vmin;
-    background-color: transparent;
+const Button = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
     border: none;
     cursor: pointer;
     animation: ${heartbeat} 15s ease-in-out infinite both;
 `;
 
-const GameButton = ({ id, buttonDir, handleGameClick }) => {
+const Img = styled.img`
+	width: 8vmin;
+	content: url(${propos => propos.imageUrl});
+	user-select: none;
+`;
 
-  let icon = [];
+const GameButton = ({ id, buttonDir }) => {
 
-  if (buttonDir === 'up') {
-    icon = <BsCaretUpFill />
-  }
+	const { handleGameAction } = useContext(GamePlayContext);
+	const imageUrl = require('../../images/game-button.png');
 
-  if (buttonDir === 'down') {
-    icon = <BsCaretDownFill />
-  }
+	let imgStyle = {};
 
-  if (buttonDir === 'left') {
-    icon = <BsCaretLeftFill />
-  }
+	if (buttonDir === 'up') {
+		imgStyle = { transform: 'rotate(0deg)' };
+	}
 
-  if (buttonDir === 'right') {
-    icon = <BsCaretRightFill />
-  }
+	if (buttonDir === 'down') {
+		imgStyle = { transform: 'rotate(180deg)' };
+	}
 
-  return (
-    <StyledGameButton id={id} onClick={() => { handleGameClick(id); }} >
-      {icon}
-    </StyledGameButton>
-  )
+	if (buttonDir === 'left') {
+		imgStyle = { transform: 'rotate(-90deg)' };
+	}
+
+	if (buttonDir === 'right') {
+		imgStyle = { transform: 'rotate(90deg)' };
+	}
+
+	return (
+		<Button id={id} onClick={() => { handleGameAction(id); }} >
+			<Img imageUrl={imageUrl} style={imgStyle} />
+		</Button>
+	)
 }
 
 export default memo(GameButton)

@@ -1,33 +1,37 @@
-import React from 'react'
+import { React, memo, useContext } from 'react'
+import { GamePlayContext } from '../helper/Context';
 import styled from 'styled-components'
-import Cell from '../components/game/Cell';
+import BoardCell from '../components/game/BoardCell'
 
-const StyledCellsContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(${props => props.gridSize}, 12vmin);
-    grid-template-rows: repeat(${props => props.gridSize}, 12vmin);
-    gap: 1vmin;
+const Container = styled.div`
     background-color: darkgrey;
-    border: 2vmin solid darkgrey;
-    border-radius: 1vmin;
+	display: grid;
+    grid-template-columns: repeat(${props => props.gridSize}, ${props => props.cellSize});
+    grid-template-rows: repeat(${props => props.gridSize}, ${props => props.cellSize});
+    gap: ${props => props.gapSize};
+	border: 2vmin solid transparent;
+    border-radius: 2vmin;
     position: relative;
     top: 0px;
     left: 0px;
 `;
 
-const CellsContainer = ({ gridSize }) => {
+const CellsContainer = () => {
 
-    const cellComponents = [];
+	const { gridSize, cellSize, gapSize } = useContext(GamePlayContext);
+	const cellComponents = [];
 
-    for (let i = 0; i < gridSize * gridSize; i++) {
-        cellComponents.push(<Cell key={i} />);
-    }
+	for (let i = 0; i < gridSize; i++) {
+		for (let j = 0; j < gridSize; j++) {
+			cellComponents.push(<BoardCell key={`${i}-${j}`} cellRow={i} cellCol={j} />);
+		}
+	}
 
-    return (
-        <StyledCellsContainer id="cells-container" gridSize={gridSize}>
-            {cellComponents}
-        </StyledCellsContainer>
-    )
+	return (
+		<Container id="cells-container" gridSize={gridSize} cellSize={cellSize} gapSize={gapSize}>
+			{cellComponents}
+		</Container>
+	)
 }
 
-export default CellsContainer
+export default memo(CellsContainer)

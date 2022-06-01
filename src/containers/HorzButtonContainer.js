@@ -1,30 +1,40 @@
-import { React, memo } from 'react'
+import { React, memo, useContext } from 'react'
+import { UserDataContext, GamePlayContext } from '../helper/Context'
 import styled from 'styled-components'
 import GameButton from '../components/game/GameButton'
 
-const StyledHorzButtonContainer = styled.div`
+const Container = styled.div`
     display: grid;
-    grid-template-columns: repeat(${props => props.numCols}, 12vmin);
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    column-gap: 1vmin;
+    grid-template-columns: repeat(${props => props.gridSize}, ${props => props.cellSize});
+    grid-template-rows: 6vmin;
+	column-gap: ${props => props.gapSize};
+	margin: 0 2vmin;
 `;
 
-const HorzButtonContainer = ({ gridSize, buttonDir, handleGameClick }) => {
+const HorzButtonContainer = ({ buttonDir }) => {
 
-    const buttons = [];
+	const { useSwipeOn } = useContext(UserDataContext);
+	const { gridSize, cellSize, gapSize } = useContext(GamePlayContext);
 
-    for (let i = 0; i < gridSize; i++) {
-        buttons.push(<GameButton key={`${buttonDir}-${i}`} id={`${buttonDir}-${i}`} buttonDir={buttonDir} handleGameClick={handleGameClick} />)
+	const buttons = [];
 
-    };
+	for (let i = 0; i < gridSize; i++) {
+		buttons.push(<GameButton key={`${buttonDir}-${i}`} id={`${buttonDir}-${i}`} buttonDir={buttonDir} />)
+	};
 
-    return (
-        <StyledHorzButtonContainer className="horz-button-container" numCols={gridSize}>
-            {buttons}
-        </StyledHorzButtonContainer>
-    )
+	if (useSwipeOn) {
+		return (
+			<div>
+			</div>
+		)
+	} else {
+		return (
+			<Container className="horz-button-container" gridSize={gridSize} cellSize={cellSize} gapSize={gapSize}>
+				{buttons}
+			</Container>
+		)
+	}
+
 }
 
 export default memo(HorzButtonContainer)

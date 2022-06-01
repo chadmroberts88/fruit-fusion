@@ -1,15 +1,17 @@
 import { React, useContext, useState, useEffect } from 'react'
-import Spacer from '../components/game/Spacer'
+import { UserDataContext, GamePlayContext } from '../helper/Context'
 import styled from 'styled-components'
-import HorzButtonContainer from './HorzButtonContainer'
-import VertButtonContainer from './VertButtonContainer'
-import Board from '../components/game/Board'
-import Modal from '../components/modal/Modal'
-import { GameContext } from '../helper/Context'
+
 import moveTiles from '../sounds/moveTiles.wav'
 import addPoint from '../sounds/addPoint.wav'
-import newLevel from '../sounds/newLevel.wav'
+import incMultiplier from '../sounds/incMultiplier.wav'
 import gameOver from '../sounds/gameOver.wav'
+
+import BoardSpacer from '../components/game/BoardSpacer'
+import GameBoard from '../components/game/GameBoard'
+import HorzButtonContainer from './HorzButtonContainer'
+import VertButtonContainer from './VertButtonContainer'
+import Modal from '../components/modal/Modal'
 
 const Container = styled.div`
     display: grid;
@@ -42,25 +44,56 @@ const StatsSection = styled.div`
     flex-direction: column;
 `;
 
-const GameContainer = ({ initializeTiles }) => {
+const GamePanel = () => {
 
-	const { score, setScore } = useContext(GameContext);
-	const { level, setLevel } = useContext(GameContext);
-	const { best, setBest } = useContext(GameContext);
-	const { isNewGame, setIsNewGame } = useContext(GameContext);
-	const { tiles, setTiles } = useContext(GameContext);
-	const { tileIds, setTileIds } = useContext(GameContext);
-	const { soundOn } = useContext(GameContext);
-	const { setGameInProgress } = useContext(GameContext);
+	const {
+		gridSize,
+		tiles,
+		setTiles,
+		tileIds,
+		setTileIds,
+		multiplier,
+		setMultiplier,
+		score,
+		setScore,
+		best,
+		setBest,
+		soundOn,
+		useSwipeOn,
+		setGameInProgress,
+		newGame,
+		setNewGame,
+		initializeTiles
+	} = useContext(UserDataContext);
 
-	const [modalOpen, setModalOpen] = useState(false);
-
+	const gapSize = '1vmin';
 	const modalImageUrl = require('../images/game-over.png');
 
-	const gridSize = 5;
+	const [cellSize, setCellSize] = useState('13vmin');
+	const [modalOpen, setModalOpen] = useState(false);
+
+	useEffect(() => {
+
+		const determineCellSize = () => {
+			if (window.innerWidth >= 700) {
+				setCellSize(useSwipeOn ? '14vmin' : '12vmin');
+			} else {
+				setCellSize(useSwipeOn ? '15vmin' : '13vmin');
+			}
+		}
+
+		determineCellSize();
+
+		window.addEventListener('resize', determineCellSize);
+
+		return () => {
+			window.removeEventListener('resize', determineCellSize);
+		}
+	}, [useSwipeOn]);
+
 	const moveTilesSound = new Audio(moveTiles);
 	const addPointSound = new Audio(addPoint);
-	const newLevelSound = new Audio(newLevel);
+	const incMultiplierSound = new Audio(incMultiplier);
 	const gameOverSound = new Audio(gameOver);
 
 	const copyTiles = () => {
@@ -160,19 +193,19 @@ const GameContainer = ({ initializeTiles }) => {
 
 	}
 
-	const handleGameClick = (buttonId) => {
+	const handleGameAction = (actionId) => {
 
-		if (buttonId !== 'none') {
+		if (actionId !== 'none') {
 			let line = [];
 			let tileMoved = false;
 			let blankCells = [];
 			let currentScore = score;
-			let currentLevel = level;
+			let currentMultiplier = multiplier;
 			let currentBest = best;
 
-			const direction = buttonId.split("-", 1);
+			const direction = actionId.split("-", 1);
 			const reg = /\d+/g;
-			const result = buttonId.match(reg);
+			const result = actionId.match(reg);
 			const n = parseInt(result[0]);
 
 			// get line (row or col) from the currentTiles array
@@ -216,14 +249,14 @@ const GameContainer = ({ initializeTiles }) => {
 					if (line[i].colorCode === line[i + 1].colorCode) {
 
 						if (line[i].colorCode === 5) {
-							currentLevel++;
+							currentMultiplier++;
 							if (soundOn) {
-								newLevelSound.play();
+								incMultiplierSound.play();
 							}
 						}
 
 						if (line[i].colorCode < 6) {
-							currentScore = currentScore + ((line[i].colorCode + 1) * 10 * currentLevel);
+							currentScore = currentScore + ((line[i].colorCode + 1) * 10 * currentMultiplier);
 							if (currentScore > currentBest) {
 								currentBest = currentScore;
 							}
@@ -275,7 +308,7 @@ const GameContainer = ({ initializeTiles }) => {
 				}
 			}
 
-			// if a tile moved, play sound, set tiles, score, and level
+			// if a tile moved, play sound, set tiles, score, multiplier, and best
 
 			if (tileMoved) {
 				if (soundOn) {
@@ -283,7 +316,7 @@ const GameContainer = ({ initializeTiles }) => {
 				}
 				setTiles(currentTiles);
 				setScore(currentScore);
-				setLevel(currentLevel);
+				setMultiplier(currentMultiplier);
 				setBest(currentBest);
 
 				// get blanks cells
@@ -310,9 +343,9 @@ const GameContainer = ({ initializeTiles }) => {
 	const handleNewGame = () => {
 		currentTiles = initializeTiles();
 		currentTileIds = 0;
-		setIsNewGame(false);
+		setNewGame(false);
 		setScore(0);
-		setLevel(1);
+		setMultiplier(1);
 		addToCurrentTiles(2);
 		setGameInProgress(true);
 	}
@@ -322,27 +355,28 @@ const GameContainer = ({ initializeTiles }) => {
 	}
 
 	const closeModal = () => {
-		setIsNewGame(true);
+		setNewGame(true);
 		setModalOpen(false);
 	}
 
 	useEffect(() => {
-		if (isNewGame) {
+		if (newGame) {
 			handleNewGame();
 		}
 	});
 
 	return (
-		<>
+		<GamePlayContext.Provider value={{ gridSize, cellSize, gapSize, handleGameAction }}>
 			<Container id="game-container">
-				<Spacer />
-				<HorzButtonContainer gridSize={gridSize} buttonDir={'up'} handleGameClick={handleGameClick} />
-				<Spacer />
-				<VertButtonContainer gridSize={gridSize} buttonDir={'left'} handleGameClick={handleGameClick} />
-				<Board gridSize={gridSize} tiles={tiles} />
-				<VertButtonContainer gridSize={gridSize} buttonDir={'right'} handleGameClick={handleGameClick} />
-				<Spacer />
-				<HorzButtonContainer gridSize={gridSize} buttonDir={'down'} handleGameClick={handleGameClick} />
+				<BoardSpacer />
+				<HorzButtonContainer buttonDir={'up'} />
+				<BoardSpacer />
+				<VertButtonContainer buttonDir={'left'} />
+				<GameBoard tiles={tiles} />
+				<VertButtonContainer buttonDir={'right'} />
+				<BoardSpacer />
+				<HorzButtonContainer buttonDir={'down'} />
+				<BoardSpacer />
 			</Container>
 			<Modal headerText={"GAME OVER"} modalOpen={modalOpen} closeModal={closeModal}>
 				<ModalImage imageUrl={modalImageUrl} />
@@ -352,8 +386,8 @@ const GameContainer = ({ initializeTiles }) => {
 						<h4>{score}</h4>
 					</StatsSection>
 					<StatsSection>
-						<h3>- Level - </h3>
-						<h4>{level}</h4>
+						<h3>- Multiplier - </h3>
+						<h4>{multiplier}</h4>
 					</StatsSection>
 					<StatsSection>
 						<h3>- Best -</h3>
@@ -361,8 +395,8 @@ const GameContainer = ({ initializeTiles }) => {
 					</StatsSection>
 				</ModalStats>
 			</Modal>
-		</>
+		</GamePlayContext.Provider>
 	)
 }
 
-export default GameContainer
+export default GamePanel

@@ -2,10 +2,9 @@ import { React, useContext, useState, useEffect } from 'react'
 import { UserDataContext, GamePlayContext } from '../helper/Context'
 import styled from 'styled-components'
 
-import moveTiles from '../sounds/moveTiles.wav'
-import addPoint from '../sounds/addPoint.wav'
-import incMultiplier from '../sounds/incMultiplier.wav'
-import gameOver from '../sounds/gameOver.wav'
+import moveTiles from '../sounds/moveTiles.mp3'
+import incMultiplier from '../sounds/incMultiplier.mp3'
+import gameOver from '../sounds/gameOver.mp3'
 
 import BoardSpacer from '../components/game/BoardSpacer'
 import GameBoard from '../components/game/GameBoard'
@@ -33,7 +32,7 @@ const ModalImage = styled.img`
 
 const ModalStats = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     width: 100%;
     margin: 3vmin 0;
@@ -69,32 +68,15 @@ const GamePanel = () => {
 	const gapSize = '1vmin';
 	const modalImageUrl = require('../images/game-over.png');
 
-	const [cellSize, setCellSize] = useState('13vmin');
+	const [cellSize, setCellSize] = useState(useSwipeOn ? '14vmin' : '12vmin');
 	const [modalOpen, setModalOpen] = useState(false);
+	const [moveTilesSound] = useState(new Audio(moveTiles));
+	const [incMultiplierSound] = useState(new Audio(incMultiplier));
+	const [gameOverSound] = useState(new Audio(gameOver));
 
 	useEffect(() => {
-
-		const determineCellSize = () => {
-			if (window.innerWidth >= 700) {
-				setCellSize(useSwipeOn ? '14vmin' : '12vmin');
-			} else {
-				setCellSize(useSwipeOn ? '15vmin' : '13vmin');
-			}
-		}
-
-		determineCellSize();
-
-		window.addEventListener('resize', determineCellSize);
-
-		return () => {
-			window.removeEventListener('resize', determineCellSize);
-		}
+		setCellSize(useSwipeOn ? '14vmin' : '12vmin');
 	}, [useSwipeOn]);
-
-	const moveTilesSound = new Audio(moveTiles);
-	const addPointSound = new Audio(addPoint);
-	const incMultiplierSound = new Audio(incMultiplier);
-	const gameOverSound = new Audio(gameOver);
 
 	const copyTiles = () => {
 		let copiedTiles = [];
@@ -248,24 +230,28 @@ const GamePanel = () => {
 				if (line[i] !== 0) {
 					if (line[i].colorCode === line[i + 1].colorCode) {
 
-						if (line[i].colorCode === 5) {
-							currentMultiplier++;
-							if (soundOn) {
-								incMultiplierSound.play();
-							}
-						}
-
 						if (line[i].colorCode < 6) {
+
 							currentScore = currentScore + ((line[i].colorCode + 1) * 10 * currentMultiplier);
 							if (currentScore > currentBest) {
 								currentBest = currentScore;
 							}
+
+							if (line[i].colorCode === 5) {
+								currentMultiplier++;
+								if (soundOn) {
+									incMultiplierSound.play();
+								}
+							}
+
+							line[i] = line[i + 1]; // <- needed to ensure an animated move
 							line[i].colorCode += 1;
 							line[i + 1] = 0;
 							tileMoved = true;
 							if (soundOn) {
-								addPointSound.play();
+								// addPointSound.play();
 							}
+
 						}
 
 					}
@@ -384,10 +370,6 @@ const GamePanel = () => {
 					<StatsSection>
 						<h3>- Score -</h3>
 						<h4>{score}</h4>
-					</StatsSection>
-					<StatsSection>
-						<h3>- Multiplier - </h3>
-						<h4>{multiplier}</h4>
 					</StatsSection>
 					<StatsSection>
 						<h3>- Best -</h3>

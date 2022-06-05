@@ -1,7 +1,7 @@
-import { React, memo, useContext } from 'react'
+import { React, memo, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { keyframes } from 'styled-components'
-import { GamePlayContext } from '../../helper/Context';
+import { GamePlayContext } from '../../helper/Context'
 
 const heartbeat = keyframes`
 	from {
@@ -71,7 +71,7 @@ const GameButton = ({ id, buttonDir }) => {
 	}
 
 	return (
-		<Button id={id} onClick={() => { handleGameAction(id); }} >
+		<Button id={id} onClick={() => { handleGameAction(id) }} >
 			<Img imageUrl={imageUrl} style={imgStyle} />
 		</Button>
 	)

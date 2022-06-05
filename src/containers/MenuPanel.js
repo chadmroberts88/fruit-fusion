@@ -11,18 +11,22 @@ import PanelBody from '../components/panel/PanelBody'
 import PrimaryButton from '../components/panel/PrimaryButton'
 import SecondaryButton from '../components/panel/SecondaryButton'
 import ToggleSection from '../components/panel/ToggleSection'
+import Option from '../components/panel/Option'
 import Modal from '../components/modal/Modal'
 import SocialLink from '../components/panel/SocialLink'
 
 const Panel = styled.div`
 	background-color: ${props => props.bgColor};
 	border-radius: 10px;
-	width: 90%;
-	height: 90%;
 
 	@media screen and (orientation: landscape) {
-		width: 80vmin;
+		width: 70vmin;
 		height: 80vmin;
+	}
+
+	@media screen and (orientation: portrait) {
+		width: 80vw;
+		height: 70vh;
 	}
 
 `;
@@ -49,31 +53,10 @@ const ButtonsSection = styled.div`
 
 `;
 
-const ColumnSpan = styled.div`
-	grid-column: 1 / span 2;
-
-	@media screen and (max-width: 425px) {
-		grid-column: 1 /span 1;
-	}
-`;
-
-const SocialSection = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    width: 40%;
-    margin: 1vmin;
-`;
-
 const MenuPanel = () => {
 
 	const {
-		soundOn,
-		setSoundOn,
 		darkModeOn,
-		setDarkModeOn,
-		useSwipeOn,
-		setUseSwipeOn,
 		setNewGame,
 		gameInProgress,
 		loggedIn
@@ -91,7 +74,6 @@ const MenuPanel = () => {
 		navigate('/game');
 	}
 
-	const [aboutModalOpen, setAboutModalOpen] = useState(false);
 	const [newGameModelOpen, setNewGameModalOpen] = useState(false);
 
 	return (
@@ -99,40 +81,22 @@ const MenuPanel = () => {
 			<PanelHeader text={"Menu"} />
 			<PanelBody>
 				<Content>
-					<ButtonsSection>
-						<PrimaryButton text={'New Game'} handleClick={() => { setNewGameModalOpen(true) }} />
-						<PrimaryButton text={loggedIn ? 'Account' : 'Log In'} handleClick={() => { navigate(loggedIn ? '/account' : '/') }} />
-						<PrimaryButton text={'How to Play'} handleClick={() => { navigate('/how-to-play') }} />
-						<PrimaryButton text={'Leaderboard'} handleClick={() => { navigate('/leaderboard') }} />
-						<ColumnSpan>
-							<PrimaryButton text={'About'} handleClick={() => { setAboutModalOpen(true) }} />
-						</ColumnSpan>
-					</ButtonsSection>
-					<ToggleSection label={'Sound Effects:'} toggleId={'sound-effects-toggle'} isChecked={soundOn} handleToggle={setSoundOn} />
-					<ToggleSection label={'Dark Mode:'} toggleId={'dark-mode-toggle'} isChecked={darkModeOn} handleToggle={setDarkModeOn} />
-					<h4>For touch screens only:</h4>
-					<ToggleSection label={'Use Swipe:'} toggleId={'use-swipe-toggele'} isChecked={useSwipeOn} handleToggle={setUseSwipeOn} />
+					<PrimaryButton text={loggedIn ? 'Account' : 'Log In / Create Account'} handleClick={() => { navigate(loggedIn ? '/account' : '/log-in') }} />
+					<PrimaryButton text={'How to Play'} handleClick={() => { navigate('/how-to-play') }} />
+					<PrimaryButton text={'Settings'} handleClick={() => { navigate('/settings') }} />
+					<PrimaryButton text={'Leaderboard'} handleClick={() => { navigate('/leaderboard') }} />
+					<PrimaryButton text={'About'} handleClick={() => { navigate('/about') }} />
+					<PrimaryButton text={'Reset Game'} handleClick={() => { setNewGameModalOpen(true) }} />
 				</Content>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={'Continue to Game'} handleClick={() => { navigateToGame() }} />
+				<SecondaryButton text={'Go to Game'} handleClick={() => { navigateToGame() }} />
 			</PanelFooter>
-			<Modal headerText={'About'} modalOpen={aboutModalOpen} closeModal={() => { setAboutModalOpen(false) }}>
-				<p>Fruit Fusion was developed by Chad Roberts.</p>
-				<SocialSection>
-					<SocialLink link={"https://www.linkedin.com/in/chadmroberts88"}>
-						<FaLinkedin />
-					</SocialLink>
-					<SocialLink link={"https://github.com/chadmroberts88"}>
-						<FaGithubSquare />
-					</SocialLink>
-				</SocialSection>
-			</Modal>
-			<Modal headerText={"Confirm New Game"} modalOpen={newGameModelOpen} closeModal={() => { setNewGameModalOpen(false) }}>
+			<Modal headerText={"Reset Game"} modalOpen={newGameModelOpen} closeModal={() => { setNewGameModalOpen(false) }}>
 				<p>You are about to throw your fruit in the trash and start a new game. Are you sure?</p>
 				<PrimaryButton text={'Continue'} handleClick={startNewGame} />
 			</Modal>
-		</Panel>
+		</Panel >
 	)
 }
 

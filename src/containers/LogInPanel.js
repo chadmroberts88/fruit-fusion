@@ -12,12 +12,15 @@ import LogInForm from '../components/forms/LogInForm'
 const Panel = styled.div`
 	background-color: ${props => props.bgColor};
 	border-radius: 10px;
-	width: 90%;
-	height: 90%;
 
 	@media screen and (orientation: landscape) {
-		width: 80vmin;
+		width: 70vmin;
 		height: 80vmin;
+	}
+
+	@media screen and (orientation: portrait) {
+		width: 80vw;
+		height: 70vh;
 	}
 
 `;
@@ -43,7 +46,7 @@ const LogInPanel = () => {
 				</Content>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={gameInProgress ? "Back" : "Let Me Play!"} handleClick={() => { navigate('/menu') }} />
+				<SecondaryButton text={"Back"} handleClick={() => { navigate('/menu') }} />
 			</PanelFooter>
 		</Panel>
 	)

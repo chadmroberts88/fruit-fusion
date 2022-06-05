@@ -1,4 +1,4 @@
-import { React } from 'react'
+import { React, memo } from 'react'
 import styled from 'styled-components'
 import CellsContainer from '../../containers/CellsContainer'
 import TilesContainer from '../../containers/TilesContainer'
@@ -17,4 +17,4 @@ const GameBoard = ({ tiles }) => {
 	)
 }
 
-export default GameBoard
+export default memo(GameBoard)

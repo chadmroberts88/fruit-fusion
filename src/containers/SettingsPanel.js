@@ -6,8 +6,9 @@ import styled from 'styled-components'
 import PanelHeader from '../components/panel/PanelHeader'
 import PanelFooter from '../components/panel/PanelFooter'
 import PanelBody from '../components/panel/PanelBody'
-import GameInstructions from '../components/panel/GameInstructions'
+import ToggleSection from '../components/panel/ToggleSection'
 import SecondaryButton from '../components/panel/SecondaryButton'
+import ToggleSwitch from '../components/panel/ToggleSwitch'
 
 
 const Panel = styled.div`
@@ -29,25 +30,32 @@ const Panel = styled.div`
 
 const Content = styled.div`
 	justify-self: center;
+    display: grid;
+    justify-items: center;
+    align-items: center;
 	width: 90%;
 	border: 1px solid #a2a2a2;
 	border-radius: 10px;
     padding: 2vmin;
-	overflow: hidden auto;
 `;
 
-const HowToPlayPanel = () => {
+const SettingsPanel = () => {
 
-	const { darkModeOn } = useContext(UserDataContext);
+	const { darkModeOn, setDarkModeOn, soundOn, setSoundOn, useSwipeOn, setUseSwipeOn } = useContext(UserDataContext);
 
 	const navigate = useNavigate();
 
 	return (
 		<Panel id="how-to-play-panel" bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
-			<PanelHeader text={'How to Play'} />
+			<PanelHeader text={'Settings'} />
 			<PanelBody>
 				<Content>
-					<GameInstructions />
+					<h3>{'Sound Effects'}</h3>
+					<ToggleSection toggleId={'sound-effects-toggle'} isChecked={soundOn} handleToggle={setSoundOn} />
+					<h3>{'Dark Mode'}</h3>
+					<ToggleSection toggleId={'dark-mode-toggle'} isChecked={darkModeOn} handleToggle={setDarkModeOn} />
+					<h3>{'Use Swipe (Hide Buttons)'}</h3>
+					<ToggleSection toggleId={'use-swipe-toggele'} isChecked={useSwipeOn} handleToggle={setUseSwipeOn} />
 				</Content>
 			</PanelBody>
 			<PanelFooter>
@@ -57,4 +65,4 @@ const HowToPlayPanel = () => {
 	)
 }
 
-export default HowToPlayPanel
+export default SettingsPanel

@@ -4,17 +4,19 @@ import ToggleSwitch from './ToggleSwitch'
 
 const Section = styled.div`
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    width: 60%;
-    /* margin: 1%; */
+	justify-items: center;
+	text-align: center;
+    width: 40%;
 `;
 
 const ToggleSection = ({ label, toggleId, isChecked, handleToggle }) => {
 	return (
 		<Section>
-			<h3>{label}</h3>
+			<h4>Off</h4>
 			<ToggleSwitch toggleId={toggleId} isChecked={isChecked} handleToggle={handleToggle} />
+			<h4>On</h4>
 		</Section>
 	)
 }

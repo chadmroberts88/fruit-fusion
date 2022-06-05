@@ -1,5 +1,6 @@
-import { React, memo } from 'react'
+import { React, memo, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { UserDataContext } from '../../helper/Context';
 import styled from 'styled-components'
 
 const Button = styled.button`
@@ -10,7 +11,7 @@ const Button = styled.button`
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 2.5vmin;
+    font-size: 2.75vmin;
     font-weight: bold;
 
     :hover {
@@ -21,10 +22,16 @@ const Button = styled.button`
 
 const MenuButton = () => {
 
+	const { darkModeOn, loggedIn } = useContext(UserDataContext);
 	const navigate = useNavigate();
 
+	const openModal = () => {
+		alert("You are playing as a guest!")
+		navigate('/menu');
+	}
+
 	return (
-		<Button onClick={() => { navigate('/menu'); }}>
+		<Button onClick={() => { loggedIn ? navigate('/menu') : openModal(); }}>
 			Menu
 		</Button>
 	)

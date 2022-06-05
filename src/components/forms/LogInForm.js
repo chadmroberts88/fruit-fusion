@@ -17,7 +17,7 @@ const Form = styled.form`
 
     input[type=text] {
         height: 5vmin;
-        width: 50%;
+        width: 60%;
         border: 2px solid #a2a2a2;
         color: black;
         font-family: 'Arimo', sans-serif;
@@ -32,13 +32,15 @@ const Form = styled.form`
         }
 
         :focus {
-            outline: 2px solid #d35b40;
+            border-color: #d35b40;
+			outline: none;
+
         }
     }
 
     input[type=submit]{
         height: 6vmin;
-        width: 26vmin;
+        width: 34vmin;
         justify-self: center;
         background-color: #d35b40;
         color: white;
@@ -61,7 +63,7 @@ const OptionsSection = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-	margin-bottom: 2vmin;
+	margin-top: 2vmin;
 `;
 
 const LogInForm = () => {
@@ -154,14 +156,16 @@ const LogInForm = () => {
 
 			<h5>{errors.password?.message}</h5>
 
-			<OptionsSection>
-				<Option text={"Create Account"} handleClick={() => { navigate('/create-account') }} />
-			</OptionsSection>
 			<input
 				type="submit"
 				name="logIn"
 				value="Log In"
 			/>
+
+			<OptionsSection>
+				<Option text={"Create Account"} handleClick={() => { navigate('/create-account') }} />
+			</OptionsSection>
+
 
 		</Form>
 	)

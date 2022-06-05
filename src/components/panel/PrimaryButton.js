@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 const StyledPrimaryButton = styled.button`
     height: 6vmin;
-    width: 26vmin;
+    width: 34vmin;
     background-color: #d35b40;
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 2.5vmin;
+    font-size: 2.75vmin;
     font-weight: bold;
-    margin: 2vmin;
+    margin: 1.5vmin;
     cursor: pointer;
 
     :hover {

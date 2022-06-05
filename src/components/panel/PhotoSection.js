@@ -10,19 +10,19 @@ const Section = styled.div`
 const Photo = styled.img`
     border: 2px solid #d35b40;
     border-radius: 50%;
-    width: 12vmin;
-    height: 12vmin;
+    width: ${props => props.size};
+    height: ${props => props.size};
 `;
 
-const PhotoSection = () => {
+const PhotoSection = ({ size }) => {
 
-    const imageUrl = require('../../images/account-photo.jpeg');
+	const imageUrl = require('../../images/guest-photo.png');
 
-    return (
-        <Section>
-            <Photo src={imageUrl}></Photo>
-        </Section>
-    )
+	return (
+		<Section>
+			<Photo src={imageUrl} size={size} />
+		</Section>
+	)
 }
 
 export default PhotoSection

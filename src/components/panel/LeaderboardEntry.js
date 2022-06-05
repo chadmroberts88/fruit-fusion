@@ -43,13 +43,13 @@ const LeaderboardEntry = ({ image, username, score }) => {
 					<Photo src={image} />
 				</BannerSection>
 				<BannerSection>
-					<span style={{ color: "white" }}>{'rank'}</span>
+					<h6 style={{ color: "white" }}>{'rank'}</h6>
 				</BannerSection>
 				<BannerSection>
-					<span style={{ color: "white" }}>{username}</span>
+					<h6 style={{ color: "white" }}>{username}</h6>
 				</BannerSection>
 				<BannerSection>
-					<span style={{ color: "white" }}>{score}</span>
+					<h6 style={{ color: "white" }}>{score}</h6>
 				</BannerSection>
 			</Banner>
 		</Entry>

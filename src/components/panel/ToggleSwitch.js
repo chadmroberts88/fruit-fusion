@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
 	position: relative;
-	justify-self: flex-end;
 `;
 
 const Label = styled.label`

@@ -14,8 +14,8 @@ const ImageSection = styled.div`
 
 const Image = styled.img`
     display: inline-block;
-    height: 5vmin;
-    width: 5vmin;
+    height: 7vmin;
+    width: 7vmin;
     content: url(${props => props.imageUrl});
 `;
 

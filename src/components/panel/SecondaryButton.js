@@ -3,12 +3,12 @@ import styled from 'styled-components'
 
 const StyledSecondaryButton = styled.button`
     height: 6vmin;
-    width: 26vmin;
+    width: 34vmin;
     background-color: #a2a2a2;
     color: black;
     border: none;
     border-radius: 10px;
-    font-size: 2.5vmin;
+    font-size: 2.75vmin;
     font-weight: bold;
     cursor: pointer;
 

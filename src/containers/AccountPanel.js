@@ -16,12 +16,15 @@ import Modal from '../components/modal/Modal'
 const Panel = styled.div`
 	background-color: ${props => props.bgColor};
 	border-radius: 10px;
-	width: 90%;
-	height: 90%;
 
 	@media screen and (orientation: landscape) {
-		width: 80vmin;
+		width: 70vmin;
 		height: 80vmin;
+	}
+
+	@media screen and (orientation: portrait) {
+		width: 80vw;
+		height: 70vh;
 	}
 
 `;
@@ -60,6 +63,7 @@ const AccountPanel = () => {
 		setGameInProgress,
 		setNewGame,
 		setLoggedIn,
+		initializeTiles
 	} = useContext(UserDataContext);
 
 	const [modalOpen, setModalOpen] = useState(false);
@@ -70,18 +74,18 @@ const AccountPanel = () => {
 		let users = JSON.parse(localStorage.getItem("Users"));
 
 		setLoggedIn(false);
-		setUsername('guest');
-		setPassword(users['guest'].password);
-		setTiles(users['guest'].tiles);
-		setTileIds(users['guest'].tileIds);
-		setMultiplier(users['guest'].multiplier);
-		setScore(users['guest'].score);
-		setBest(users['guest'].best);
-		setSoundOn(users['guest'].soundOn);
-		setDarkModeOn(users['guest'].darkModeOn);
-		setUseSwipeOn(users['guest'].useSwipeOn);
-		setGameInProgress(users['guest'].gameInProgress);
-		setNewGame(users['guest'].setNewGame);
+		setUsername('Guest');
+		setPassword(null);
+		setTiles(initializeTiles());
+		setTileIds(0);
+		setMultiplier(1);
+		setScore(0);
+		setBest(0);
+		setSoundOn(true);
+		setDarkModeOn(true);
+		setUseSwipeOn(false);
+		setGameInProgress(false);
+		setNewGame(false);
 		navigate('/');
 	}
 
@@ -121,7 +125,7 @@ const AccountPanel = () => {
 				<PanelHeader text={"Account"} />
 				<PanelBody>
 					<Content>
-						<PhotoSection />
+						<PhotoSection size={'12vmin'} />
 						<InfoSection info={info} />
 						<OptionsSection>
 							<Option text={"Update Account"} handleClick={() => { navigate('/create-account') }} />
@@ -134,7 +138,7 @@ const AccountPanel = () => {
 					<SecondaryButton text={"Menu"} handleClick={() => { navigate('/menu') }} />
 				</PanelFooter>
 			</Panel>
-			<Modal headerText={"Confirm Delete"} modalOpen={modalOpen} closeModal={() => { setModalOpen(false) }}>
+			<Modal headerText={"Delete Account"} modalOpen={modalOpen} closeModal={() => { setModalOpen(false) }}>
 				<p>Are you sure you would like to delete your Fruit Fusion account?</p>
 				<p>All account data including your high-scores and position on the leaderboard will be lost. This data cannot be restored.</p>
 				<PrimaryButton text={"Continue"} handleClick={() => { deleteAccount() }} />

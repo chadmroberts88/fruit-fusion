@@ -17,13 +17,13 @@ const BoardCell = ({ cellRow, cellCol }) => {
 
 	const minSwipeDistance = 50;
 
-	const onTouchStart = (e) => {
+	const handleTouchStart = (e) => {
 
 		setTouchStartX(e.targetTouches[0].clientX)
 		setTouchStartY(e.targetTouches[0].clientY)
 	}
 
-	const onTouchEnd = (e) => {
+	const handleTouchEnd = (e) => {
 
 		let touchEndX = e.changedTouches[0].clientX;
 		let touchEndY = e.changedTouches[0].clientY;
@@ -55,7 +55,6 @@ const BoardCell = ({ cellRow, cellCol }) => {
 		}
 
 		handleGameAction(actionId);
-
 	}
 
 	return (
@@ -63,8 +62,8 @@ const BoardCell = ({ cellRow, cellCol }) => {
 			key={`cell-${cellRow}-${cellCol}`}
 			id={`cell-${cellRow}-${cellCol}`}
 			className="cell"
-			onTouchStart={useSwipeOn ? onTouchStart : null}
-			onTouchEnd={useSwipeOn ? onTouchEnd : null}
+			onTouchStart={useSwipeOn ? handleTouchStart : null}
+			onTouchEnd={useSwipeOn ? handleTouchEnd : null}
 		>
 		</Cell>
 	)

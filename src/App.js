@@ -8,26 +8,31 @@ import PanelContainer from './containers/PanelContainer'
 
 const AppContainer = styled.div`
 	background-color: ${props => props.bgColor};
-	display: grid;
-	grid-template-columns: 96vw;
-	grid-template-rows: 12vh 82vh;
-	row-gap: 2vh;
-	column-gap: 2vw;
+	display: flex;
+	align-items: center;
+	justify-items: center;
 	border: 2px solid white;
 	border-radius: 2vmin;
 
 	@media screen and (orientation: landscape){
-		grid-template-columns: 14vw 80vw;
-		grid-template-rows: 96vh;
+		height: 90vh;
+		width: 88vw;
+		flex-direction: row;
+	}
+
+	@media screen and (orientation: portrait) {
+		height: 86vh;
+		width: 90vw;
+		flex-direction: column;
 	}
 
 	h4 {
-		color: ${props => props.h3Color};
+		color: ${props => props.textColor};
 		font-size: 3vmin;
 	}
 
 	h5 {
-		color: ${props => props.pColor};
+		color: ${props => props.textColor};
 		font-size: 2vmin;
 		font-weight: normal;
 		height: 2.5vmin;
@@ -37,15 +42,20 @@ const AppContainer = styled.div`
 		margin-bottom: 2vmin;
 	}
 
-	p {
-		color: ${props => props.pColor};
+	h6 {
+		color: ${props => props.textColor};
 		font-size: 2.5vmin;
+	}
+
+	p {
+		color: ${props => props.textColor};
+		font-size: 1rem;
 		margin-bottom: 1.5vmin;
 	}
 
 	span {
-		color: ${props => props.pColor};
-        font-size: 2.5vmin;
+		color: ${props => props.textColor};
+		font-size: 1rem;
         font-weight: bold;
 		margin: 1vmin;
 	}
@@ -54,7 +64,7 @@ const AppContainer = styled.div`
 
 const App = () => {
 
-	const [username, setUsername] = useState('guest');
+	const [username, setUsername] = useState('Guest');
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	const gridSize = 5;
@@ -175,10 +185,11 @@ const App = () => {
 			<AppContainer
 				id="app"
 				bgColor={darkModeOn ? "black" : "#ffffef"}
-				h3Color={darkModeOn ? "white" : "black"}
-				pColor={darkModeOn ? "white" : "black"}
+				textColor={darkModeOn ? "white" : "black"}
 			>
 				<Router>
+					{/* <div className='div1'></div>
+					<div className='div2'></div> */}
 					<HeaderContainer />
 					<PanelContainer />
 				</Router>

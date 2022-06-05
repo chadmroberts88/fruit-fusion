@@ -10,31 +10,37 @@
 	-webkit-box-sizing: border-box;
 }
 
+html {
+	height: -webkit-fill-available;
+}
+
 body {
-	display: grid;
+	display: flex;
 	align-items: center;
-	justify-items: center;
+	justify-content: center;
 	height: 100vh;
+	height: -webkit-fill-available;
 	background: black;
 }
 
 h1 {
-	color: yellowgreen;
-	font-size: 4vmin;
+	color: #9acd32;
+	font-size: 10vmin;
 	font-family: 'Titan One', cursive;
 	text-shadow: 1px 1px 0 #000;
 	text-align: center;
+	margin: -0.75vmin 0vmin;
 }
 
 h2 {
 	color: #d35b40;
-	font-size: 5vmin;
+	font-size: 6vmin;
 	margin-bottom: 1vmin;
 }
 
 h3,
 label {
-	color: orange;
+	color: #ffa500;
 	font-size: 3vmin;
 	font-weight: bold;
 	text-transform: uppercase;

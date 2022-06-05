@@ -13,13 +13,16 @@ import LeaderboardEntry from '../components/panel/LeaderboardEntry'
 const Panel = styled.div`
 	background-color: ${props => props.bgColor};
 	border-radius: 10px;
-	width: 90%;
-	height: 90%;
 	overflow: hidden;
 
 	@media screen and (orientation: landscape) {
-		width: 80vmin;
+		width: 70vmin;
 		height: 80vmin;
+	}
+
+	@media screen and (orientation: portrait) {
+		width: 80vw;
+		height: 70vh;
 	}
 
 `;
@@ -55,7 +58,7 @@ const LeaderboardPanel = () => {
 
 	const { darkModeOn } = useContext(UserDataContext);
 
-	let image = require("../images/account-photo.jpeg");
+	let image = require("../images/guest-photo.png");
 
 	return (
 		<Panel id="about-panel" bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>

@@ -17,7 +17,7 @@ const Form = styled.form`
 
     input[type=text] {
         height: 5vmin;
-        width: 50%;
+        width: 60%;
         border: 2px solid #a2a2a2;
         color: black;
         font-family: 'Arimo', sans-serif;
@@ -32,14 +32,15 @@ const Form = styled.form`
         }
 
         :focus {
-            outline: 2px solid #d35b40;
+            border-color: #d35b40;
+			outline: none;
         }
     }
 
     input[type=file]{
         color: ${props => props.fileInputTextColor};
         font-size: 2.5vmin;
-        width: 42%;
+        width: 50%;
 
         ::-webkit-file-upload-button,
         ::file-selector-button {
@@ -61,7 +62,7 @@ const Form = styled.form`
 
     input[type=submit]{
         height: 6vmin;
-        width: 26vmin;
+        width: 34vmin;
         justify-self: center;
         background-color: #d35b40;
         color: white;
@@ -234,7 +235,7 @@ const RegistrationForm = () => {
 				<input
 					type="submit"
 					name={loggedIn ? "updateAccount" : "createAccount"}
-					value={loggedIn ? "Update" : "Create"}
+					value={loggedIn ? "Update Account" : "Create Account"}
 				/>
 
 			</Form>

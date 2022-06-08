@@ -1,6 +1,6 @@
 import { React, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../helper/Context'
+import { UserDataContext } from '../context/UserDataContext'
 import styled from 'styled-components'
 
 import PanelHeader from '../components/panel/PanelHeader'
@@ -38,12 +38,11 @@ const Content = styled.div`
 
 const HowToPlayPanel = () => {
 
-	const { darkModeOn } = useContext(UserDataContext);
-
+	const { userData } = useContext(UserDataContext);
 	const navigate = useNavigate();
 
 	return (
-		<Panel id="how-to-play-panel" bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
+		<Panel id="how-to-play-panel" bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
 			<PanelHeader text={'How to Play'} />
 			<PanelBody>
 				<Content>
@@ -51,7 +50,7 @@ const HowToPlayPanel = () => {
 				</Content>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={'Back'} handleClick={() => { navigate('/menu') }} />
+				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/menu') }} />
 			</PanelFooter>
 		</Panel>
 	)

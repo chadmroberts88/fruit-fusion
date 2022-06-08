@@ -1,5 +1,6 @@
 import { React, memo, useContext } from 'react'
-import { UserDataContext, GamePlayContext } from '../helper/Context'
+import { UserDataContext } from '../context/UserDataContext'
+import { GameContext } from '../context/GameContext'
 import styled from 'styled-components'
 import GameButton from '../components/game/GameButton'
 
@@ -13,8 +14,8 @@ const Container = styled.div`
 
 const VertButtonContainer = ({ buttonDir }) => {
 
-	const { useSwipeOn } = useContext(UserDataContext);
-	const { gridSize, cellSize, gapSize } = useContext(GamePlayContext);
+	const { userData } = useContext(UserDataContext);
+	const { gridSize, cellSize, gapSize } = useContext(GameContext);
 
 	const buttons = [];
 
@@ -22,7 +23,7 @@ const VertButtonContainer = ({ buttonDir }) => {
 		buttons.push(<GameButton key={`${buttonDir}-${i}`} id={`${buttonDir}-${i}`} buttonDir={buttonDir} />)
 	};
 
-	if (useSwipeOn) {
+	if (userData.useSwipeOn) {
 		return (
 			<div>
 			</div>

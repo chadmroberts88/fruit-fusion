@@ -1,6 +1,6 @@
 import { React, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../helper/Context'
+import { UserDataContext } from '../context/UserDataContext'
 import { FaAward } from 'react-icons/fa'
 import styled from 'styled-components'
 
@@ -54,14 +54,13 @@ const Leaderboard = styled.div`
 
 const LeaderboardPanel = () => {
 
+	const { userData } = useContext(UserDataContext);
 	const navigate = useNavigate();
-
-	const { darkModeOn } = useContext(UserDataContext);
 
 	let image = require("../images/guest-photo.png");
 
 	return (
-		<Panel id="about-panel" bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
+		<Panel id="about-panel" bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
 			<PanelHeader text={'Leaderboard'} />
 			<PanelBody>
 				<Content>
@@ -72,13 +71,12 @@ const LeaderboardPanel = () => {
 						<h3>Score</h3>
 					</LeaderboardHeader>
 					<Leaderboard>
-						<LeaderboardEntry image={image} username={"JimLahey"} score={14328} level={5} />
-						<LeaderboardEntry image={image} username={"JimLahey"} score={14328} level={5} />
+						<LeaderboardEntry image={image} username={"JimLahey"} score={14328} />
 					</Leaderboard>
 				</Content>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={'Back'} handleClick={() => { navigate('/menu') }} />
+				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/menu') }} />
 			</PanelFooter>
 		</Panel>
 	)

@@ -1,5 +1,5 @@
 import { React, memo, useContext } from 'react'
-import { GamePlayContext } from '../helper/Context';
+import { GameContext } from '../context/GameContext'
 import styled from 'styled-components'
 import BoardCell from '../components/game/BoardCell'
 
@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const CellsContainer = () => {
 
-	const { gridSize, cellSize, gapSize } = useContext(GamePlayContext);
+	const { gridSize, cellSize, gapSize } = useContext(GameContext);
 	const cellComponents = [];
 
 	for (let i = 0; i < gridSize; i++) {

@@ -52,7 +52,7 @@ const Input = styled.input.attrs({
 const ToggleSwitch = ({ toggleId, isChecked, handleToggle }) => {
 	return (
 		<Wrapper>
-			<Input id={toggleId} checked={isChecked} onChange={(event) => handleToggle(event.currentTarget.checked)} />
+			<Input id={toggleId} checked={isChecked} onChange={handleToggle} />
 			<Label id={`${toggleId}-label`} htmlFor={toggleId} />
 		</Wrapper>
 	)

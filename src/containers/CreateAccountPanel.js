@@ -1,6 +1,6 @@
 import { React, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../helper/Context'
+import { UserDataContext } from '../context/UserDataContext'
 import styled from 'styled-components'
 
 import PanelHeader from '../components/panel/PanelHeader'
@@ -26,20 +26,24 @@ const Panel = styled.div`
 `;
 
 const Content = styled.div`
+	justify-self: center;
     display: grid;
     justify-items: center;
     align-items: center;
-    height: 100%;
+	width: 90%;
+	border: 1px solid #a2a2a2;
+	border-radius: 10px;
+    padding: 2vmin;
 `;
 
 const CreateAccountPanel = () => {
 
 	const navigate = useNavigate();
 
-	const { darkModeOn, loggedIn } = useContext(UserDataContext);
+	const { userData, loggedIn } = useContext(UserDataContext);
 
 	return (
-		<Panel id="create-account-panel" bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
+		<Panel id={loggedIn ? "update-account-panel" : "create-account-panel"} bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
 			<PanelHeader text={loggedIn ? 'Update Account' : 'Create Account'} />
 			<PanelBody>
 				<Content>
@@ -47,7 +51,7 @@ const CreateAccountPanel = () => {
 				</Content>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={"Back"} handleClick={() => { navigate(loggedIn ? '/account' : '/') }} />
+				<SecondaryButton text={loggedIn ? 'Back to Account' : 'Back to Log In'} handleClick={() => { navigate(loggedIn ? '/account' : '/') }} />
 			</PanelFooter>
 		</Panel>
 	)

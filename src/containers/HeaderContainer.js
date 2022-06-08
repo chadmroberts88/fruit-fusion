@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { UserDataContext } from '../helper/Context'
+import { UserDataContext } from '../context/UserDataContext'
 import styled from 'styled-components'
 
 import UserSection from '../components/header/UserSection'
@@ -31,14 +31,14 @@ const Container = styled.div`
 
 const HeaderContainer = () => {
 
-	const { multiplier, score, best, darkModeOn } = useContext(UserDataContext);
+	const { userData } = useContext(UserDataContext);
 
 	return (
-		<Container id='header-container' bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
+		<Container id='header-container' bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
 			<UserSection />
-			<StatSection heading={"Multi"} stat={`X ${multiplier}`}></StatSection>
-			<StatSection heading={"Score"} stat={score}></StatSection>
-			<StatSection heading={"Best"} stat={best}></StatSection>
+			<StatSection heading={"Multi:"} stat={`X ${userData.multiplier}`}></StatSection>
+			<StatSection heading={"Score:"} stat={userData.score}></StatSection>
+			<StatSection heading={"Best:"} stat={userData.best}></StatSection>
 			<MenuButton />
 		</Container >
 	)

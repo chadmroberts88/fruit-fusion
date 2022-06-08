@@ -1,7 +1,7 @@
 import { React, memo, useContext, useState } from 'react'
 import styled from 'styled-components'
 import { keyframes } from 'styled-components'
-import { GamePlayContext } from '../../helper/Context'
+import { GameContext } from '../../context/GameContext'
 
 const heartbeat = keyframes`
 	from {
@@ -49,7 +49,7 @@ const Img = styled.img`
 
 const GameButton = ({ id, buttonDir }) => {
 
-	const { handleGameAction } = useContext(GamePlayContext);
+	const { handleGameAction } = useContext(GameContext);
 	const imageUrl = require('../../images/game-button.png');
 
 	let imgStyle = {};

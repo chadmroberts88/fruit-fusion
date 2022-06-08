@@ -1,5 +1,5 @@
 import { React, memo, useContext } from 'react'
-import { UserDataContext } from '../../helper/Context'
+import { UserDataContext } from '../../context/UserDataContext'
 import styled from 'styled-components'
 
 import PhotoSection from '../panel/PhotoSection'
@@ -11,7 +11,7 @@ const Section = styled.div`
 
 const Username = styled.div`
 	white-space: nowrap;
-	color: white;
+	color: ${props => props.color};
 	overflow: hidden;
 	text-overflow: ellipsis;
 	text-align: center;
@@ -19,13 +19,13 @@ const Username = styled.div`
 
 const UserSection = () => {
 
-	const { username, loggedIn } = useContext(UserDataContext);
+	const { userData } = useContext(UserDataContext);
 
 	return (
 		<Section id='user-section'>
 			<PhotoSection size={'8vmin'} />
-			<Username>
-				<span style={{ margin: 0, fontSize: '2.5vmin' }}>{username}</span>
+			<Username color={userData.darkModeOn ? 'white' : 'black'}>
+				<span style={{ margin: 0, fontSize: '2.5vmin' }}>{userData.username}</span>
 			</Username>
 		</Section >
 	)

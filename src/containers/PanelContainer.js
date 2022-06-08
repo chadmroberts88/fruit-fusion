@@ -1,10 +1,8 @@
-import { React, useEffect, useState } from 'react'
+import { React } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { UserDataContext } from '../helper/Context'
 import styled from 'styled-components'
 
 import GamePanel from '../containers/GamePanel'
-import WelcomePanel from '../containers/WelcomePanel'
 import LogInPanel from '../containers/LogInPanel'
 import MenuPanel from '../containers/MenuPanel'
 import HowToPlayPanel from '../containers/HowToPlayPanel'
@@ -23,6 +21,7 @@ const Container = styled.div`
 	justify-items: center;
 	height: 100%;
 	width: 100%;
+	overflow: auto;
 `;
 
 const PanelContainer = () => {
@@ -30,10 +29,10 @@ const PanelContainer = () => {
 	return (
 		<Container id="panel-container">
 			<Routes>
-				<Route path='/' element={<WelcomePanel />} />
-				<Route path='/log-in' element={<LogInPanel />} />
+				<Route path='/' element={<LogInPanel />} />
 				<Route path='/account' element={<AccountPanel />} />
 				<Route path='/create-account' element={<CreateAccountPanel />} />
+				<Route path='/update-account' element={<CreateAccountPanel />} />
 				<Route path='/menu' element={<MenuPanel />} />
 				<Route path='/how-to-play' element={<HowToPlayPanel />} />
 				<Route path='/leaderboard' element={<LeaderboardPanel />} />

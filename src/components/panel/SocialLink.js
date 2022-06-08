@@ -19,11 +19,11 @@ const Link = styled.a`
 
 const SocialLink = ({ link, children }) => {
 
-    return (
-        <Link href={link}>
-            {children}
-        </Link>
-    )
+	return (
+		<Link href={link}>
+			{children}
+		</Link>
+	)
 }
 
 export default SocialLink

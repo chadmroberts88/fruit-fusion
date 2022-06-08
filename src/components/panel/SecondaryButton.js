@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledSecondaryButton = styled.button`
+const Button = styled.button`
     height: 6vmin;
     width: 34vmin;
     background-color: #a2a2a2;
@@ -10,6 +10,7 @@ const StyledSecondaryButton = styled.button`
     border-radius: 10px;
     font-size: 2.75vmin;
     font-weight: bold;
+	margin: 1.5vmin;
     cursor: pointer;
 
     :hover {
@@ -20,9 +21,9 @@ const StyledSecondaryButton = styled.button`
 
 const SecondaryButton = ({ text, handleClick }) => {
 	return (
-		<StyledSecondaryButton onClick={() => { handleClick(); }}>
+		<Button onClick={() => { handleClick() }} >
 			{text}
-		</StyledSecondaryButton>
+		</Button>
 	)
 }
 

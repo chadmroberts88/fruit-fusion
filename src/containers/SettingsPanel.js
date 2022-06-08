@@ -1,6 +1,6 @@
 import { React, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../helper/Context'
+import { UserDataContext } from '../context/UserDataContext'
 import styled from 'styled-components'
 
 import PanelHeader from '../components/panel/PanelHeader'
@@ -8,8 +8,6 @@ import PanelFooter from '../components/panel/PanelFooter'
 import PanelBody from '../components/panel/PanelBody'
 import ToggleSection from '../components/panel/ToggleSection'
 import SecondaryButton from '../components/panel/SecondaryButton'
-import ToggleSwitch from '../components/panel/ToggleSwitch'
-
 
 const Panel = styled.div`
 	background-color: ${props => props.bgColor};
@@ -41,25 +39,45 @@ const Content = styled.div`
 
 const SettingsPanel = () => {
 
-	const { darkModeOn, setDarkModeOn, soundOn, setSoundOn, useSwipeOn, setUseSwipeOn } = useContext(UserDataContext);
-
+	const { userData, setUserData } = useContext(UserDataContext);
 	const navigate = useNavigate();
 
+	const toggleSoundEffects = () => {
+		setUserData({
+			...userData,
+			soundOn: !userData.soundOn
+		});
+	}
+
+	const toggleDarkMode = () => {
+		setUserData({
+			...userData,
+			darkModeOn: !userData.darkModeOn
+		});
+	}
+
+	const toggleUseSwipe = () => {
+		setUserData({
+			...userData,
+			useSwipeOn: !userData.useSwipeOn
+		});
+	}
+
 	return (
-		<Panel id="how-to-play-panel" bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
+		<Panel id="settings-panel" bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
 			<PanelHeader text={'Settings'} />
 			<PanelBody>
 				<Content>
-					<h3>{'Sound Effects'}</h3>
-					<ToggleSection toggleId={'sound-effects-toggle'} isChecked={soundOn} handleToggle={setSoundOn} />
-					<h3>{'Dark Mode'}</h3>
-					<ToggleSection toggleId={'dark-mode-toggle'} isChecked={darkModeOn} handleToggle={setDarkModeOn} />
-					<h3>{'Use Swipe (Hide Buttons)'}</h3>
-					<ToggleSection toggleId={'use-swipe-toggele'} isChecked={useSwipeOn} handleToggle={setUseSwipeOn} />
+					<h3>{'Sound Effects:'}</h3>
+					<ToggleSection toggleId={'sound-effects-toggle'} isChecked={userData.soundOn} handleToggle={() => { toggleSoundEffects() }} />
+					<h3>{'Dark Mode:'}</h3>
+					<ToggleSection toggleId={'dark-mode-toggle'} isChecked={userData.darkModeOn} handleToggle={() => { toggleDarkMode() }} />
+					<h3>{'Use Swipe (Hide Buttons):'}</h3>
+					<ToggleSection toggleId={'use-swipe-toggele'} isChecked={userData.useSwipeOn} handleToggle={() => { toggleUseSwipe() }} />
 				</Content>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={'Back'} handleClick={() => { navigate('/menu') }} />
+				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/menu') }} />
 			</PanelFooter>
 		</Panel>
 	)

@@ -1,12 +1,12 @@
 import { React, useContext, useState } from 'react'
-import { UserDataContext } from '../../helper/Context'
+import { UserDataContext } from '../../context/UserDataContext'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import styled from 'styled-components'
 import * as yup from 'yup'
 
-import Modal from '../modal/Modal'
+import CreateAccountModal from '../modals/CreateAccountModal'
 
 const Form = styled.form`
     display: grid;
@@ -15,9 +15,9 @@ const Form = styled.form`
 	justify-items: center;
     width: 90%;
 
-    input[type=text] {
+    input[type=text], input[type=password] {
         height: 5vmin;
-        width: 60%;
+        width: 34vmin;
         border: 2px solid #a2a2a2;
         color: black;
         font-family: 'Arimo', sans-serif;
@@ -40,7 +40,7 @@ const Form = styled.form`
     input[type=file]{
         color: ${props => props.fileInputTextColor};
         font-size: 2.5vmin;
-        width: 50%;
+        width: 30vmin;
 
         ::-webkit-file-upload-button,
         ::file-selector-button {
@@ -80,18 +80,31 @@ const Form = styled.form`
 
 `;
 
+const CheckboxSection = styled.div`
+	display: flex;
+	align-items: center;
+	margin: 1vmin;
+
+	input[type=checkbox] {
+		height: 2.5vmin;
+		width: 2.5vmin;
+		margin-right: 1vmin;
+	}
+`;
+
 const RegistrationForm = () => {
 
-	const { username, setUsername, password, setPassword, darkModeOn, loggedIn, setLoggedIn, initializeTiles } = useContext(UserDataContext);
-	const [modalOpen, setModalOpen] = useState(false);
+	const { userData, setUserData, loggedIn, setLoggedIn } = useContext(UserDataContext);
+	const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
+	const [passwordVisible, setPasswordVisible] = useState(false);
 	const navigate = useNavigate();
 
 	const openModal = () => {
-		setModalOpen(true);
+		setCreateAccountModalOpen(true);
 	}
 
 	const closeModal = () => {
-		setModalOpen(false);
+		setCreateAccountModalOpen(false);
 		setLoggedIn(true);
 		navigate('/account');
 	}
@@ -125,7 +138,7 @@ const RegistrationForm = () => {
 				let users = localStorage.getItem("Users");
 				users = users ? JSON.parse(users) : {};
 				if (loggedIn) {
-					return !users.hasOwnProperty(value) || value === username;
+					return !users.hasOwnProperty(value) || value === userData.username;
 				} else {
 					return !users.hasOwnProperty(value);
 				}
@@ -146,56 +159,56 @@ const RegistrationForm = () => {
 		resolver: yupResolver(schema),
 		mode: "onTouched",
 		defaultValues: {
-			username: loggedIn ? username : '',
-			password: loggedIn ? password : '',
-			confirmPassword: loggedIn ? password : ''
+			username: loggedIn ? userData.username : '',
+			password: loggedIn ? userData.password : '',
+			confirmPassword: loggedIn ? userData.password : ''
 		}
 	});
 
 	const submitForm = (data) => {
 
-		const dataTemplate = {
-			password: null,
-			tiles: initializeTiles(),
-			tileIds: 0,
-			multiplier: 1,
-			score: 0,
-			best: 0,
-			soundOn: true,
-			darkModeOn: true,
-			useSwipeOn: false,
-			newGame: false,
-			gameInProgress: false
-		};
-
 		let users = localStorage.getItem("Users");
 		users = users ? JSON.parse(users) : {};
 
-		if (loggedIn) {
-			if (data.username !== username) {
-				users[data.username] = users[username];
-				delete users[username];
+		if (loggedIn) { // if logged in, update username and password
+
+			if (data.username !== userData.username) { // if username changed, update
+				users[userData.username].username = data.username;
+				users[data.username] = users[userData.username];
+				delete users[userData.username];
 			}
-			users[data.username].password = data.password;
-		} else {
-			users[data.username] = dataTemplate;
-			users[data.username].password = data.password;
+
+			users[data.username].password = data.password; // update password
+
+		} else { // if not logged in (i.e. new account), create user
+
+			users[data.username] = {
+				username: data.username,
+				password: data.password,
+				multiplier: 1,
+				score: 0,
+				best: 0,
+				rank: 0,
+				soundOn: true,
+				darkModeOn: true,
+				useSwipeOn: false,
+			};
+
+			let currentUser = { username: data.username };
+			localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+
 		}
 
-		localStorage.setItem("Users", JSON.stringify(users));
-
-		setUsername(data.username);
-		setPassword(data.password);
+		setUserData(users[data.username]);
 		openModal();
 	}
 
 	return (
 		<>
-			<Form onSubmit={handleSubmit(submitForm)} fileInputTextColor={darkModeOn ? "white" : "black"}>
+			<Form onSubmit={handleSubmit(submitForm)} fileInputTextColor={userData.darkModeOn ? "white" : "black"}>
 				<input
 					style={errors.photo ? { color: "#ff9494" } : null}
 					type="file"
-					name="photo"
 					accept="image/*"
 					{...register('photo')}
 				/>
@@ -205,7 +218,6 @@ const RegistrationForm = () => {
 				<input
 					style={errors.username ? { backgroundColor: "#ffcccc" } : null}
 					type="text"
-					name="username"
 					placeholder="Enter Username"
 					{...register('username')}
 				/>
@@ -214,8 +226,7 @@ const RegistrationForm = () => {
 
 				<input
 					style={errors.password ? { backgroundColor: "#ffcccc" } : null}
-					type="text"
-					name="password"
+					type={passwordVisible ? "text" : "password"}
 					placeholder="Enter Password"
 					{...register('password')}
 				/>
@@ -224,13 +235,21 @@ const RegistrationForm = () => {
 
 				<input
 					style={errors.confirmPassword ? { backgroundColor: "#ffcccc" } : null}
-					type="text"
-					name="confirmPassword"
+					type={passwordVisible ? "text" : "password"}
 					placeholder="Confirm Password"
 					{...register('confirmPassword')}
 				/>
 
 				<h5>{errors.confirmPassword?.message}</h5>
+
+				<CheckboxSection>
+					<input
+						type="checkbox"
+						checked={passwordVisible}
+						onChange={(event) => { setPasswordVisible(event.currentTarget.checked) }}
+					/>
+					<span style={{ margin: '0.25vmin 0 0', fontSize: '2.5vmin' }}>Show Password</span>
+				</CheckboxSection>
 
 				<input
 					type="submit"
@@ -239,9 +258,7 @@ const RegistrationForm = () => {
 				/>
 
 			</Form>
-			<Modal headerText={loggedIn ? "Update Successful" : "Account Created"} modalOpen={modalOpen} closeModal={closeModal}>
-				<p>Your account has been sucessfully {loggedIn ? "updated" : "created"}.</p>
-			</Modal>
+			<CreateAccountModal modalOpen={createAccountModalOpen} closeModal={closeModal} />
 		</>
 	)
 }

@@ -1,5 +1,5 @@
 import { React, memo, useContext } from 'react'
-import { GamePlayContext } from '../helper/Context';
+import { GameContext } from '../context/GameContext'
 import styled from 'styled-components'
 import BoardTile from '../components/game/BoardTile'
 
@@ -13,17 +13,24 @@ const Container = styled.div`
 	margin: 2vmin;
 `;
 
-const TilesContainer = ({ tiles }) => {
+const TilesContainer = () => {
 
-	const { gridSize, cellSize, gapSize } = useContext(GamePlayContext);
+	const { gridSize, cellSize, gapSize, gameData } = useContext(GameContext);
 
 	const tileColors = ["red", "orange", "yellow", "green", "blue", "purple", "basket"]
 	const tileComponents = [];
 
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
-			if (tiles[i][j] !== 0) {
-				tileComponents.push(<BoardTile key={tiles[i][j].id} x={i} y={j} color={`${tileColors[tiles[i][j].colorCode]}-${tiles[i][j].typeCode}`} />);
+			if (gameData.tiles[i][j] !== 0) {
+				tileComponents.push(
+					<BoardTile
+						key={gameData.tiles[i][j].id}
+						x={i}
+						y={j}
+						color={`${tileColors[gameData.tiles[i][j].colorCode]}-${gameData.tiles[i][j].typeCode}`}
+					/>
+				);
 			}
 		}
 	}

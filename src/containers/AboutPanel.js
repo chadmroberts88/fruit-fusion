@@ -1,6 +1,6 @@
 import { React, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../helper/Context'
+import { UserDataContext } from '../context/UserDataContext'
 import { FaLinkedin, FaGithubSquare } from 'react-icons/fa'
 import styled from 'styled-components'
 
@@ -43,7 +43,6 @@ const Content = styled.div`
 
 const TextSection = styled.div`
     display: flex;
-    width: 60%;
     margin: 1vmin;
 `;
 
@@ -57,13 +56,12 @@ const SocialSection = styled.div`
 
 const AboutPanel = () => {
 
-	const { darkModeOn } = useContext(UserDataContext);
-
+	const { userData } = useContext(UserDataContext);
 	const navigate = useNavigate();
 
 	return (
-		<Panel id="how-to-play-panel" bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
-			<PanelHeader text={'About'} />
+		<Panel id="about-panel" bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
+			<PanelHeader text={'About Fruit Fusion'} />
 			<PanelBody>
 				<Content>
 					<TextSection>
@@ -80,7 +78,7 @@ const AboutPanel = () => {
 				</Content>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={'Back'} handleClick={() => { navigate('/menu') }} />
+				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/menu') }} />
 			</PanelFooter>
 		</Panel>
 	)

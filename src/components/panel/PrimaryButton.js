@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledPrimaryButton = styled.button`
+const Button = styled.button`
     height: 6vmin;
     width: 34vmin;
     background-color: #d35b40;
@@ -22,9 +22,9 @@ const StyledPrimaryButton = styled.button`
 const PrimaryButton = ({ text, handleClick }) => {
 
 	return (
-		<StyledPrimaryButton onClick={() => { handleClick(); }}>
+		<Button onClick={() => { handleClick() }}>
 			{text}
-		</StyledPrimaryButton>
+		</Button>
 	)
 }
 

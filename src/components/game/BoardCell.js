@@ -1,5 +1,6 @@
 import { React, useState, memo, useContext } from 'react'
-import { UserDataContext, GamePlayContext } from '../../helper/Context'
+import { UserDataContext } from '../../context/UserDataContext'
+import { GameContext } from '../../context/GameContext'
 import styled from 'styled-components'
 
 const Cell = styled.div`
@@ -12,7 +13,7 @@ const BoardCell = ({ cellRow, cellCol }) => {
 
 	const [touchStartX, setTouchStartX] = useState(null);
 	const [touchStartY, setTouchStartY] = useState(null);
-	const { handleGameAction } = useContext(GamePlayContext);
+	const { handleGameAction } = useContext(GameContext);
 	const { useSwipeOn } = useContext(UserDataContext);
 
 	const minSwipeDistance = 50;

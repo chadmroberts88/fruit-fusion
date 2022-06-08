@@ -7,12 +7,12 @@ const Board = styled.div`
     position: relative;
 `;
 
-const GameBoard = ({ tiles }) => {
+const GameBoard = () => {
 
 	return (
-		<Board id="board">
-			<CellsContainer ></CellsContainer>
-			<TilesContainer tiles={tiles}></TilesContainer>
+		<Board id="game-board">
+			<CellsContainer />
+			<TilesContainer />
 		</Board>
 	)
 }

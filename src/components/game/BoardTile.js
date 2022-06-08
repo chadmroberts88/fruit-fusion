@@ -1,6 +1,6 @@
 import { React, memo, useContext } from 'react'
 import { motion } from 'framer-motion'
-import { GamePlayContext } from '../../helper/Context'
+import { GameContext } from '../../context/GameContext'
 import styled from 'styled-components'
 
 const Tile = styled.img`
@@ -14,7 +14,7 @@ const Tile = styled.img`
 
 const BoardTile = ({ x, y, color }) => {
 
-	const { cellSize, gapSize } = useContext(GamePlayContext);
+	const { cellSize, gapSize } = useContext(GameContext);
 
 	let imageUrl = '';
 

@@ -11,7 +11,7 @@ const Section = styled.div`
     width: 40%;
 `;
 
-const ToggleSection = ({ label, toggleId, isChecked, handleToggle }) => {
+const ToggleSection = ({ toggleId, isChecked, handleToggle }) => {
 	return (
 		<Section>
 			<h4>Off</h4>

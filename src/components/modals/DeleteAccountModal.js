@@ -66,35 +66,13 @@ const DeleteAccountModal = ({ modalOpen, closeModal }) => {
 
 	const {
 		userData,
-		setUserData,
-		setLoggedIn,
+		deleteUser
 	} = useContext(UserDataContext);
 
 	const navigate = useNavigate();
 
 	const deleteAccount = () => {
-
-		let users = localStorage.getItem("Users");
-		users = users ? JSON.parse(users) : {};
-
-		delete users[userData.username];
-
-		localStorage.setItem("Users", JSON.stringify(users));
-
-		setUserData({
-			...userData,
-			username: 'Guest',
-			password: null,
-			multiplier: 1,
-			score: 0,
-			best: 0,
-			rank: 0,
-			soundOn: true,
-			darkModeOn: true,
-			useSwipeOn: false,
-		})
-
-		setLoggedIn(false);
+		deleteUser(userData.username);
 		navigate('/');
 	}
 

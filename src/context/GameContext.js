@@ -9,22 +9,15 @@ export const GameContext = createContext({})
 
 const GameProvider = ({ children }) => {
 
-	const { userData, setUserData, loggedIn } = useContext(UserDataContext);
-
+	const { userData, setUserData, updateUserData, loggedIn } = useContext(UserDataContext);
 	const [moveTilesSound] = useState(new Audio(moveTiles));
 	const [incMultiplierSound] = useState(new Audio(incMultiplier));
 	const [gameOverSound] = useState(new Audio(gameOver));
-
 	const [gridSize] = useState(5);
 	const [gapSize] = useState('1vmin');
 	const [cellSize, setCellSize] = useState(userData.useSwipeOn ? '14vmin' : '12vmin');
-	const [newGame, setNewGame] = useState(true);
+	const [newGame, setNewGame] = useState(false);
 	const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
-
-	const [gameData, setGameData] = useState({
-		tiles: initializeTiles(),
-		tileIds: 0,
-	});
 
 	function initializeTiles() {
 		let initialTiles = [];
@@ -35,6 +28,42 @@ const GameProvider = ({ children }) => {
 			}
 		}
 		return initialTiles;
+	}
+
+	const guestGameTemplate = {
+		tiles: initializeTiles(),
+		tileIds: 0,
+		multiplier: 1,
+		score: 0
+	}
+
+	if (!localStorage.getItem("GamesList")) {
+		localStorage.setItem("GamesList", JSON.stringify({
+			Guest: guestGameTemplate
+		}));
+	}
+
+	let currentUser = JSON.parse(localStorage.getItem("CurrentUser")).username;
+	const [gameData, setGameData] = useState(JSON.parse(localStorage.getItem("GamesList"))[currentUser]);
+
+	console.log(gameData);
+
+	const getGamesList = () => {
+		return JSON.parse(localStorage.getItem("GamesList"));
+	}
+
+	const setGamesList = (gamesList) => {
+		localStorage.setItem("GamesList", JSON.stringify(gamesList));
+	}
+
+	const updateGameData = (dataObject) => {
+		let gamesList = getGamesList(); // get list of games
+		Object.entries(dataObject).forEach(entry => {
+			const [key, value] = entry;
+			gamesList[userData.username][key] = value;
+		});
+		setGameData(gamesList[userData.username]); // update state
+		setGamesList(gamesList); // overwrite games list
 	}
 
 	const closeGameOverModal = () => {
@@ -54,11 +83,11 @@ const GameProvider = ({ children }) => {
 
 	const handleGameAction = (actionId) => {
 
-		let currentMultiplier = userData.multiplier;
-		let currentScore = userData.score;
-		let currentBest = userData.best;
 		let currentTiles = copyTiles();
 		let currentTileIds = gameData.tileIds;
+		let currentMultiplier = gameData.multiplier;
+		let currentScore = gameData.score;
+		let currentBest = userData.best;
 		let blankCells = getBlankCells();
 		let pairAvailable = false;
 
@@ -110,13 +139,10 @@ const GameProvider = ({ children }) => {
 		if (actionId === 'newGame') {
 			currentTiles = initializeTiles();
 			currentTileIds = 0;
+			currentMultiplier = 1;
+			currentScore = 0;
 			addToCurrentTiles(2);
 			setNewGame(false);
-			setUserData({
-				...userData,
-				multiplier: 1,
-				score: 0
-			});
 		}
 
 		// handle game click or swipe
@@ -287,20 +313,18 @@ const GameProvider = ({ children }) => {
 
 			}
 
-			setUserData({
-				...userData,
-				multiplier: currentMultiplier,
-				score: currentScore,
-				best: currentBest
-			});
-
 		}
 
-		setGameData({
-			...gameData,
+		updateGameData({
 			tiles: currentTiles,
-			tileIds: currentTileIds
+			tileIds: currentTileIds,
+			multiplier: currentMultiplier,
+			score: currentScore,
 		});
+
+		updateUserData({
+			best: currentBest
+		})
 
 	}
 
@@ -315,7 +339,9 @@ const GameProvider = ({ children }) => {
 				handleGameAction,
 				gameOverModalOpen,
 				closeGameOverModal,
-				gameData
+				gameData,
+				setGameData,
+				initializeTiles
 			}}
 		>
 			{children}

@@ -1,12 +1,14 @@
 import { React, useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserDataContext } from '../../context/UserDataContext'
+import { GameContext } from '../../context/GameContext'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import styled from 'styled-components'
 import * as yup from 'yup'
 
 import Option from '../panel/Option'
+
 
 const Form = styled.form`
     display: grid;
@@ -80,7 +82,8 @@ const OptionsSection = styled.div`
 
 const LogInForm = () => {
 
-	const { setUserData, setLoggedIn } = useContext(UserDataContext);
+	const { setUserData, setLoggedIn, logIn } = useContext(UserDataContext);
+	const { setGameData } = useContext(GameContext);
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const navigate = useNavigate();
 
@@ -100,15 +103,15 @@ const LogInForm = () => {
 
 	const submitForm = (data) => {
 
-		let users = JSON.parse(localStorage.getItem("Users"));
+		let usersList = JSON.parse(localStorage.getItem("UsersList"));
+		// let games = JSON.parse(localStorage.getItem("Games"));
 
-		if (users.hasOwnProperty(data.username) && users[data.username].password === data.password) {
+		if (usersList.hasOwnProperty(data.username) && usersList[data.username].password === data.password) {
 
-			let currentUser = { username: data.username };
-			localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
-			setUserData(users[data.username]);
-			setLoggedIn(true);
+			logIn(data.username);
 			navigate('/account');
+
+			// setGameData(games[data.username]);
 
 		} else {
 			setError("username", {

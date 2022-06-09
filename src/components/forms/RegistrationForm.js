@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import * as yup from 'yup'
 
 import CreateAccountModal from '../modals/CreateAccountModal'
+import { GameContext } from '../../context/GameContext'
 
 const Form = styled.form`
     display: grid;
@@ -94,7 +95,8 @@ const CheckboxSection = styled.div`
 
 const RegistrationForm = () => {
 
-	const { userData, setUserData, loggedIn, setLoggedIn } = useContext(UserDataContext);
+	const { userData, setUserData, loggedIn, setLoggedIn, createUser, updateUserData, updateUsername } = useContext(UserDataContext);
+	const { initializeTiles, setGameData } = useContext(GameContext);
 	const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const navigate = useNavigate();
@@ -135,12 +137,11 @@ const RegistrationForm = () => {
 			.max(20, "Usernames must be less than 20 characters long.")
 			.matches(/^[A-Za-z0-9_-]*$/, "Please include only letters, numbers, - and _.")
 			.test("userExists", "This user already exists. Please chose a different username.", (value) => {
-				let users = localStorage.getItem("Users");
-				users = users ? JSON.parse(users) : {};
+				let usersList = JSON.parse(localStorage.getItem("UsersList"));
 				if (loggedIn) {
-					return !users.hasOwnProperty(value) || value === userData.username;
+					return !usersList.hasOwnProperty(value) || value === userData.username;
 				} else {
-					return !users.hasOwnProperty(value);
+					return !usersList.hasOwnProperty(value);
 				}
 			}),
 		password: yup
@@ -167,39 +168,22 @@ const RegistrationForm = () => {
 
 	const submitForm = (data) => {
 
-		let users = localStorage.getItem("Users");
-		users = users ? JSON.parse(users) : {};
+		// let games = JSON.parse(localStorage.getItem("Games"));
 
 		if (loggedIn) { // if logged in, update username and password
 
-			if (data.username !== userData.username) { // if username changed, update
-				users[userData.username].username = data.username;
-				users[data.username] = users[userData.username];
-				delete users[userData.username];
+			if (data.password !== userData.password) { // if password changed, update
+				updateUserData('password', data.password);
 			}
 
-			users[data.username].password = data.password; // update password
+			if (data.username !== userData.username) { // if username changed, update
+				updateUsername(data.username);
+			}
 
 		} else { // if not logged in (i.e. new account), create user
-
-			users[data.username] = {
-				username: data.username,
-				password: data.password,
-				multiplier: 1,
-				score: 0,
-				best: 0,
-				rank: 0,
-				soundOn: true,
-				darkModeOn: true,
-				useSwipeOn: false,
-			};
-
-			let currentUser = { username: data.username };
-			localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
-
+			createUser(data.username, data.password);
 		}
 
-		setUserData(users[data.username]);
 		openModal();
 	}
 

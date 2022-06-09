@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { UserDataContext } from '../context/UserDataContext'
+import { GameContext } from '../context/GameContext'
 import styled from 'styled-components'
 
 import UserSection from '../components/header/UserSection'
@@ -32,12 +33,13 @@ const Container = styled.div`
 const HeaderContainer = () => {
 
 	const { userData } = useContext(UserDataContext);
+	const { gameData } = useContext(GameContext);
 
 	return (
 		<Container id='header-container' bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
 			<UserSection />
-			<StatSection heading={"Multi:"} stat={`X ${userData.multiplier}`}></StatSection>
-			<StatSection heading={"Score:"} stat={userData.score}></StatSection>
+			<StatSection heading={"Multi:"} stat={`X ${gameData.multiplier}`}></StatSection>
+			<StatSection heading={"Score:"} stat={gameData.score}></StatSection>
 			<StatSection heading={"Best:"} stat={userData.best}></StatSection>
 			<MenuButton />
 		</Container >

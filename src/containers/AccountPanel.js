@@ -50,31 +50,10 @@ const OptionsSection = styled.div`
 
 const AccountPanel = () => {
 
-	const { userData, setUserData, setLoggedIn, setGuestModeConfirmed } = useContext(UserDataContext);
+	const { userData, logOut } = useContext(UserDataContext);
 	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const [logOutModalOpen, setLogOutModalOpen] = useState(false);
 	const navigate = useNavigate();
-
-	const logOut = () => {
-
-		let currentUser = { username: 'Guest' };
-		localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
-
-		setUserData({
-			username: 'Guest',
-			password: null,
-			multiplier: 1,
-			score: 0,
-			best: 0,
-			rank: 0,
-			soundOn: true,
-			darkModeOn: true,
-			useSwipeOn: false,
-		});
-		setLoggedIn(false);
-		setGuestModeConfirmed(false);
-		setLogOutModalOpen(true);
-	}
 
 	const closeLogOutModal = () => {
 		setLogOutModalOpen(false);
@@ -104,7 +83,7 @@ const AccountPanel = () => {
 					<Content>
 						<PhotoSection size={'11vmin'} />
 						<InfoSection info={info} />
-						<PrimaryButton text={"Log Out"} handleClick={() => { logOut() }} />
+						<PrimaryButton text={"Log Out"} handleClick={() => { logOut(); setLogOutModalOpen(true); }} />
 						<OptionsSection>
 							<Option text={"Update Account"} handleClick={() => { navigate('/update-account') }} />
 							<Option text={"Delete Account"} handleClick={() => { setDeleteModalOpen(true) }} />

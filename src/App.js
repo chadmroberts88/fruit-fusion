@@ -3,8 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { UserDataContext } from './context/UserDataContext'
 import styled from 'styled-components'
 
-import HeaderContainer from './containers/HeaderContainer'
-import PanelContainer from './containers/PanelContainer'
+import HeaderContainer from './containers/main/HeaderContainer'
+import PanelContainer from './containers/main/PanelContainer'
 
 const AppContainer = styled.div`
 	background-color: ${props => props.bgColor};

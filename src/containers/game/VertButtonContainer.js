@@ -1,8 +1,9 @@
 import { React, memo, useContext } from 'react'
-import { UserDataContext } from '../context/UserDataContext'
-import { GameContext } from '../context/GameContext'
+import { UserDataContext } from '../../context/UserDataContext'
+import { GameContext } from '../../context/GameContext'
 import styled from 'styled-components'
-import GameButton from '../components/game/GameButton'
+
+import GameButton from '../../components/game/GameButton'
 
 const Container = styled.div`
     display: grid;

@@ -6,16 +6,15 @@ const Section = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    grid-column: 1 / span 2;
 `;
 
 const OptionsSection = (props) => {
 
-    return (
-        <Section>
-            {props.children}
-        </Section>
-    )
+	return (
+		<Section>
+			{props.children}
+		</Section>
+	)
 }
 
 export default OptionsSection

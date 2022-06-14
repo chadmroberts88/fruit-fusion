@@ -2,7 +2,7 @@ import { React, memo, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserDataContext } from '../../context/UserDataContext'
 import styled from 'styled-components'
-import PlayAsGuestModal from '../modals/PlayAsGuestModal'
+import PlayAsGuestModal from '../../containers/modals/PlayAsGuestModal'
 
 const Button = styled.button`
     cursor: pointer;
@@ -23,18 +23,36 @@ const Button = styled.button`
 
 const MenuButton = () => {
 
+	const { userData } = useContext(UserDataContext);
 	const [playAsGuestModalOpen, setPlayAsGuestModalOpen] = useState(false);
-	const { loggedIn, guestModeConfirmed } = useContext(UserDataContext);
 	const navigate = useNavigate();
+
+	const handleClose = () => {
+		setPlayAsGuestModalOpen(false);
+		navigate('/');
+	}
+
+	const handleMenuClick = () => {
+		if (userData.username === 'Guest') {
+			if (userData.guestModeConfirmed) {
+				navigate('/menu');
+			} else {
+				setPlayAsGuestModalOpen(true);
+			}
+		} else {
+			navigate('/menu');
+		}
+	}
 
 	return (
 		<>
-			<Button
-				onClick={() => { guestModeConfirmed || loggedIn ? navigate('/menu') : setPlayAsGuestModalOpen(true) }}
-			>
+			<Button onClick={() => { handleMenuClick(); }}>
 				Menu
 			</Button>
-			<PlayAsGuestModal modalOpen={playAsGuestModalOpen} closeModal={() => { setPlayAsGuestModalOpen(false); navigate('/'); }} />
+			<PlayAsGuestModal
+				modalOpen={playAsGuestModalOpen}
+				handleClose={handleClose}
+			/>
 		</>
 	)
 }

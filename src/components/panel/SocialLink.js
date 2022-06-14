@@ -20,7 +20,7 @@ const Link = styled.a`
 const SocialLink = ({ link, children }) => {
 
 	return (
-		<Link href={link}>
+		<Link href={link} target="_blank">
 			{children}
 		</Link>
 	)

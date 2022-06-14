@@ -5,6 +5,7 @@ const UserDataProvider = ({ children }) => {
 
 	const guestTemplate = {
 		username: 'Guest',
+		guestModeConfirmed: false,
 		password: null,
 		best: 0,
 		rank: 0,
@@ -25,15 +26,16 @@ const UserDataProvider = ({ children }) => {
 		}));
 	}
 
-	let currentUser = JSON.parse(localStorage.getItem("CurrentUser")).username;
-
-	const [guestModeConfirmed, setGuestModeConfirmed] = useState(currentUser === 'Guest' ? false : true);
-	const [loggedIn, setLoggedIn] = useState(currentUser === 'Guest' ? false : true);
-	const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("UsersList"))[currentUser]);
+	const getCurrentUser = () => {
+		return JSON.parse(localStorage.getItem("CurrentUser")).username;
+	}
 
 	const getUsersList = () => {
 		return JSON.parse(localStorage.getItem("UsersList"));
 	}
+
+	const [loggedIn, setLoggedIn] = useState(getCurrentUser() === 'Guest' ? false : true);
+	const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("UsersList"))[getCurrentUser()]);
 
 	const setUsersList = (usersList) => {
 		localStorage.setItem("UsersList", JSON.stringify(usersList));
@@ -49,7 +51,6 @@ const UserDataProvider = ({ children }) => {
 		usersList['Guest'] = guestTemplate// reset 'Guest' data if new user
 		setUsersList(usersList); // overwrite users list
 		setCurrentUser(username); // overwrite current user
-		setLoggedIn(true);
 	}
 
 	const logOut = () => {
@@ -57,7 +58,6 @@ const UserDataProvider = ({ children }) => {
 		setUserData(usersList['Guest']); // pull guest data, set it to state
 		setCurrentUser('Guest'); // overwrite current user
 		setLoggedIn(false);
-		setGuestModeConfirmed(false);
 	}
 
 	const createUser = (username, password) => {
@@ -67,6 +67,7 @@ const UserDataProvider = ({ children }) => {
 			username: username,
 			password: password
 		};
+		delete usersList[username].guestModeConfirmed;
 		setUsersList(usersList); // overwrite users list
 		logIn(username); // log in new user
 	}
@@ -98,21 +99,18 @@ const UserDataProvider = ({ children }) => {
 		setUsersList(usersList); // overwrite users list
 	}
 
-	// update user's data in local storage whenever userData changes
+	// fetch userData from local storage whenever log in changes
 
-	// useEffect(() => {
-	// 	let usersList = getUsersList(); // get list of users
-	// 	usersList[userData.username] = userData; // update the user's data in local storage with current state
-	// 	setUsersList(usersList); // overwrite users list
-	// }, [userData]);
+	useEffect(() => {
+		let usersList = getUsersList(); // get list of users
+		setUserData(usersList[getCurrentUser()]); // update current state with stored userData
+	}, [loggedIn]);
 
 	return (
 		<UserDataContext.Provider
 			value={{
 				loggedIn,
 				setLoggedIn,
-				guestModeConfirmed,
-				setGuestModeConfirmed,
 				userData,
 				setUserData,
 				logIn,
@@ -120,7 +118,8 @@ const UserDataProvider = ({ children }) => {
 				createUser,
 				deleteUser,
 				updateUsername,
-				updateUserData
+				updateUserData,
+				getCurrentUser
 			}}
 		>
 			{children}

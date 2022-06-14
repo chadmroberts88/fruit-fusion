@@ -1,7 +1,7 @@
 import { React, memo } from 'react'
 import styled from 'styled-components'
-import CellsContainer from '../../containers/CellsContainer'
-import TilesContainer from '../../containers/TilesContainer'
+import CellsContainer from './CellsContainer'
+import TilesContainer from './TilesContainer'
 
 const Board = styled.div`
     position: relative;

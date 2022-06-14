@@ -1,7 +1,8 @@
 import { React, memo, useContext } from 'react'
-import { GameContext } from '../context/GameContext'
+import { GameContext } from '../../context/GameContext'
 import styled from 'styled-components'
-import BoardTile from '../components/game/BoardTile'
+
+import BoardTile from '../../components/game/BoardTile'
 
 const Container = styled.div`
     position: absolute;

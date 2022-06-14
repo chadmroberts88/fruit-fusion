@@ -1,25 +1,31 @@
 import { React, useContext } from 'react'
-import { ThemeContext } from '../../helper/Context';
+import { UserDataContext } from '../../context/UserDataContext'
 import styled from 'styled-components'
 
-const Frame = styled.div`
-    background-color: ${props => props.bgColor};
-    border-radius: 10px;
 
-    /* @media screen and (orientation: portrait) {
-        width: 86vmin;
-        height: 92vmin;
-        margin-bottom: 2vmin;
-    } */
+const Frame = styled.div`
+	background-color: ${props => props.bgColor};
+	border-radius: 10px;
+	overflow: hidden;
+
+	@media screen and (orientation: landscape) {
+		width: 70vmin;
+		height: 80vmin;
+	}
+
+	@media screen and (orientation: portrait) {
+		width: 80vw;
+		height: 70vh;
+	}
 
 `;
 
-const PanelFrame = ({ children }) => {
+const PanelFrame = ({ id, children }) => {
 
-	const { darkModeOn } = useContext(ThemeContext);
+	const { userData } = useContext(UserDataContext);
 
 	return (
-		<Frame bgColor={darkModeOn ? "#333232" : "#f7d5b7"}>
+		<Frame id={id} bgColor={userData.darkModeOn ? "#333232" : "#f7d5b7"}>
 			{children}
 		</Frame>
 	)

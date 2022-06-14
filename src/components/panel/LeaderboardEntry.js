@@ -34,7 +34,7 @@ const Photo = styled.img`
     height: 7vmin;
 `;
 
-const LeaderboardEntry = ({ image, username, score }) => {
+const LeaderboardEntry = ({ image, rank, username, score }) => {
 
 	return (
 		<Entry>
@@ -43,7 +43,7 @@ const LeaderboardEntry = ({ image, username, score }) => {
 					<Photo src={image} />
 				</BannerSection>
 				<BannerSection>
-					<h6 style={{ color: "white" }}>{'rank'}</h6>
+					<h6 style={{ color: "white" }}>{rank}</h6>
 				</BannerSection>
 				<BannerSection>
 					<h6 style={{ color: "white" }}>{username}</h6>

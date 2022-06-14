@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import styled from 'styled-components'
 import * as yup from 'yup'
 
-import CreateAccountModal from '../modals/CreateAccountModal'
+import CreateAccountModal from '../../containers/modals/CreateAccountModal'
 import { GameContext } from '../../context/GameContext'
 
 const Form = styled.form`
@@ -95,17 +95,13 @@ const CheckboxSection = styled.div`
 
 const RegistrationForm = () => {
 
-	const { userData, setUserData, loggedIn, setLoggedIn, createUser, updateUserData, updateUsername } = useContext(UserDataContext);
-	const { initializeTiles, setGameData } = useContext(GameContext);
+	const { userData, loggedIn, setLoggedIn, createUser, updateUserData, updateUsername } = useContext(UserDataContext);
+	const { createGame } = useContext(GameContext);
 	const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const navigate = useNavigate();
 
-	const openModal = () => {
-		setCreateAccountModalOpen(true);
-	}
-
-	const closeModal = () => {
+	const closeCreateAccountModal = () => {
 		setCreateAccountModalOpen(false);
 		setLoggedIn(true);
 		navigate('/account');
@@ -168,8 +164,6 @@ const RegistrationForm = () => {
 
 	const submitForm = (data) => {
 
-		// let games = JSON.parse(localStorage.getItem("Games"));
-
 		if (loggedIn) { // if logged in, update username and password
 
 			if (data.password !== userData.password) { // if password changed, update
@@ -182,9 +176,11 @@ const RegistrationForm = () => {
 
 		} else { // if not logged in (i.e. new account), create user
 			createUser(data.username, data.password);
+			createGame(data.username);
 		}
 
-		openModal();
+		setCreateAccountModalOpen(true);
+
 	}
 
 	return (
@@ -242,7 +238,7 @@ const RegistrationForm = () => {
 				/>
 
 			</Form>
-			<CreateAccountModal modalOpen={createAccountModalOpen} closeModal={closeModal} />
+			<CreateAccountModal modalOpen={createAccountModalOpen} handleClose={closeCreateAccountModal} />
 		</>
 	)
 }

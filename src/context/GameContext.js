@@ -9,44 +9,71 @@ export const GameContext = createContext({})
 
 const GameProvider = ({ children }) => {
 
-	const { userData, setUserData, updateUserData, loggedIn } = useContext(UserDataContext);
+	const { userData, updateUserData, getCurrentUser } = useContext(UserDataContext);
 	const [moveTilesSound] = useState(new Audio(moveTiles));
 	const [incMultiplierSound] = useState(new Audio(incMultiplier));
 	const [gameOverSound] = useState(new Audio(gameOver));
 	const [gridSize] = useState(5);
 	const [gapSize] = useState('1vmin');
 	const [cellSize, setCellSize] = useState(userData.useSwipeOn ? '14vmin' : '12vmin');
-	const [newGame, setNewGame] = useState(false);
+	const [newGame, setNewGame] = useState(true);
 	const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
 
-	function initializeTiles() {
+	function initializeTiles(qty) {
+
 		let initialTiles = [];
+		let initialTileIds = 0;
+
 		for (let i = 0; i < gridSize; i++) {
 			initialTiles[i] = [];
 			for (let j = 0; j < gridSize; j++) {
 				initialTiles[i][j] = 0
 			}
 		}
+
+		for (let q = 0; q < qty; q++) {
+
+			let blankTiles = [];
+
+			for (let i = 0; i < gridSize; i++) {
+				for (let j = 0; j < gridSize; j++) {
+					if (initialTiles[i][j] === 0) {
+						blankTiles.push({ x: i, y: j });
+					}
+				}
+			}
+
+			if (blankTiles.length > 0) {
+				const randomIndex = Math.floor(Math.random() * blankTiles.length);
+				const x = blankTiles[randomIndex].x;
+				const y = blankTiles[randomIndex].y;
+				initialTileIds++;
+				initialTiles[x][y] = {
+					id: initialTileIds,
+					colorCode: Math.random() > 0.4 ? 0 : 1,
+					typeCode: Math.floor(Math.random() * 3)
+				};
+			}
+		}
+
 		return initialTiles;
+
 	}
 
-	const guestGameTemplate = {
-		tiles: initializeTiles(),
-		tileIds: 0,
+	const newGameTemplate = {
+		tiles: initializeTiles(2),
+		tileIds: 2,
 		multiplier: 1,
 		score: 0
 	}
 
 	if (!localStorage.getItem("GamesList")) {
 		localStorage.setItem("GamesList", JSON.stringify({
-			Guest: guestGameTemplate
+			Guest: newGameTemplate
 		}));
 	}
 
-	let currentUser = JSON.parse(localStorage.getItem("CurrentUser")).username;
-	const [gameData, setGameData] = useState(JSON.parse(localStorage.getItem("GamesList"))[currentUser]);
-
-	console.log(gameData);
+	const [gameData, setGameData] = useState(JSON.parse(localStorage.getItem("GamesList"))[getCurrentUser()]);
 
 	const getGamesList = () => {
 		return JSON.parse(localStorage.getItem("GamesList"));
@@ -54,6 +81,16 @@ const GameProvider = ({ children }) => {
 
 	const setGamesList = (gamesList) => {
 		localStorage.setItem("GamesList", JSON.stringify(gamesList));
+	}
+
+	const createGame = (username) => {
+		let gamesList = getGamesList();
+		gamesList[username] = {
+			...gameData
+		}
+		gamesList['Guest'] = newGameTemplate;
+		setGameData(gamesList[username]);
+		setGamesList(gamesList);
 	}
 
 	const updateGameData = (dataObject) => {
@@ -67,7 +104,7 @@ const GameProvider = ({ children }) => {
 	}
 
 	const closeGameOverModal = () => {
-		setNewGame(true);
+		handleGameAction('newGame');
 		setGameOverModalOpen(false);
 	}
 
@@ -75,11 +112,10 @@ const GameProvider = ({ children }) => {
 		setCellSize(userData.useSwipeOn ? '14vmin' : '12vmin');
 	}, [userData.useSwipeOn]);
 
-	useEffect(() => {
-		if (newGame) {
-			handleGameAction('newGame');
-		}
-	});
+	const fetchGameData = (username) => {
+		let gamesList = getGamesList();
+		setGameData(gamesList[username]);
+	}
 
 	const handleGameAction = (actionId) => {
 
@@ -88,7 +124,7 @@ const GameProvider = ({ children }) => {
 		let currentMultiplier = gameData.multiplier;
 		let currentScore = gameData.score;
 		let currentBest = userData.best;
-		let blankCells = getBlankCells();
+		let blankTiles = getBlankTiles();
 		let pairAvailable = false;
 
 		function copyTiles() {
@@ -102,31 +138,30 @@ const GameProvider = ({ children }) => {
 			return copiedTiles;
 		}
 
-		function getBlankCells() {
-			let blankCells = [];
+		function getBlankTiles() {
+			let blankTiles = [];
 			for (let i = 0; i < gridSize; i++) {
 				for (let j = 0; j < gridSize; j++) {
 					if (currentTiles[i][j] === 0) {
-						blankCells.push({ x: i, y: j });
+						blankTiles.push({ x: i, y: j });
 					}
 				}
 			}
-			return blankCells;
+			return blankTiles;
 		}
 
-		function addToCurrentTiles(qty) {
+		function addTiles(qty) {
 
 			for (let q = 0; q < qty; q++) {
-				blankCells = getBlankCells();
-				if (blankCells.length > 0) {
-					const randomIndex = Math.floor(Math.random() * blankCells.length);
-					const x = blankCells[randomIndex].x;
-					const y = blankCells[randomIndex].y;
-					const probability = Math.random();
+				blankTiles = getBlankTiles();
+				if (blankTiles.length > 0) {
+					const randomIndex = Math.floor(Math.random() * blankTiles.length);
+					const x = blankTiles[randomIndex].x;
+					const y = blankTiles[randomIndex].y;
 					currentTileIds++;
 					currentTiles[x][y] = {
 						id: currentTileIds,
-						colorCode: probability > 0.4 ? 0 : 1,
+						colorCode: Math.random() > 0.4 ? 0 : 1,
 						typeCode: Math.floor(Math.random() * 3)
 					};
 				}
@@ -137,12 +172,10 @@ const GameProvider = ({ children }) => {
 		// handle new game
 
 		if (actionId === 'newGame') {
-			currentTiles = initializeTiles();
-			currentTileIds = 0;
+			currentTiles = initializeTiles(2);
+			currentTileIds = 2;
 			currentMultiplier = 1;
 			currentScore = 0;
-			addToCurrentTiles(2);
-			setNewGame(false);
 		}
 
 		// handle game click or swipe
@@ -150,7 +183,6 @@ const GameProvider = ({ children }) => {
 		if (actionId !== 'none' && actionId !== 'newGame') {
 			let line = [];
 			let tileMoved = false;
-			let blankCells = [];
 
 			const direction = actionId.split("-", 1);
 			const reg = /\d+/g;
@@ -267,9 +299,8 @@ const GameProvider = ({ children }) => {
 
 				// if there is a blank cell, add a tile
 
-				blankCells = getBlankCells();
-				if (blankCells.length > 0) {
-					addToCurrentTiles(1);
+				if (getBlankTiles().length > 0) {
+					addTiles(1);
 				}
 
 				// CHECK FOR GAME OVER
@@ -303,8 +334,7 @@ const GameProvider = ({ children }) => {
 
 				// if there are no blank cells and no pairs availabe, game over
 
-				blankCells = getBlankCells();
-				if (blankCells.length === 0 && !pairAvailable) {
+				if (getBlankTiles().length === 0 && !pairAvailable) {
 					if (userData.soundOn) {
 						gameOverSound.play();
 					}
@@ -341,7 +371,8 @@ const GameProvider = ({ children }) => {
 				closeGameOverModal,
 				gameData,
 				setGameData,
-				initializeTiles
+				createGame,
+				fetchGameData
 			}}
 		>
 			{children}

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { UserDataContext } from '../context/UserDataContext'
-import { GameContext } from '../context/GameContext'
+import { UserDataContext } from '../../context/UserDataContext'
+import { GameContext } from '../../context/GameContext'
 import styled from 'styled-components'
 
-import UserSection from '../components/header/UserSection'
-import MenuButton from '../components/header/MenuButton'
-import StatSection from '../components/header/StatSection'
+import UserSection from '../../components/header/UserSection'
+import MenuButton from '../../components/header/MenuButton'
+import StatSection from '../../components/header/StatSection'
 
 const Container = styled.div`
 	background-color: ${props => props.bgColor};

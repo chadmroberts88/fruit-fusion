@@ -82,8 +82,8 @@ const OptionsSection = styled.div`
 
 const LogInForm = () => {
 
-	const { setUserData, setLoggedIn, logIn } = useContext(UserDataContext);
-	const { setGameData } = useContext(GameContext);
+	const { setLoggedIn, logIn } = useContext(UserDataContext);
+	const { fetchGameData } = useContext(GameContext);
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const navigate = useNavigate();
 
@@ -104,14 +104,13 @@ const LogInForm = () => {
 	const submitForm = (data) => {
 
 		let usersList = JSON.parse(localStorage.getItem("UsersList"));
-		// let games = JSON.parse(localStorage.getItem("Games"));
 
 		if (usersList.hasOwnProperty(data.username) && usersList[data.username].password === data.password) {
 
 			logIn(data.username);
+			fetchGameData(data.username);
+			setLoggedIn(true);
 			navigate('/account');
-
-			// setGameData(games[data.username]);
 
 		} else {
 			setError("username", {

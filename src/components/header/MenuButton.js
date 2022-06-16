@@ -29,18 +29,18 @@ const MenuButton = () => {
 
 	const handleClose = () => {
 		setPlayAsGuestModalOpen(false);
-		navigate('/fruit-fusion');
+		navigate('/');
 	}
 
 	const handleMenuClick = () => {
 		if (userData.username === 'Guest') {
 			if (userData.guestModeConfirmed) {
-				navigate('/fruit-fusion/menu');
+				navigate('/menu');
 			} else {
 				setPlayAsGuestModalOpen(true);
 			}
 		} else {
-			navigate('/fruit-fusion/menu');
+			navigate('/menu');
 		}
 	}
 

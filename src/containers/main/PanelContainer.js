@@ -33,16 +33,16 @@ const PanelContainer = () => {
 	return (
 		<Container id="panel-container">
 			<Routes>
-				<Route path='/fruit-fusion' element={<LogInPanel />} />
-				<Route path='/fruit-fusion/create-account' element={<CreateAccountPanel />} />
-				<Route path='/fruit-fusion/update-account' element={<CreateAccountPanel />} />
-				<Route path='/fruit-fusion/account' element={loggedIn ? <AccountPanel /> : <MenuPanel />} />
-				<Route path='/fruit-fusion/menu' element={<MenuPanel />} />
-				<Route path='/fruit-fusion/how-to-play' element={<HowToPlayPanel />} />
-				<Route path='/fruit-fusion/leaderboard' element={<LeaderboardPanel />} />
-				<Route path='/fruit-fusion/settings' element={<SettingsPanel />} />
-				<Route path='/fruit-fusion/about' element={<AboutPanel />} />
-				<Route path='/fruit-fusion/game' element={<GamePanel />} />
+				<Route path='/' element={<LogInPanel />} />
+				<Route path='/create-account' element={<CreateAccountPanel />} />
+				<Route path='/update-account' element={<CreateAccountPanel />} />
+				<Route path='/account' element={loggedIn ? <AccountPanel /> : <MenuPanel />} />
+				<Route path='/menu' element={<MenuPanel />} />
+				<Route path='/how-to-play' element={<HowToPlayPanel />} />
+				<Route path='/leaderboard' element={<LeaderboardPanel />} />
+				<Route path='/settings' element={<SettingsPanel />} />
+				<Route path='/about' element={<AboutPanel />} />
+				<Route path='/game' element={<GamePanel />} />
 				<Route path='*' element={<ErrorPanel />} />
 			</Routes>
 		</Container>

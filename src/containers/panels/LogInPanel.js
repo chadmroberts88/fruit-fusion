@@ -50,18 +50,18 @@ const LogInPanel = () => {
 
 	const handleClose = () => {
 		setPlayAsGuestModalOpen(false);
-		navigate('/fruit-fusion');
+		navigate('');
 	}
 
 	const handleFooterClick = () => {
 		if (userData.username === 'Guest') {
 			if (userData.guestModeConfirmed) {
-				navigate('/fruit-fusion/menu');
+				navigate('/menu');
 			} else {
 				setPlayAsGuestModalOpen(true);
 			}
 		} else {
-			navigate('/fruit-fusion/menu');
+			navigate('/menu');
 		}
 	}
 

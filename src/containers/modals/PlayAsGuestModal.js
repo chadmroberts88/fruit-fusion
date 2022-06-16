@@ -13,7 +13,7 @@ const PlayAsGuestModal = ({ modalOpen, handleClose }) => {
 	const playAsGuest = () => {
 		updateUserData({ guestModeConfirmed: true });
 		handleClose();
-		navigate('/fruit-fusion/menu');
+		navigate('/menu');
 	};
 
 	return (

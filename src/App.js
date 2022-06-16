@@ -1,5 +1,5 @@
 import { React, useContext } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { UserDataContext } from './context/UserDataContext'
 import styled from 'styled-components'
 
@@ -72,10 +72,10 @@ const App = () => {
 			bgColor={userData.darkModeOn ? "black" : "#ffffef"}
 			textColor={userData.darkModeOn ? "white" : "black"}
 		>
-			<Router>
+			<HashRouter basename='/'>
 				<HeaderContainer />
 				<PanelContainer />
-			</Router>
+			</HashRouter>
 		</AppContainer>
 	)
 

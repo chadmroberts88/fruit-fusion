@@ -32,7 +32,7 @@ const AccountPanel = () => {
 	const closeLogOutModal = () => {
 		handleGameAction('newGame');
 		setLogOutModalOpen(false);
-		navigate('/fruit-fusion/')
+		navigate('/')
 	}
 
 	const info = [
@@ -59,12 +59,12 @@ const AccountPanel = () => {
 					<InfoSection info={info} />
 					<PrimaryButton text={"Log Out"} handleClick={logUserOut} />
 					<OptionsSection>
-						<Option text={"Update Account"} handleClick={() => { navigate('/fruit-fusion/update-account') }} />
+						<Option text={"Update Account"} handleClick={() => { navigate('/update-account') }} />
 						<Option text={"Delete Account"} handleClick={() => { setDeleteModalOpen(true) }} />
 					</OptionsSection>
 				</PanelBody>
 				<PanelFooter>
-					<SecondaryButton text={"Go to Menu"} handleClick={() => { navigate('/fruit-fusion/menu') }} />
+					<SecondaryButton text={"Go to Menu"} handleClick={() => { navigate('/menu') }} />
 				</PanelFooter>
 			</PanelFrame>
 			<DeleteAccountModal modalOpen={deleteModalOpen} closeModal={() => { setDeleteModalOpen(false) }} />

@@ -58,7 +58,7 @@ const GameOverModal = () => {
 				{
 					loggedIn ?
 						<ModalImage imageUrl={modalImageUrl} /> :
-						<p>Your score won't be posted to the leaderboard when playing as a Guest. Would you like to create an account so your future scores will be saved?</p>
+						<p>Your score won't be posted to the leaderboard when playing as a Guest. Would you like to create an account so your best score will be saved?</p>
 				}
 
 				{

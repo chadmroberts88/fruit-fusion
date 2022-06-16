@@ -110,7 +110,7 @@ const LogInForm = () => {
 			logIn(data.username);
 			fetchGameData(data.username);
 			setLoggedIn(true);
-			navigate('/account');
+			navigate('/fruit-fusion/account');
 
 		} else {
 			setError("username", {
@@ -161,7 +161,7 @@ const LogInForm = () => {
 			/>
 
 			<OptionsSection>
-				<Option text={"Create Account"} handleClick={() => { navigate('/create-account') }} />
+				<Option text={"Create Account"} handleClick={() => { navigate('/fruit-fusion/create-account') }} />
 			</OptionsSection>
 
 		</Form>

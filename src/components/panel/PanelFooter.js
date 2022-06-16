@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledPanelFooter = styled.div`
+const Footer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,11 +11,11 @@ const StyledPanelFooter = styled.div`
 `;
 
 const PanelFooter = (props) => {
-    return (
-        <StyledPanelFooter className='panel-footer'>
-            {props.children}
-        </StyledPanelFooter>
-    )
+	return (
+		<Footer className='panel-footer'>
+			{props.children}
+		</Footer>
+	)
 }
 
 export default PanelFooter

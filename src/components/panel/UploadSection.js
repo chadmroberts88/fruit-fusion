@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MdFindInPage } from 'react-icons/md'
-
 
 const Section = styled.div`
     display: grid;
@@ -35,14 +33,12 @@ const PhotoInput = styled.input`
 
 const UploadSection = ({ label }) => {
 
-    let fileName = 'account-photoooooooooooooo.jpeg';
-
-    return (
-        <Section>
-            <h3>{label}</h3>
-            <PhotoInput type={"file"} accept={"image/*"} />
-        </Section >
-    )
+	return (
+		<Section>
+			<h3>{label}</h3>
+			<PhotoInput type={"file"} accept={"image/*"} />
+		</Section >
+	)
 }
 
 export default UploadSection

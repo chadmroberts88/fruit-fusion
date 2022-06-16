@@ -33,17 +33,17 @@ const MenuPanel = () => {
 					<h3>Currently Playing As:</h3>
 					<h4>{userData.username}</h4>
 				</UserSection>
-				<PrimaryButton text={'Go to Game'} handleClick={() => { navigate('/game') }} />
+				<PrimaryButton text={'Go to Game'} handleClick={() => { navigate('/fruit-fusion/game') }} />
 				<OptionsSection>
 					<Option text={'Reset Game'} handleClick={() => { setResetGameModalOpen(true) }} />
-					<Option text={'How to Play'} handleClick={() => { navigate('/how-to-play') }} />
-					<Option text={'Settings'} handleClick={() => { navigate('/settings') }} />
-					<Option text={'Leaderboard'} handleClick={() => { navigate('/leaderboard') }} />
-					<Option text={'About Fruit Fusion'} handleClick={() => { navigate('/about') }} />
+					<Option text={'How to Play'} handleClick={() => { navigate('/fruit-fusion/how-to-play') }} />
+					<Option text={'Settings'} handleClick={() => { navigate('/fruit-fusion/settings') }} />
+					<Option text={'Leaderboard'} handleClick={() => { navigate('/fruit-fusion/leaderboard') }} />
+					<Option text={'About Fruit Fusion'} handleClick={() => { navigate('/fruit-fusion/about') }} />
 				</OptionsSection>
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={loggedIn ? 'Go to Account' : 'Log In / Create Account'} handleClick={() => { navigate(loggedIn ? '/account' : '/') }} />
+				<SecondaryButton text={loggedIn ? 'Go to Account' : 'Log In / Create Account'} handleClick={() => { navigate(loggedIn ? '/fruit-fusion/account' : '/fruit-fusion') }} />
 			</PanelFooter>
 			<ResetGameModal modalOpen={resetGameModelOpen} closeModal={() => { setResetGameModalOpen(false) }} />
 		</PanelFrame>

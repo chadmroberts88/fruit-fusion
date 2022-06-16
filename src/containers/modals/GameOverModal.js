@@ -64,7 +64,7 @@ const GameOverModal = () => {
 				{
 					loggedIn ?
 						null :
-						<PrimaryButton text={'Create Account'} handleClick={() => { navigate('/create-account') }} />
+						<PrimaryButton text={'Create Account'} handleClick={() => { navigate('/fruit-fusion/create-account') }} />
 				}
 			</Modal>
 			: null}</>

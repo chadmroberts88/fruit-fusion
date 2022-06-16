@@ -21,7 +21,7 @@ const CreateAccountPanel = () => {
 				<RegistrationForm />
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={loggedIn ? 'Back to Account' : 'Back to Log In'} handleClick={() => { navigate(loggedIn ? '/fruit-fusion/account' : '/fruit-fusion') }} />
+				<SecondaryButton text={loggedIn ? 'Back to Account' : 'Back to Log In'} handleClick={() => { navigate(loggedIn ? '/account' : '/') }} />
 			</PanelFooter>
 		</PanelFrame>
 	)

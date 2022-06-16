@@ -58,7 +58,7 @@ const AboutPanel = () => {
 				<SecondaryButton
 					text={"Back to Menu"}
 					handleClick={() => {
-						navigate("/fruit-fusion/menu");
+						navigate("/menu");
 					}}
 				/>
 			</PanelFooter>

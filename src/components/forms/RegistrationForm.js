@@ -104,7 +104,7 @@ const RegistrationForm = () => {
 	const closeCreateAccountModal = () => {
 		setCreateAccountModalOpen(false);
 		setLoggedIn(true);
-		navigate('/fruit-fusion/account');
+		navigate('/account');
 	}
 
 	const schema = yup.object().shape({

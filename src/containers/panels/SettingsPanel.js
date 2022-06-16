@@ -38,7 +38,7 @@ const SettingsPanel = () => {
 				<ToggleSection toggleId={'use-swipe-toggele'} isChecked={userData.useSwipeOn} handleToggle={() => { toggleUseSwipe() }} />
 			</PanelBody>
 			<PanelFooter>
-				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/fruit-fusion/menu') }} />
+				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/menu') }} />
 			</PanelFooter>
 		</PanelFrame>
 	)

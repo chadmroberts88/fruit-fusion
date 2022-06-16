@@ -24,7 +24,7 @@ const DeleteAccountModal = ({ modalOpen, closeModal }) => {
 						text={'Delete Account'}
 						handleClick={() => {
 							deleteUser(userData.username);
-							navigate('/fruit-fusion');
+							navigate('/');
 						}}
 					/>
 				</Modal>

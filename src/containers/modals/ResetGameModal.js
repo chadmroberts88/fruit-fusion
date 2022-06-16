@@ -26,7 +26,7 @@ const ResetGameModal = ({ modalOpen, closeModal }) => {
 						text={"Reset Game"}
 						handleClick={() => {
 							handleGameAction('newGame');
-							navigate("/fruit-fusion/game");
+							navigate("/game");
 						}}
 					/>
 				</Modal>

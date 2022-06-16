@@ -79,7 +79,7 @@ const LeaderboardPanel = () => {
 				</Content>
 			</Body>
 			<PanelFooter>
-				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/fruit-fusion/menu') }} />
+				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/menu') }} />
 			</PanelFooter>
 		</PanelFrame>
 	)

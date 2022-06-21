@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fruit-fusion/static/css/main.9dd36abc.css",
-    "main.js": "/fruit-fusion/static/js/main.e564edf8.js",
+    "main.js": "/fruit-fusion/static/js/main.ffaff8b7.js",
     "static/media/game-over.png": "/fruit-fusion/static/media/game-over.a9778d4f252639366882.png",
     "static/media/gameOver.mp3": "/fruit-fusion/static/media/gameOver.0e5d1baa6eb720ffe642.mp3",
     "static/media/error.png": "/fruit-fusion/static/media/error.036403bc4a43f3a2678d.png",
@@ -16,10 +16,10 @@
     "static/media/moveTiles.mp3": "/fruit-fusion/static/media/moveTiles.6966c9debbcc2cf051d6.mp3",
     "index.html": "/fruit-fusion/index.html",
     "main.9dd36abc.css.map": "/fruit-fusion/static/css/main.9dd36abc.css.map",
-    "main.e564edf8.js.map": "/fruit-fusion/static/js/main.e564edf8.js.map"
+    "main.ffaff8b7.js.map": "/fruit-fusion/static/js/main.ffaff8b7.js.map"
   },
   "entrypoints": [
     "static/css/main.9dd36abc.css",
-    "static/js/main.e564edf8.js"
+    "static/js/main.ffaff8b7.js"
   ]
 }

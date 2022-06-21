@@ -24,11 +24,7 @@ const AccountPanel = () => {
 	const [logOutModalOpen, setLogOutModalOpen] = useState(false);
 	const navigate = useNavigate();
 
-	const logUserOut = () => {
-		setLogOutModalOpen(true);
-	}
-
-	const closeLogOutModal = () => {
+	const logOutAndClose = () => {
 		logOut();
 		createGame('Guest');
 		setLogOutModalOpen(false);
@@ -57,7 +53,7 @@ const AccountPanel = () => {
 				<PanelBody>
 					<PhotoSection size={'11vmin'} />
 					<InfoSection info={info} />
-					<PrimaryButton text={"Log Out"} handleClick={logUserOut} />
+					<PrimaryButton text={"Log Out"} handleClick={() => { setLogOutModalOpen(true); }} />
 					<OptionsSection>
 						<Option text={"Update Account"} handleClick={() => { navigate('/update-account') }} />
 						<Option text={"Delete Account"} handleClick={() => { setDeleteModalOpen(true) }} />
@@ -68,7 +64,7 @@ const AccountPanel = () => {
 				</PanelFooter>
 			</PanelFrame>
 			<DeleteAccountModal modalOpen={deleteModalOpen} closeModal={() => { setDeleteModalOpen(false) }} />
-			<LogOutModal modalOpen={logOutModalOpen} handleClose={() => { closeLogOutModal() }} />
+			<LogOutModal modalOpen={logOutModalOpen} handleClose={() => { logOutAndClose() }} />
 		</>
 	)
 }

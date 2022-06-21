@@ -19,7 +19,7 @@ import LogOutModal from '../modals/LogOutModal'
 const AccountPanel = () => {
 
 	const { userData, logOut } = useContext(UserDataContext);
-	const { handleGameAction } = useContext(GameContext);
+	const { createGame } = useContext(GameContext);
 	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const [logOutModalOpen, setLogOutModalOpen] = useState(false);
 	const navigate = useNavigate();
@@ -29,9 +29,8 @@ const AccountPanel = () => {
 	}
 
 	const closeLogOutModal = () => {
-		console.log("logging out");
 		logOut();
-		handleGameAction('newGame');
+		createGame('Guest');
 		setLogOutModalOpen(false);
 		navigate('/')
 	}

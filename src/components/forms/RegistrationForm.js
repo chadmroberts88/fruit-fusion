@@ -96,7 +96,7 @@ const CheckboxSection = styled.div`
 const RegistrationForm = () => {
 
 	const { userData, loggedIn, setLoggedIn, createUser, updateUserData, updateUsername } = useContext(UserDataContext);
-	const { createGame } = useContext(GameContext);
+	const { createGame, updateGamesListName } = useContext(GameContext);
 	const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
 	const [passwordVisible, setPasswordVisible] = useState(false);
 	const navigate = useNavigate();
@@ -171,6 +171,7 @@ const RegistrationForm = () => {
 			}
 
 			if (data.username !== userData.username) { // if username changed, update
+				updateGamesListName(data.username);
 				updateUsername(data.username);
 			}
 

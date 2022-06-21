@@ -103,6 +103,13 @@ const GameProvider = ({ children }) => {
 		setGamesList(gamesList); // overwrite games list
 	}
 
+	const updateGamesListName = (newUsername) => {
+		let gamesList = getGamesList(); // get list of games
+		gamesList[newUsername] = gamesList[userData.username]; // copy data from prev user object
+		delete gamesList[userData.username]; // delete prev game object
+		setGamesList(gamesList); // overwrite games list
+	}
+
 	const closeGameOverModal = () => {
 		handleGameAction('newGame');
 		setGameOverModalOpen(false);
@@ -115,6 +122,7 @@ const GameProvider = ({ children }) => {
 	const fetchGameData = (username) => {
 		let gamesList = getGamesList();
 		setGameData(gamesList[username]);
+		console.log("Game Dat fetched");
 	}
 
 	const handleGameAction = (actionId) => {
@@ -372,7 +380,8 @@ const GameProvider = ({ children }) => {
 				gameData,
 				setGameData,
 				createGame,
-				fetchGameData
+				fetchGameData,
+				updateGamesListName
 			}}
 		>
 			{children}

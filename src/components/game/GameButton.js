@@ -1,4 +1,4 @@
-import { React, memo, useContext, useState } from 'react'
+import { React, memo, useContext } from 'react'
 import styled from 'styled-components'
 import { keyframes } from 'styled-components'
 import { GameContext } from '../../context/GameContext'

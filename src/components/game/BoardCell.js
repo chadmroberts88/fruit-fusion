@@ -14,7 +14,7 @@ const BoardCell = ({ cellRow, cellCol }) => {
 	const [touchStartX, setTouchStartX] = useState(null);
 	const [touchStartY, setTouchStartY] = useState(null);
 	const { handleGameAction } = useContext(GameContext);
-	const { useSwipeOn } = useContext(UserDataContext);
+	const { userData } = useContext(UserDataContext);
 
 	const minSwipeDistance = 50;
 
@@ -63,8 +63,8 @@ const BoardCell = ({ cellRow, cellCol }) => {
 			key={`cell-${cellRow}-${cellCol}`}
 			id={`cell-${cellRow}-${cellCol}`}
 			className="cell"
-			onTouchStart={useSwipeOn ? handleTouchStart : null}
-			onTouchEnd={useSwipeOn ? handleTouchEnd : null}
+			onTouchStart={userData.useSwipeOn ? handleTouchStart : null}
+			onTouchEnd={userData.useSwipeOn ? handleTouchEnd : null}
 		>
 		</Cell>
 	)

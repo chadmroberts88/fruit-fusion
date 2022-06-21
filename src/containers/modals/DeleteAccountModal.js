@@ -1,6 +1,7 @@
 import { React, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserDataContext } from '../../context/UserDataContext'
+import { GameContext } from '../../context/GameContext'
 
 import Modal from '../../components/modal/Modal'
 import PrimaryButton from '../../components/panel/PrimaryButton'
@@ -8,6 +9,7 @@ import PrimaryButton from '../../components/panel/PrimaryButton'
 const DeleteAccountModal = ({ modalOpen, closeModal }) => {
 
 	const { userData, deleteUser } = useContext(UserDataContext);
+	const { createGame } = useContext(GameContext);
 	const navigate = useNavigate();
 
 	return (
@@ -24,6 +26,8 @@ const DeleteAccountModal = ({ modalOpen, closeModal }) => {
 						text={'Delete Account'}
 						handleClick={() => {
 							deleteUser(userData.username);
+							createGame('Guest');
+							closeModal();
 							navigate('/');
 						}}
 					/>

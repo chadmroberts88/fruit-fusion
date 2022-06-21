@@ -25,11 +25,12 @@ const AccountPanel = () => {
 	const navigate = useNavigate();
 
 	const logUserOut = () => {
-		logOut();
 		setLogOutModalOpen(true);
 	}
 
 	const closeLogOutModal = () => {
+		console.log("logging out");
+		logOut();
 		handleGameAction('newGame');
 		setLogOutModalOpen(false);
 		navigate('/')

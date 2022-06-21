@@ -93,6 +93,12 @@ const GameProvider = ({ children }) => {
 		setGamesList(gamesList);
 	}
 
+	const deleteGame = (username) => {
+		let gamesList = getGamesList();
+		delete gamesList[username];
+		setGamesList(gamesList);
+	}
+
 	const updateGameData = (dataObject) => {
 		let gamesList = getGamesList(); // get list of games
 		Object.entries(dataObject).forEach(entry => {
@@ -380,6 +386,7 @@ const GameProvider = ({ children }) => {
 				gameData,
 				setGameData,
 				createGame,
+				deleteGame,
 				fetchGameData,
 				updateGamesListName
 			}}

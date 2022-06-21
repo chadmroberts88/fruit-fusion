@@ -9,7 +9,7 @@ import PrimaryButton from '../../components/panel/PrimaryButton'
 const DeleteAccountModal = ({ modalOpen, closeModal }) => {
 
 	const { userData, deleteUser } = useContext(UserDataContext);
-	const { createGame } = useContext(GameContext);
+	const { createGame, deleteGame } = useContext(GameContext);
 	const navigate = useNavigate();
 
 	return (
@@ -25,6 +25,7 @@ const DeleteAccountModal = ({ modalOpen, closeModal }) => {
 					<PrimaryButton
 						text={'Delete Account'}
 						handleClick={() => {
+							deleteGame(userData.username);
 							deleteUser(userData.username);
 							createGame('Guest');
 							closeModal();

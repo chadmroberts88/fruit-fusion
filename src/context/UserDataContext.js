@@ -10,7 +10,7 @@ const UserDataProvider = ({ children }) => {
 		best: 0,
 		rank: 0,
 		soundOn: true,
-		darkModeOn: true,
+		darkModeOn: false,
 		useSwipeOn: false
 	};
 

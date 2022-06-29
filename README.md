@@ -1,30 +1,20 @@
 # Fruit Fusion
 
----
-
 ## View Deployment:
 
 https://chadmroberts88.github.io/fruit-fusion/
-
----
 
 ## Description:
 
 Fruit Fusion is a matching game based on the logic of the popular [2048](https://play2048.co/). This project currently uses the browser's local storage to hold user account information and game data, however, a back-end is underway.
 
----
-
 ## Motivation:
 
-On our drive across Canada; from Alberta to Newfoundland, my spouse and I played many mobile games while passing time in hotels and at pit stops. I wanted to challenge myself to develop a web game on par with some of those we played. Fruit Fusion is the result.
-
----
+On our drive across Canada, from Alberta to Newfoundland, my spouse and I played many mobile games while passing time in hotels and at pit stops. I wanted to challenge myself to develop a web game on par with some of those we played. Fruit Fusion is the result.
 
 ## Outcome:
 
 Developing Fruit Fusion provided me with an opportunity to take a deep dive into the React.js library and make use of API features such as React Hooks. Working on this project also helped me better understand concepts such as component-based development, prototyping, and UI/UX design.
-
----
 
 ## Features:
 
@@ -34,12 +24,11 @@ Navigating to the menu, users can choose to start playing the game immediately, 
 
 When users log out, their game progress and setting selections are saved to their account and will be retrieved on the next login.
 
----
-
 ## Technologies Used:
 
 - [React.js](https://reactjs.org/)
 - [Create React App](https://create-react-app.dev/)
+- [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [React Router](https://reactrouter.com/)
 - [React Hook Form](https://react-hook-form.com/)
 - [Styled Components](https://styled-components.com/)
@@ -47,24 +36,22 @@ When users log out, their game progress and setting selections are saved to thei
 - [Framer Motion](https://www.framer.com/motion/)
 - [Figma](https://www.figma.com/)
 
----
-
 ## Run on a Local Machine:
 
 1. Open a terminal window in the directory where you want to clone this project, then type:
 
-   git clone https://github.com/chadmroberts88/fruit-fusion.git
+   `git clone https://github.com/chadmroberts88/fruit-fusion.git`
 
 2. Navigate into the "fruit-fusion" directory:
 
-   cd fruit-fusion
+   `cd fruit-fusion`
 
 3. Install the required dependencies:
 
-   npm install
+   `npm install`
 
 4. Run the project:
 
-   npm start
+   `npm start`
 
 5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.

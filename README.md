@@ -10,7 +10,9 @@ Fruit Fusion is a matching game based on the logic of the popular [2048](https:/
 
 ## Motivation:
 
-On our drive across Canada, from Alberta to Newfoundland, my spouse and I played many mobile games while passing time in hotels and at pit stops. I wanted to challenge myself to develop a web game on par with some of those we played. Fruit Fusion is the result.
+On our drive across Canada, from Alberta to Newfoundland, my spouse and I played many mobile games while passing time in hotels and at pit stops. I wanted to challenge myself to develop a web game on par with some of those we played.
+
+When I first started with this project, it was called "Color Clash". The logic was the same, but I was using colored squares rather than fruit. I thought it may be difficult for people who are colorblind or otherwise visually impaired to play, so, I added some shapes in the form of fruit and changed the name to "Fruit Fusion".
 
 ## Outcome:
 

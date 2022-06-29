@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Fruit Fusion
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## View Deployment:
 
-In the project directory, you can run:
+https://chadmroberts88.github.io/fruit-fusion/
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Description:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Fruit Fusion is a matching game based on the logic of the popular [2048](https://play2048.co/). This project currently uses the browser's local storage to hold user account information and game data, however, a back-end is underway.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Motivation:
 
-### `npm run build`
+On our drive across Canada; from Alberta to Newfoundland, my spouse and I played many mobile games while passing time in hotels and at pit stops. I wanted to challenge myself to develop a web game on par with some of those we played. Fruit Fusion is the result.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Outcome:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Developing Fruit Fusion provided me with an opportunity to take a deep dive into the React.js library and make use of API features such as React Hooks. Working on this project also helped me better understand concepts such as component-based development, prototyping, and UI/UX design.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Features:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Users can play as a guest or create their own accounts by selecting a username and password. The ability to add a custom profile photo will also be available once the back-end for this project is complete.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Navigating to the menu, users can choose to start playing the game immediately, or view instructions on how to play. There is also an option in the menu to change the user's settings, which include: turning off the game’s sound effects, toggling dark mode, or using swipe gestures (and hiding game buttons) when playing on a touchscreen device. From the menu, users can also choose to view the leaderboard (currently limited to players using the same browser session), see the app’s about-information, and update their account information.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+When users log out, their game progress and setting selections are saved to their account and will be retrieved on the next login.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Technologies Used:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [React.js](https://reactjs.org/)
+- [Create React App](https://create-react-app.dev/)
+- [React Router](https://reactrouter.com/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Styled Components](https://styled-components.com/)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Figma](https://www.figma.com/)
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Run on a Local Machine:
 
-### Analyzing the Bundle Size
+1. Open a terminal window in the directory where you want to clone this project, then type:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+   git clone https://github.com/chadmroberts88/fruit-fusion.git
 
-### Making a Progressive Web App
+2. Navigate into the "fruit-fusion" directory:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   cd fruit-fusion
 
-### Advanced Configuration
+3. Install the required dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+   npm install
 
-### Deployment
+4. Run the project:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+   npm start
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.

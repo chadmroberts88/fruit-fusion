@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const Tile = styled.img`
 	position: absolute;
     width: ${props => props.cellSize};
-	height: ${props => props.cellSize};
+		height: ${props => props.cellSize};
     border-radius: 2vmin;
     content: url(${props => props.imageUrl});
 	user-select: none;

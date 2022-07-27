@@ -15,7 +15,7 @@ const GameProvider = ({ children }) => {
 	const [gameOverSound] = useState(new Audio(gameOver));
 	const [gridSize] = useState(5);
 	const [gapSize] = useState('1vmin');
-	const [cellSize, setCellSize] = useState(userData.useSwipeOn ? '14vmin' : '12vmin');
+	const [cellSize, setCellSize] = useState(userData.useSwipeOn ? '15vmin' : '14vmin');
 	const [newGame, setNewGame] = useState(true);
 	const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
 
@@ -122,7 +122,7 @@ const GameProvider = ({ children }) => {
 	}
 
 	useEffect(() => {
-		setCellSize(userData.useSwipeOn ? '14vmin' : '12vmin');
+		setCellSize(userData.useSwipeOn ? '15vmin' : '14vmin');
 	}, [userData.useSwipeOn]);
 
 	const fetchGameData = (username) => {

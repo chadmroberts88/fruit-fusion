@@ -2,12 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Instructions = styled.div`
-    text-align: center;
+	
 `;
 
 const ImageSection = styled.div`
     display: flex;
-    justify-content: center;
     align-items: center;
     margin-bottom: 1.5vmin;
 `;

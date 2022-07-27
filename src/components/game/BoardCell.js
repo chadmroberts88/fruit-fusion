@@ -4,9 +4,9 @@ import { GameContext } from '../../context/GameContext'
 import styled from 'styled-components'
 
 const Cell = styled.div`
-    background-color: lightgrey;
+    background-color: ${props => props.color};
     border-radius: 2vmin;
-	touch-action: none;
+		touch-action: none;
 `;
 
 const BoardCell = ({ cellRow, cellCol }) => {
@@ -65,6 +65,7 @@ const BoardCell = ({ cellRow, cellCol }) => {
 			className="cell"
 			onTouchStart={userData.useSwipeOn ? handleTouchStart : null}
 			onTouchEnd={userData.useSwipeOn ? handleTouchEnd : null}
+			color={userData.darkModeOn ? '#404040' : '#F0FFF2'}
 		>
 		</Cell>
 	)

@@ -11,36 +11,30 @@
 }
 
 html {
-	height: -webkit-fill-available;
+	height: 100%;
+	width: 100%;
 }
 
-body {
+/* body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
 	height: -webkit-fill-available;
 	background: black;
+} */
+
+body,
+#root {
+	height: 100%;
+	width: 100%;
 }
 
-h1 {
-	color: #9acd32;
-	font-size: 10vmin;
-	font-family: 'Titan One', cursive;
-	text-shadow: 1px 1px 0 #000;
-	text-align: center;
-	margin: -0.75vmin 0vmin;
-}
+@supports (-webkit-touch-callout: none) {
 
-h2 {
-	color: #d35b40;
-	font-size: 6vmin;
-}
-
-h3,
-label {
-	color: #ffa500;
-	font-size: 3vmin;
-	font-weight: bold;
-	text-transform: uppercase;
+	body,
+	#root {
+		height: 100%;
+		width: 100%;
+	}
 }

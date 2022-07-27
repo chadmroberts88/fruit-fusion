@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import styled from 'styled-components'
 import * as yup from 'yup'
 
-import CreateAccountModal from '../../containers/modals/CreateAccountModal'
+import CreateAccountModal from '../../modals/CreateAccountModal'
 import { GameContext } from '../../context/GameContext'
 
 const Form = styled.form`

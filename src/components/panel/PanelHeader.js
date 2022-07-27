@@ -1,19 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledPanelHeader = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 14%;
+const Header = styled.div`
+	display: flex;
+	justify-content: space-between;
 `;
 
-const PanelHeader = ({ text }) => {
+const PanelHeader = ({ children, text }) => {
 	return (
-		<StyledPanelHeader className='panel-header'>
+		<Header>
 			<h2>{text}</h2>
-		</StyledPanelHeader>
+			{children}
+		</Header>
 	)
 }
 

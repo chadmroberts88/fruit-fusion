@@ -1,80 +1,89 @@
 import { React, useContext } from 'react'
-import { HashRouter } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { UserDataContext } from './context/UserDataContext'
 import styled from 'styled-components'
 
-import HeaderContainer from './containers/main/HeaderContainer'
-import PanelContainer from './containers/main/PanelContainer'
+import MenuPage from './pages/MenuPage'
+import HowToPage from './pages/HowToPage'
+import AccountPage from './pages/AccountPage'
+import RegistrationPage from './pages/RegistrationPage'
+import LeaderboardPage from './pages/LeaderboardPage'
+import SettingsPage from './pages/SettingsPage'
+import AboutPage from './pages/AboutPage'
+import ErrorPage from './pages/ErrorPanel'
+
+import HomePage from './pages/HomePage'
+import GamePage from './pages/GamePage'
+
 
 const AppContainer = styled.div`
 	background-color: ${props => props.bgColor};
 	display: flex;
 	align-items: center;
 	justify-items: center;
-	border: 2px solid white;
-	border-radius: 2vmin;
+	height: 100%;
+	width: 100%;
 
-	@media screen and (orientation: landscape){
-		height: 90vh;
-		width: 88vw;
-		flex-direction: row;
+
+	h1 {
+	color: #9acd32;
+	font-size: 10vmin;
+	font-family: 'Titan One', cursive;
+	text-shadow: 1px 1px 0 #000;
+	text-align: center;
+	margin: -0.75vmin 0vmin;
 	}
 
-	@media screen and (orientation: portrait) {
-		height: 86vh;
-		width: 90vw;
-		flex-direction: column;
+	h2 {
+		color: #000000;
+		font-size: 1.5rem;
+	}
+
+	h3 {
+		color: #1A7431;
+		/* color: #F0FFF2; */
+		/* color: #F25C54; */
 	}
 
 	h4 {
-		color: ${props => props.textColor};
-		font-size: 2.75vmin;
+		color: #F25C54;
 	}
 
 	h5 {
-		color: ${props => props.textColor};
-		font-size: 2vmin;
-		font-weight: normal;
-		height: 2.5vmin;
-        overflow: hidden;
-        text-align: center;
-		margin-top: 0.5vmin;
-		margin-bottom: 2vmin;
+		/* color: #1A7431; */
+		/* color: #F0FFF2; */
+		/* color: #F25C54; */
+		color: #000000;
 	}
 
-	h6 {
-		color: ${props => props.textColor};
-		font-size: 2.5vmin;
-	}
 
-	p {
-		color: ${props => props.textColor};
-		font-size: 1rem;
-		margin-bottom: 1.5vmin;
-	}
-
-	span {
-		color: ${props => props.textColor};
-		font-size: 1rem;
-        font-weight: bold;
-		margin: 1vmin;
-	}
 
 `;
 
 const App = () => {
 
-	const { userData } = useContext(UserDataContext);
+	const { userData, loggedIn } = useContext(UserDataContext);
 
 	return (
 		<AppContainer
 			id="app"
-			bgColor={userData.darkModeOn ? "black" : "#ffffef"}
+			bgColor={userData.darkModeOn ? "#FEE89C" : "#ffffef"}
 			textColor={userData.darkModeOn ? "white" : "black"}
 		>
 			<HashRouter basename='/'>
-				<HeaderContainer />
-				<PanelContainer />
+				<Routes>
+					<Route path='/' element={<HomePage />} />
+					<Route path='/create-account' element={<RegistrationPage />} />
+					<Route path='/update-account' element={<RegistrationPage />} />
+					<Route path='/account' element={<AccountPage />} />
+					<Route path='/menu' element={<MenuPage />} />
+					<Route path='/how-to-play' element={<HowToPage />} />
+					<Route path='/leaderboard' element={<LeaderboardPage />} />
+					<Route path='/settings' element={<SettingsPage />} />
+					<Route path='/about' element={<AboutPage />} />
+					<Route path='/game' element={<GamePage />} />
+					<Route path='*' element={<ErrorPage />} />
+				</Routes>
 			</HashRouter>
 		</AppContainer>
 	)

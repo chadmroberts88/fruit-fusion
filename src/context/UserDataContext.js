@@ -5,6 +5,7 @@ const UserDataProvider = ({ children }) => {
 
 	const guestTemplate = {
 		username: 'Guest',
+		email: 'none',
 		guestModeConfirmed: false,
 		password: null,
 		best: 0,

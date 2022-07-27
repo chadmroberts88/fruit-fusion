@@ -6,7 +6,6 @@ const Section = styled.div`
     display: grid;
     grid-template-columns: 50% 50%;
     row-gap: 3vmin;
-    align-items: center;
     width: 70%;
 `;
 
@@ -15,23 +14,23 @@ const Data = styled.div`
 	color: ${props => props.color};
 	overflow: hidden;
 	text-overflow: ellipsis;
-	text-align: center;
 `;
 
 const InfoSection = ({ info }) => {
 
 	const { darkModeOn } = useContext(UserDataContext);
 
+	const spanstyle = { margin: 0, fontSize: '2.5vmin' }
 	let elements = [];
 
 	for (let i = 0; i < info.length; i++) {
 		elements.push(
-			<h3 key={`label-${i}`}>{info[i].label}</h3>
+			<span key={`label-${i}`}>{info[i].label}</span>
 		);
 
 		elements.push(
 			<Data key={`data-${i}`} color={darkModeOn ? 'white' : 'black'}>
-				<span style={{ margin: 0, fontSize: '2.5vmin' }}>{info[i].data}</span>
+				<span>{info[i].data}</span>
 			</Data>
 		);
 	}

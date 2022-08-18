@@ -1,48 +1,39 @@
-import { React } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FaUser } from 'react-icons/fa'
+import React from 'react'
+import { FaUserAlt } from 'react-icons/fa'
 import styled from 'styled-components'
 
+import PanelContainer from '../components/panel/PanelContainer'
 import PanelFrame from '../components/panel/PanelFrame'
 import PanelHeader from '../components/panel/PanelHeader'
-import PanelFooter from '../components/panel/PanelFooter'
-import SecondaryButton from '../components/panel/SecondaryButton'
+import PanelBodyFlex from '../components/panel/PanelBodyFlex'
+import ContentSection from '../components/panel/ContentSection'
+import CloseButton from '../components/buttons/CloseButton'
 import LeaderboardEntry from '../components/panel/LeaderboardEntry'
 
-const Body = styled.div`
-	display: grid;
-    height: 72%;
-	width: 100%;
-`;
-
-const Content = styled.div`
-	justify-self: center;
-	width: 90%;
-	min-height: 100%;
+const UserIcon = styled(FaUserAlt)`
+	margin: 0.75vmin 0 0 0;
 `;
 
 const LeaderboardHeader = styled.div`
     display: grid;
     grid-template-columns: 18% 16% 32% 22%;
     column-gap: 4%;
-    justify-items: center;
     align-items: center;
-    height: 12%;
-    padding: 0 2vmin;
+		justify-items: center;
+    padding: 0 10px;
 `;
 
 const Leaderboard = styled.div`
-    height: 88%;
+		display: flex;
+		flex-direction: column;
+		row-gap: 10px;
+    height: 100%;
     overflow: hidden auto;
-    border: 1px solid #a2a2a2;
-    border-radius: 10px;
-    padding: 2vmin;
 `;
 
 const LeaderboardPage = () => {
 
 	let image = require("../images/guest-photo.png");
-	const navigate = useNavigate();
 
 	let userObjects = [];
 	let usersList = JSON.parse(localStorage.getItem("UsersList"));
@@ -63,25 +54,28 @@ const LeaderboardPage = () => {
 	}
 
 	return (
-		<PanelFrame id="leaderboard-panel" >
-			<PanelHeader text={'Leaderboard'} />
-			<Body>
-				<Content>
+		<PanelContainer>
+			<PanelFrame id="leaderboard-panel" >
+				<PanelBodyFlex>
+					<PanelHeader text={'Leaderboard'}>
+						<CloseButton path={'/game'} />
+					</PanelHeader>
+
 					<LeaderboardHeader>
-						<h3><FaUser style={{ marginTop: "0.75vmin" }} /></h3>
+						<h3><UserIcon /></h3>
 						<h3>Rank</h3>
 						<h3>Player</h3>
 						<h3>Score</h3>
 					</LeaderboardHeader>
-					<Leaderboard>
-						{leaderboardEntries}
-					</Leaderboard>
-				</Content>
-			</Body>
-			<PanelFooter>
-				<SecondaryButton text={'Back to Menu'} handleClick={() => { navigate('/menu') }} />
-			</PanelFooter>
-		</PanelFrame>
+
+					<ContentSection>
+						<Leaderboard>
+							{leaderboardEntries}
+						</Leaderboard>
+					</ContentSection>
+				</PanelBodyFlex>
+			</PanelFrame>
+		</PanelContainer>
 	)
 }
 

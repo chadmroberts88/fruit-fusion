@@ -2,12 +2,12 @@ import { React, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserDataContext } from '../context/UserDataContext'
 
-import PanelFrame from '../components/panel/PanelFrame'
+import PanelContainer from '../components/panel/PanelContainer'
+import PanelFrameSmall from '../components/panel/PanelFrameSmall'
 import PanelHeader from '../components/panel/PanelHeader'
-import PanelFooter from '../components/panel/PanelFooter'
-import PanelBody from '../components/panel/PanelBody'
-import SecondaryButton from '../components/panel/SecondaryButton'
-import RegistrationForm from '../components/forms/RegistrationForm'
+import CloseButton from '../components/buttons/CloseButton'
+import FormContainer from '../components/form/FormContainer'
+import RegistrationForm from '../forms/RegistrationForm'
 
 const RegistrationPage = () => {
 
@@ -15,15 +15,17 @@ const RegistrationPage = () => {
 	const navigate = useNavigate();
 
 	return (
-		<PanelFrame id={loggedIn ? "update-account-panel" : "create-account-panel"}>
-			<PanelHeader text={loggedIn ? 'Update Account' : 'Create Account'} />
-			<PanelBody>
-				<RegistrationForm />
-			</PanelBody>
-			<PanelFooter>
-				<SecondaryButton text={loggedIn ? 'Back to Account' : 'Back to Log In'} handleClick={() => { navigate(loggedIn ? '/account' : '/') }} />
-			</PanelFooter>
-		</PanelFrame>
+		<PanelContainer>
+			<PanelFrameSmall id='registration-page'>
+				<FormContainer>
+					<PanelHeader text='Register'>
+						<CloseButton path={'/'} />
+					</PanelHeader>
+					<RegistrationForm />
+				</FormContainer>
+			</PanelFrameSmall>
+		</PanelContainer>
+
 	)
 }
 

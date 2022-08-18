@@ -7,8 +7,8 @@ const Frame = styled.div`
 	box-shadow: 8px 8px 10px 0px rgba(0,0,0,0.5);
 	padding: 25px;
 	width: 80%;
-	max-width: 500px;
-	height: 90%;
+	max-width: 350px;
+	height: fit-content;
 	border-radius: 10px;
 `;
 

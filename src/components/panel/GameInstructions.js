@@ -2,7 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Instructions = styled.div`
-	
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
 `;
 
 const ImageSection = styled.div`
@@ -43,7 +45,7 @@ const GameInstructions = () => {
 		<Instructions>
 			<p>The objective of the game is to fuse as many pairs of like-colored fruit as possible until there are no more moves that can be made.</p>
 			<p>A pair of red fruit fuses to produce an orange fruit, a pair of orange fruit fuses into a yellow fruit, and so on. The number of points you earn for each fusion increases as you work your way through the colors of the rainbow.</p>
-			<span>Red + Red = 10 pts.</span>
+			<strong>Red + Red = 10 pts.</strong>
 			<ImageSection>
 				<Image imageUrl={apple} alt="apple"></Image>
 				<span>or</span>
@@ -51,7 +53,7 @@ const GameInstructions = () => {
 				<span>or</span>
 				<Image imageUrl={cherries} alt="apple"></Image>
 			</ImageSection>
-			<span>Orange + Orange = 20 pts.</span>
+			<strong>Orange + Orange = 20 pts.</strong>
 			<ImageSection>
 				<Image imageUrl={orange} alt="apple"></Image>
 				<span>or</span>
@@ -59,7 +61,7 @@ const GameInstructions = () => {
 				<span>or</span>
 				<Image imageUrl={mango} alt="apple"></Image>
 			</ImageSection>
-			<span>Yellow + Yellow = 30 pts.</span>
+			<strong>Yellow + Yellow = 30 pts.</strong>
 			<ImageSection>
 				<Image imageUrl={bananas} alt="apple"></Image>
 				<span>or</span>
@@ -67,7 +69,7 @@ const GameInstructions = () => {
 				<span>or</span>
 				<Image imageUrl={pineapple} alt="apple"></Image>
 			</ImageSection>
-			<span>Green + Green = 40 pts.</span>
+			<strong>Green + Green = 40 pts.</strong>
 			<ImageSection>
 				<Image imageUrl={pear} alt="apple"></Image>
 				<span>or</span>
@@ -75,7 +77,7 @@ const GameInstructions = () => {
 				<span>or</span>
 				<Image imageUrl={melon} alt="apple"></Image>
 			</ImageSection>
-			<span>Blue + Blue = 50 pts.</span>
+			<strong>Blue + Blue = 50 pts.</strong>
 			<ImageSection>
 				<Image imageUrl={blueberries} alt="apple"></Image>
 				<span>or</span>
@@ -83,7 +85,7 @@ const GameInstructions = () => {
 				<span>or</span>
 				<Image imageUrl={blueberry2} alt="apple"></Image>
 			</ImageSection>
-			<span>Purple + Purple = 60 pts.</span>
+			<strong>Purple + Purple = 60 pts.</strong>
 			<ImageSection>
 				<Image imageUrl={grapes} alt="apple"></Image>
 				<span>or</span>

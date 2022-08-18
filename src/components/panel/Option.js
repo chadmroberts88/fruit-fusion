@@ -2,19 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Link = styled.div`
-    color: #d35b40;
-    font-family: 'Arimo', sans-serif;
-    font-size: 3vmin;
+    color: #F25C54;
+    font-size: 1rem;
     font-weight: bold;
-    text-align: center;
-    margin: 1vmin;
-    width: fit-content;
-    height: fit-content;
-    justify-self: center;
     cursor: pointer;
 
     :hover {
-		color: #e86a4e;
+		color: #FF847E;
     }
 
 `;

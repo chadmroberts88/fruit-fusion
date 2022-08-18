@@ -36,7 +36,7 @@ const GameMenu = () => {
 
 	return (
 		<Menu id="game-menu" color={userData.darkModeOn ? '#282828' : '#96E072'}>
-			<UserButton path={'/account'} />
+			<UserButton path={'/menu'} />
 			<HowToButton path={'/how-to-play'} />
 			<LeaderboardButton path={'/leaderboard'} />
 			<ResetButton />

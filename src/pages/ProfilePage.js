@@ -6,12 +6,12 @@ import PanelBody from '../components/panel/PanelBody'
 import PanelHeader from '../components/panel/PanelHeader'
 import CloseButton from '../components/buttons/CloseButton'
 
-const AccountPage = () => {
+const ProfilePage = () => {
 	return (
-		<PanelContainer id='account-page'>
+		<PanelContainer id='profile-page'>
 			<PanelFrame>
 				<PanelBody>
-					<PanelHeader text={'Update Account'}>
+					<PanelHeader text={'Update Profile'}>
 						<CloseButton path={'/menu'} />
 					</PanelHeader>
 				</PanelBody>
@@ -20,4 +20,4 @@ const AccountPage = () => {
 	)
 }
 
-export default AccountPage
+export default ProfilePage

@@ -1,55 +1,59 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserDataContext } from '../../context/UserDataContext'
 import styled from 'styled-components'
 
 const Entry = styled.div`
-    display: grid;
-    align-items: center;
-    width: 100%;
-    height: 8vmin;
+  display: grid;
+  align-items: center;
+  width: 100%;
+  height: 7vmin;
 `;
 
 const Banner = styled.div`
-    display: grid;
-    grid-template-columns: 18% 16% 32% 22%;
-    column-gap: 4%;
-    align-items: center;
-    justify-items: center;
-    background-color: #d35b40;
-    border-radius: 10px;
-    height: 4vmin;
+	background-color: ${props => props.bgColor};
+	display: grid;
+	grid-template-columns: 18% 16% 32% 22%;
+	column-gap: 4%;
+	align-items: center;
+	justify-items: center;
+	border-radius: 10px;
+	height: 4vmin;
 `;
 
 const BannerSection = styled.div`
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    width: 100%;
-    overflow: hidden;
+	display: grid;
+	align-items: center;
+	justify-items: center;
+	width: 100%;
+	overflow: hidden;
 `;
 
 const Photo = styled.img`
-    border: 2px solid #d35b40;
-    border-radius: 50%;
-    width: 7vmin;
-    height: 7vmin;
+	border: 2px solid;
+	border-color: #1A7431;
+	border-radius: 50%;
+	width: 7vmin;
+	height: 7vmin;
 `;
 
 const LeaderboardEntry = ({ image, rank, username, score }) => {
 
+	const { userData } = useContext(UserDataContext);
+
 	return (
 		<Entry>
-			<Banner>
+			<Banner bgColor={userData.darkModeOn ? '#282828' : '#1A7431'}>
 				<BannerSection>
 					<Photo src={image} />
 				</BannerSection>
 				<BannerSection>
-					<h6 style={{ color: "white" }}>{rank}</h6>
+					<h6>{rank}</h6>
 				</BannerSection>
 				<BannerSection>
-					<h6 style={{ color: "white" }}>{username}</h6>
+					<h6>{username}</h6>
 				</BannerSection>
 				<BannerSection>
-					<h6 style={{ color: "white" }}>{score}</h6>
+					<h6>{score}</h6>
 				</BannerSection>
 			</Banner>
 		</Entry>

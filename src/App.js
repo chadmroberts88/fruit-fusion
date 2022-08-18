@@ -3,9 +3,8 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import { UserDataContext } from './context/UserDataContext'
 import styled from 'styled-components'
 
-import MenuPage from './pages/MenuPage'
 import HowToPage from './pages/HowToPage'
-import AccountPage from './pages/AccountPage'
+import MenuPage from './pages/MenuPage'
 import RegistrationPage from './pages/RegistrationPage'
 import LeaderboardPage from './pages/LeaderboardPage'
 import SettingsPage from './pages/SettingsPage'
@@ -14,6 +13,8 @@ import ErrorPage from './pages/ErrorPanel'
 
 import HomePage from './pages/HomePage'
 import GamePage from './pages/GamePage'
+import ProfilePage from './pages/ProfilePage'
+import AccountPage from './pages/AccountPage'
 
 
 const AppContainer = styled.div`
@@ -26,12 +27,12 @@ const AppContainer = styled.div`
 
 
 	h1 {
-	color: #9acd32;
-	font-size: 10vmin;
+	color: #F25C54;
+	font-size: 2.5rem;
 	font-family: 'Titan One', cursive;
 	text-shadow: 1px 1px 0 #000;
 	text-align: center;
-	margin: -0.75vmin 0vmin;
+	/* margin: -0.75vmin 0vmin; */
 	}
 
 	h2 {
@@ -56,6 +57,11 @@ const AppContainer = styled.div`
 		color: #000000;
 	}
 
+	h6 {
+		color: #FFFFFF;
+		font-size: 0.75rem;
+	}
+
 
 
 `;
@@ -73,15 +79,19 @@ const App = () => {
 			<HashRouter basename='/'>
 				<Routes>
 					<Route path='/' element={<HomePage />} />
-					<Route path='/create-account' element={<RegistrationPage />} />
-					<Route path='/update-account' element={<RegistrationPage />} />
-					<Route path='/account' element={<AccountPage />} />
+					<Route path='/game' element={<GamePage />} />
 					<Route path='/menu' element={<MenuPage />} />
+					<Route path='/profile' element={<ProfilePage />} />
+					<Route path='/settings' element={<SettingsPage />} />
+					<Route path='/account' element={<AccountPage />} />
 					<Route path='/how-to-play' element={<HowToPage />} />
 					<Route path='/leaderboard' element={<LeaderboardPage />} />
-					<Route path='/settings' element={<SettingsPage />} />
+
+
+
+					<Route path='/register' element={<RegistrationPage />} />
+					<Route path='/update' element={<RegistrationPage />} />
 					<Route path='/about' element={<AboutPage />} />
-					<Route path='/game' element={<GamePage />} />
 					<Route path='*' element={<ErrorPage />} />
 				</Routes>
 			</HashRouter>

@@ -5,8 +5,8 @@ const Button = styled.button`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-    height: 40px;
-    width: 40%;
+    height: 34px;
+    width: fit-content;
 		padding: 10px;
     background-color: #F25C54;
     color: white;
@@ -19,12 +19,20 @@ const Button = styled.button`
         background-color: #FF847E;
     }
 
+		:disabled {
+			cursor: not-allowed;
+			opacity: 0.6;
+		}
+
 `;
 
-const PrimaryButton = ({ text, handleClick }) => {
+const PrimaryButton = ({ text, handleClick, disabled }) => {
 
 	return (
-		<Button onClick={() => { handleClick() }}>
+		<Button
+			onClick={() => { handleClick() }}
+			disabled={disabled}
+		>
 			{text}
 		</Button>
 	)

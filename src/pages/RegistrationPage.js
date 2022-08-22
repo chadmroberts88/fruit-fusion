@@ -1,5 +1,4 @@
 import React from 'react'
-
 import PanelContainer from '../components/panel/PanelContainer'
 import PanelFrameSmall from '../components/panel/PanelFrameSmall'
 import PanelHeader from '../components/panel/PanelHeader'

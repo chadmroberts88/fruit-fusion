@@ -1,6 +1,4 @@
-import { React, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../context/UserDataContext'
+import React from 'react'
 
 import PanelContainer from '../components/panel/PanelContainer'
 import PanelFrameSmall from '../components/panel/PanelFrameSmall'
@@ -10,9 +8,6 @@ import FormContainer from '../components/form/FormContainer'
 import RegistrationForm from '../forms/RegistrationForm'
 
 const RegistrationPage = () => {
-
-	const { loggedIn } = useContext(UserDataContext);
-	const navigate = useNavigate();
 
 	return (
 		<PanelContainer>

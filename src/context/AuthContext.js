@@ -1,10 +1,12 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js';
 import UserPool from '../UserPool';
 
-export const AccountContext = createContext({});
+export const AuthContext = createContext({});
 
-const AccountProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
+
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	const authenticate = async (email, password) => {
 		return await new Promise((resolve, reject) => {
@@ -21,6 +23,7 @@ const AccountProvider = ({ children }) => {
 			user.authenticateUser(authDetails, {
 				onSuccess: (data) => {
 					resolve(data);
+					setLoggedIn(true);
 				},
 				onFailure: (error) => {
 					reject(error);
@@ -39,12 +42,15 @@ const AccountProvider = ({ children }) => {
 				user.getSession((error, session) => {
 					if (error) {
 						reject(error);
+						setLoggedIn(false);
 					} else {
 						resolve(session);
+						setLoggedIn(true);
 					}
 				});
 			} else {
 				reject('No session logged in.');
+				setLoggedIn(false);
 			}
 		});
 	};
@@ -57,16 +63,17 @@ const AccountProvider = ({ children }) => {
 	};
 
 	return (
-		<AccountContext.Provider
+		<AuthContext.Provider
 			value={{
 				authenticate,
 				getSession,
-				logOut
+				logOut,
+				loggedIn
 			}}
 		>
 			{children}
-		</AccountContext.Provider>
+		</AuthContext.Provider>
 	);
 }
 
-export default AccountProvider;
+export default AuthProvider;

@@ -4,16 +4,16 @@ import './index.css';
 import App from './App';
 import UserDataProvider from './context/UserDataContext';
 import GameProvider from './context/GameContext';
-import AccountProvider from './context/AccountContext';
+import AuthProvider from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-	<AccountProvider>
+	<AuthProvider>
 		<UserDataProvider>
 			<GameProvider>
 				<App />
 			</GameProvider>
 		</UserDataProvider>
-	</AccountProvider>
+	</AuthProvider>
 );

@@ -8,14 +8,13 @@ import MenuPage from './pages/MenuPage'
 import RegistrationPage from './pages/RegistrationPage'
 import LeaderboardPage from './pages/LeaderboardPage'
 import SettingsPage from './pages/SettingsPage'
-import AboutPage from './pages/AboutPage'
 import ErrorPage from './pages/ErrorPanel'
 
-import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
 import GamePage from './pages/GamePage'
 import ProfilePage from './pages/ProfilePage'
 import AccountPage from './pages/AccountPage'
-import LoginStatus from './LoginStatus'
+import Protected from './Protected'
 
 
 const AppContainer = styled.div`
@@ -78,24 +77,22 @@ const App = () => {
 			bgColor={userData.darkModeOn ? "#FEE89C" : "#ffffef"}
 			textColor={userData.darkModeOn ? "white" : "black"}
 		>
-			<LoginStatus />
 			<HashRouter basename='/'>
 				<Routes>
-					<Route path='/' element={<HomePage />} />
-					<Route path='/game' element={<GamePage />} />
-					<Route path='/menu' element={<MenuPage />} />
-					<Route path='/profile' element={<ProfilePage />} />
-					<Route path='/settings' element={<SettingsPage />} />
-					<Route path='/account' element={<AccountPage />} />
-					<Route path='/how-to-play' element={<HowToPage />} />
-					<Route path='/leaderboard' element={<LeaderboardPage />} />
-
-
-
-					<Route path='/register' element={<RegistrationPage />} />
-					<Route path='/update' element={<RegistrationPage />} />
-					<Route path='/about' element={<AboutPage />} />
+					<Route path='/' element={<LoginPage />} />
+					<Route path='register' element={<RegistrationPage />} />
 					<Route path='*' element={<ErrorPage />} />
+
+					<Route element={<Protected />}>
+						<Route path='game' element={<GamePage />} />
+						<Route path='menu' element={<MenuPage />} />
+						<Route path='profile' element={<ProfilePage />} />
+						<Route path='settings' element={<SettingsPage />} />
+						<Route path='account' element={<AccountPage />} />
+						<Route path='how-to-play' element={<HowToPage />} />
+						<Route path='leaderboard' element={<LeaderboardPage />} />
+					</Route>
+
 				</Routes>
 			</HashRouter>
 		</AppContainer>

@@ -2,17 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Link = styled.a`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 8vmin;
-    color: #d35b40;
-    background-color: transparent;
-    border: none;
+    color: #F25C54;
+		font-weight: bold;
     cursor: pointer;
 
     :hover {
-        color: #e86a4e;
+        color: #FF847E;
     }
 
 `;

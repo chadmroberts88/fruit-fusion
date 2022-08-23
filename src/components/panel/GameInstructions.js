@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import SocialLink from './SocialLink';
 
 const Instructions = styled.div`
 	display: flex;
@@ -8,16 +9,20 @@ const Instructions = styled.div`
 `;
 
 const ImageSection = styled.div`
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5vmin;
+	display: flex;
+	align-items: center;
+	margin-bottom: 1.5vmin;
 `;
 
 const Image = styled.img`
-    display: inline-block;
-    height: 7vmin;
-    width: 7vmin;
-    content: url(${props => props.imageUrl});
+	display: inline-block;
+	height: 7vmin;
+	width: 7vmin;
+	content: url(${props => props.imageUrl});
+`;
+
+const HorzRule = styled.hr`
+	margin: 10px 0px;
 `;
 
 const GameInstructions = () => {
@@ -98,6 +103,11 @@ const GameInstructions = () => {
 				will increase. The more baskets of fruit you collect, the more points you can earn!
 				<strong> Baskets of fruit cannot be fused.</strong></p>
 			<p>Good luck!</p>
+			<HorzRule />
+			<p>
+				Fruit Fusion was developed by Chad Roberts. Check out more of my
+				work on <SocialLink link='https://www.linkedin.com/in/chadmroberts88'>LinkedIn</SocialLink> or <SocialLink link='https://github.com/chadmroberts88'>Github</SocialLink>.
+			</p>
 		</Instructions>
 	)
 }

@@ -23,8 +23,6 @@ const CellsContainer = () => {
 	const { userData } = useContext(UserDataContext)
 	const cellComponents = [];
 
-	console.log(cellSize);
-
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
 			cellComponents.push(<BoardCell key={`${i}-${j}`} cellRow={i} cellCol={j} />);

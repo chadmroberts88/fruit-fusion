@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { UserDataContext } from '../context/UserDataContext';
 import { GameContext } from '../context/GameContext';
-import { AccountContext } from '../context/AccountContext';
+import { AuthContext } from '../context/AuthContext';
 import styled from 'styled-components';
 import { EmailSchema, PasswordSchema } from '../schema/LoginSchema';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,6 +12,7 @@ import SubmitInput from '../components/form/SubmitInput'
 import InputLabel from '../components/form/InputLabel'
 import PasswordInput from '../components/form/PasswordInput'
 import InputError from '../components/form/InputError'
+import { useNavigate } from 'react-router-dom';
 
 const Form = styled.form`
 	display: grid;
@@ -24,7 +25,8 @@ const LogInForm = () => {
 
 	const { setLoggedIn, logIn } = useContext(UserDataContext);
 	const { fetchGameData } = useContext(GameContext);
-	const { authenticate } = useContext(AccountContext);
+	const { authenticate } = useContext(AuthContext);
+	const navigate = useNavigate();
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -71,10 +73,11 @@ const LogInForm = () => {
 		if (emailValid && passwordValid) {
 			authenticate(email, password)
 				.then((data) => {
-					console.log("Logged in sucessfully:", data);
+					console.log(data);
+					navigate('/game');
 				})
 				.catch((error) => {
-					console.log('Failed ro log in:', error)
+					console.log(error)
 					showErrorToast('Failed to log in. Please check your email and password.');
 				});
 		}

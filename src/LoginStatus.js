@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from 'react';
 import PrimaryButton from './components/panel/PrimaryButton';
-import { AccountContext } from './context/AccountContext';
+import { AuthContext } from './context/AuthContext';
 
 const LoginStatus = () => {
 	const [status, setStatus] = useState(false);
-	const { getSession, logOut } = useContext(AccountContext);
+	const { getSession, logOut } = useContext(AuthContext);
 
 	useEffect(() => {
 		getSession()

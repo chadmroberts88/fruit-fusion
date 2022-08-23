@@ -23,12 +23,11 @@ const Input = styled.input`
 
 `;
 
-const EmailInput = ({ type, placeholder, bgColor, onChange }, ref) => {
+const EmailInput = ({ placeholder, onChange }, ref) => {
 	return (
 		<Input
-			type={type}
+			type={'email'}
 			placeholder={placeholder}
-			bgColor={bgColor}
 			onChange={onChange}
 			ref={ref}
 		/>

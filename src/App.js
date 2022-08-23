@@ -15,11 +15,13 @@ import HomePage from './pages/HomePage'
 import GamePage from './pages/GamePage'
 import ProfilePage from './pages/ProfilePage'
 import AccountPage from './pages/AccountPage'
+import LoginStatus from './LoginStatus'
 
 
 const AppContainer = styled.div`
 	background-color: ${props => props.bgColor};
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-items: center;
 	height: 100%;
@@ -76,6 +78,7 @@ const App = () => {
 			bgColor={userData.darkModeOn ? "#FEE89C" : "#ffffef"}
 			textColor={userData.darkModeOn ? "white" : "black"}
 		>
+			<LoginStatus />
 			<HashRouter basename='/'>
 				<Routes>
 					<Route path='/' element={<HomePage />} />

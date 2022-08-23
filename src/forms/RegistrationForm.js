@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserDataContext } from '../context/UserDataContext'
-import { useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import UserPool from '../UserPool'
-import styled from 'styled-components'
-import * as yup from 'yup'
-
-import CreateAccountModal from '../modals/CreateAccountModal'
-import { GameContext } from '../context/GameContext'
+import { useContext, useState } from 'react';
+import { UserDataContext } from '../context/UserDataContext';
+import UserPool from '../UserPool';
+import styled from 'styled-components';
+import { EmailSchema, PasswordSchema, ConfirmSchema } from '../schema/RegistrationSchema';
+import { GameContext } from '../context/GameContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import EmailInput from '../components/form/EmailInput'
 import SubmitInput from '../components/form/SubmitInput'
@@ -25,77 +22,108 @@ const Form = styled.form`
 
 const RegistrationForm = () => {
 
-	const { userData, loggedIn, setLoggedIn, createUser, updateUserData, updateEmail } = useContext(UserDataContext);
+	const { setLoggedIn } = useContext(UserDataContext);
 	const { createGame, updateGamesListName } = useContext(GameContext);
-	const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
-	const [passwordVisible, setPasswordVisible] = useState(false);
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [confirmPass, setConfirmPass] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
+	const [confirmError, setConfirmError] = useState('');
 
-	const navigate = useNavigate();
-
-	const closeCreateAccountModal = () => {
-		setCreateAccountModalOpen(false);
-		setLoggedIn(true);
-		navigate('/account');
+	const showErrorToast = (message) => {
+		toast.error(message, {
+			position: "bottom-center",
+			autoClose: 6000,
+			theme: 'colored',
+			hideProgressBar: true,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
 	}
 
-	const schema = yup.object().shape({
-		email: yup
-			.string()
-			.email()
-			.required(),
-		password: yup
-			.string()
-			.required()
-			.min(8)
-			.max(20)
-			.matches(),
-		confirmPassword: yup
-			.string()
-			.required()
-			.oneOf([yup.ref('password'), null], "Passwords must match.")
-	});
-
-	const { register, handleSubmit, formState: { errors } } = useForm({
-		resolver: yupResolver(schema),
-		mode: 'onChange'
-	});
-
-	const submitForm = (event) => {
+	const submitForm = async (event) => {
 		event.preventDefault();
 
-		if (password === confirmPass) {
-			UserPool.signUp(email, password, [], null, (err, data) => {
-				if (err) {
-					console.log(err);
+		let emailValid = false;
+		let passwordValid = false;
+		let confirmValid = false;
+
+		try {
+			await EmailSchema.validate(email);
+			emailValid = true;
+			setEmailError('');
+		} catch (error) {
+			emailValid = false;
+			setEmailError(error.message);
+		}
+
+		try {
+			await PasswordSchema.validate(password);
+			passwordValid = true;
+			setPasswordError('');
+		} catch (error) {
+			passwordValid = false;
+			setPasswordError(error.message);
+		}
+
+		try {
+			await ConfirmSchema.validate(confirmPassword);
+			confirmValid = true;
+			setConfirmError('');
+
+			if (password === confirmPassword) {
+				confirmValid = true;
+				setConfirmError('');
+			} else {
+				confirmValid = false;
+				setConfirmError('Passwords do not match.');
+			}
+
+		} catch (error) {
+			confirmValid = false;
+			setConfirmError(error.message);
+		}
+
+		if (emailValid && passwordValid && confirmValid) {
+			UserPool.signUp(email, password, [], null, (error, data) => {
+				if (error) {
+					switch (error.message) {
+						case 'An account with the given email already exists.':
+							showErrorToast('This email has already been registered.');
+							break;
+						default:
+							showErrorToast('An unknown error has occurred.');
+							break;
+					}
 				} else {
 					console.log(data);
 				}
-			})
-		} else {
-			console.log("Passwords do not match!");
+			});
 		}
 
 	}
 
 	return (
 		<>
-			<Form onSubmit={submitForm}>
+			<Form
+				onSubmit={submitForm}
+				noValidate={true}
+			>
 
 				<div>
 					<InputLabel
 						text={'Email Address'}
 					/>
 					<EmailInput
-						type={'Email'}
 						placeholder={'Enter Email Address'}
-						bgColor={errors.email ? "#ffcccc" : "white"}
 						onChange={(event) => setEmail(event.target.value)}
 					/>
 					<InputError>
-						{errors.email?.message}
+						{emailError}
 					</InputError>
 				</div>
 
@@ -104,13 +132,11 @@ const RegistrationForm = () => {
 						text={'Password'}
 					/>
 					<PasswordInput
-						type={passwordVisible ? "text" : "password"}
 						placeholder={'Enter Password'}
-						bgColor={errors.password ? "#ffcccc" : "white"}
 						onChange={(event) => setPassword(event.target.value)}
 					/>
 					<InputError>
-						{errors.password?.message}
+						{passwordError}
 					</InputError>
 				</div>
 
@@ -119,13 +145,11 @@ const RegistrationForm = () => {
 						text={'Confirm Password'}
 					/>
 					<PasswordInput
-						type={passwordVisible ? "text" : "password"}
 						placeholder={'Re-enter Password'}
-						bgColor={errors.password ? "#ffcccc" : "white"}
-						onChange={(event) => setConfirmPass(event.target.value)}
+						onChange={(event) => setConfirmPassword(event.target.value)}
 					/>
 					<InputError>
-						{errors.confirmPassword?.message}
+						{confirmError}
 					</InputError>
 				</div>
 
@@ -134,7 +158,7 @@ const RegistrationForm = () => {
 				/>
 
 			</Form>
-			<CreateAccountModal modalOpen={createAccountModalOpen} handleClose={closeCreateAccountModal} />
+			<ToastContainer style={{ textAlign: 'center' }} />
 		</>
 	)
 }

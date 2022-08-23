@@ -39,7 +39,7 @@ const IconContainer = styled.div`
 `;
 
 
-const PasswordInput = ({ placeholder, bgColor, onChange }, ref) => {
+const PasswordInput = ({ placeholder, onChange }, ref) => {
 
 	const [showPass, setShowPass] = useState(false);
 
@@ -48,7 +48,6 @@ const PasswordInput = ({ placeholder, bgColor, onChange }, ref) => {
 			<Input
 				type={showPass ? 'text' : 'password'}
 				placeholder={placeholder}
-				bgColor={bgColor}
 				onChange={onChange}
 				ref={ref}
 			/>

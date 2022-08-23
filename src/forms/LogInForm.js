@@ -1,11 +1,11 @@
-import { React, useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../context/UserDataContext'
-import { GameContext } from '../context/GameContext'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import styled from 'styled-components'
-import * as yup from 'yup'
+import { useState, useContext } from 'react';
+import { UserDataContext } from '../context/UserDataContext';
+import { GameContext } from '../context/GameContext';
+import { AccountContext } from '../context/AccountContext';
+import styled from 'styled-components';
+import { EmailSchema, PasswordSchema } from '../schema/LoginSchema';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import EmailInput from '../components/form/EmailInput'
 import SubmitInput from '../components/form/SubmitInput'
@@ -24,87 +24,102 @@ const LogInForm = () => {
 
 	const { setLoggedIn, logIn } = useContext(UserDataContext);
 	const { fetchGameData } = useContext(GameContext);
-	const [passwordVisible, setPasswordVisible] = useState(false);
-	const navigate = useNavigate();
+	const { authenticate } = useContext(AccountContext);
 
-	const schema = yup.object().shape({
-		email: yup
-			.string()
-			.required("Please enter an email address"),
-		password: yup
-			.string()
-			.required("Please enter a password.")
-	});
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
 
-	const { register, handleSubmit, setError, formState: { errors } } = useForm({
-		resolver: yupResolver(schema),
-		mode: "onSubmit"
-	});
+	const showErrorToast = (message) => {
+		toast.error(message, {
+			position: "bottom-center",
+			autoClose: 6000,
+			theme: 'colored',
+			hideProgressBar: true,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
+	};
 
-	const submitForm = (data) => {
+	const submitForm = async (event) => {
+		event.preventDefault();
 
-		let usersList = JSON.parse(localStorage.getItem("UsersList"));
+		let emailValid = false;
+		let passwordValid = false;
 
-		if (usersList.hasOwnProperty(data.email) && usersList[data.email].password === data.password) {
-
-			logIn(data.email);
-			fetchGameData(data.email);
-			setLoggedIn(true);
-			navigate('/account');
-
-		} else {
-			setError("email", {
-				type: "check",
-				message: "Check email."
-			})
-
-			setError("password", {
-				type: "check",
-				message: "Check password."
-			})
+		try {
+			await EmailSchema.validate(email);
+			emailValid = true;
+			setEmailError('');
+		} catch (error) {
+			emailValid = false;
+			setEmailError(error.message);
 		}
 
+		try {
+			await PasswordSchema.validate(password);
+			passwordValid = true;
+			setPasswordError('');
+		} catch (error) {
+			passwordValid = false;
+			setPasswordError(error.message);
+		}
+
+		if (emailValid && passwordValid) {
+			authenticate(email, password)
+				.then((data) => {
+					console.log("Logged in sucessfully:", data);
+				})
+				.catch((error) => {
+					console.log('Failed ro log in:', error)
+					showErrorToast('Failed to log in. Please check your email and password.');
+				});
+		}
 	}
 
 	return (
-		<Form onSubmit={handleSubmit(submitForm)}>
+		<>
+			<Form
+				onSubmit={submitForm}
+				noValidate={true}
+			>
 
-			<div>
-				<InputLabel
-					text={'Email Address'}
+				<div>
+					<InputLabel
+						text={'Email Address'}
+					/>
+					<EmailInput
+						placeholder={'Enter Email Address'}
+						onChange={(event) => setEmail(event.target.value)}
+					/>
+					<InputError>
+						{emailError}
+					</InputError>
+				</div>
+
+				<div>
+					<InputLabel
+						text={'Password'}
+					/>
+					<PasswordInput
+						placeholder={'Enter Password'}
+						onChange={(event) => setPassword(event.target.value)}
+					/>
+					<InputError>
+						{passwordError}
+					</InputError>
+				</div>
+
+				<SubmitInput
+					value="Log In"
 				/>
-				<EmailInput
-					type={'email'}
-					placeholder='Enter Email Address'
-					bgColor={errors.email ? "#ffcccc" : "white"}
-					{...register('email')}
-				/>
-				<InputError>
-					{errors.email?.message}
-				</InputError>
-			</div>
 
-
-			<div>
-				<InputLabel
-					text={'Password'}
-				/>
-				<PasswordInput
-					type={passwordVisible ? "text" : "password"}
-					placeholder="Enter Password"
-					bgColor={errors.password ? "#ffcccc" : "white"}
-					{...register('password')}
-				/>
-				<InputError>
-					{errors.password?.message}
-				</InputError>
-			</div>
-
-			<SubmitInput
-				value="Log In"
-			/>
-
-		</Form>
+			</Form>
+			<ToastContainer style={{ textAlign: 'center' }} />
+		</>
 	)
 }
 

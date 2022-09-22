@@ -1,75 +1,70 @@
-import { React, useContext } from 'react'
-import { HashRouter, Routes, Route } from 'react-router-dom'
-import { UserDataContext } from './context/UserDataContext'
-import styled from 'styled-components'
+import React, { useContext } from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import { UserDataContext } from './context/UserDataContext';
+import styled from 'styled-components';
+import { Amplify } from 'aws-amplify';
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import './amplify.css';
+import awsExports from './aws-exports';
 
 import HowToPage from './pages/HowToPage'
 import MenuPage from './pages/MenuPage'
-import RegistrationPage from './pages/RegistrationPage'
 import LeaderboardPage from './pages/LeaderboardPage'
 import SettingsPage from './pages/SettingsPage'
 import ErrorPage from './pages/ErrorPanel'
-
-import LoginPage from './pages/LoginPage'
 import GamePage from './pages/GamePage'
 import ProfilePage from './pages/ProfilePage'
 import AccountPage from './pages/AccountPage'
-import Protected from './Protected'
 
+Amplify.configure(awsExports);
 
 const AppContainer = styled.div`
 	background-color: ${props => props.bgColor};
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-items: center;
+	justify-content: center;
 	height: 100%;
 	width: 100%;
-
-
-	h1 {
-	color: #F25C54;
-	font-size: 2.5rem;
-	font-family: 'Titan One', cursive;
-	text-shadow: 1px 1px 0 #000;
-	text-align: center;
-	/* margin: -0.75vmin 0vmin; */
-	}
-
-	h2 {
-		color: #000000;
-		font-size: 1.5rem;
-	}
-
-	h3 {
-		color: #1A7431;
-		/* color: #F0FFF2; */
-		/* color: #F25C54; */
-	}
-
-	h4 {
-		color: #F25C54;
-	}
-
-	h5 {
-		/* color: #1A7431; */
-		/* color: #F0FFF2; */
-		/* color: #F25C54; */
-		color: #000000;
-	}
-
-	h6 {
-		color: #FFFFFF;
-		font-size: 0.75rem;
-	}
-
-
-
 `;
+
+const FooterContainer = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
+	font-size: 0.75rem;
+`;
+
+const formFields = {
+	signUp: {
+		preferred_username: {
+			labelHidden: true,
+			placeholder: 'Player Name (Shown on leaderboard)',
+			isRequired: true,
+		}
+	}
+}
+
+const components = {
+	Header() {
+		return (<h1>Fruit Fusion</h1>);
+	},
+
+	Footer() {
+		return (
+			<FooterContainer>
+				Developed by Chad Roberts.
+			</FooterContainer>
+		)
+	}
+}
 
 const App = () => {
 
-	const { userData, loggedIn } = useContext(UserDataContext);
+	const { userData } = useContext(UserDataContext);
 
 	return (
 		<AppContainer
@@ -77,24 +72,22 @@ const App = () => {
 			bgColor={userData.darkModeOn ? "#FEE89C" : "#ffffef"}
 			textColor={userData.darkModeOn ? "white" : "black"}
 		>
-			<HashRouter basename='/'>
-				<Routes>
-					<Route path='/' element={<LoginPage />} />
-					<Route path='register' element={<RegistrationPage />} />
-					<Route path='*' element={<ErrorPage />} />
-
-					<Route element={<Protected />}>
-						<Route path='game' element={<GamePage />} />
-						<Route path='menu' element={<MenuPage />} />
-						<Route path='profile' element={<ProfilePage />} />
-						<Route path='settings' element={<SettingsPage />} />
-						<Route path='account' element={<AccountPage />} />
-						<Route path='how-to-play' element={<HowToPage />} />
-						<Route path='leaderboard' element={<LeaderboardPage />} />
-					</Route>
-
-				</Routes>
-			</HashRouter>
+			<Authenticator formFields={formFields} components={components}>
+				{({ signOut, user }) => (
+					<HashRouter basename='/'>
+						<Routes>
+							<Route path='game' element={<GamePage />} />
+							<Route path='menu' element={<MenuPage />} />
+							<Route path='profile' element={<ProfilePage />} />
+							<Route path='settings' element={<SettingsPage />} />
+							<Route path='account' element={<AccountPage />} />
+							<Route path='how-to-play' element={<HowToPage />} />
+							<Route path='leaderboard' element={<LeaderboardPage />} />
+							<Route path='*' element={<ErrorPage />} />
+						</Routes>
+					</HashRouter>
+				)}
+			</Authenticator>
 		</AppContainer>
 	)
 

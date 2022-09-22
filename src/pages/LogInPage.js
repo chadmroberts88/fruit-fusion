@@ -37,8 +37,6 @@ const LoginPage = () => {
 						<p>Don't have an account?</p>
 						<SubSection>
 							<SecondaryButton text={'Register'} handleClick={() => { navigate('/register') }} disabled={false} />
-							<p>or</p>
-							<SecondaryButton text={'Play as Guest'} handleClick={() => { }} disabled={false} />
 						</SubSection>
 					</Section>
 				</FormContainer>

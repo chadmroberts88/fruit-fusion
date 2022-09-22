@@ -5,6 +5,7 @@
 	"homepage": "https://chadmroberts88.github.io/fruit-fusion/",
 	"dependencies": {
 		"-": "^0.0.1",
+		"@aws-amplify/ui-react": "^3.5.4",
 		"@emotion/react": "^11.9.0",
 		"@emotion/styled": "^11.8.1",
 		"@hookform/resolvers": "^2.8.10",
@@ -12,6 +13,7 @@
 		"@testing-library/react": "^13.2.0",
 		"@testing-library/user-event": "^13.5.0",
 		"amazon-cognito-identity-js": "^5.2.10",
+		"aws-amplify": "^4.3.36",
 		"axios": "^0.27.2",
 		"framer-motion": "^4.1.17",
 		"fsevents": "^2.3.2",

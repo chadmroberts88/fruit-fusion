@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fruitfusion-dev-135356-authRole",
+      "UnauthRoleArn": "arn:aws:iam::326733283482:role/amplify-fruitfusion-dev-135356-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::326733283482:role/amplify-fruitfusion-dev-135356-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-fruitfusion-dev-135356-deployment",
+      "UnauthRoleName": "amplify-fruitfusion-dev-135356-unauthRole",
+      "StackName": "amplify-fruitfusion-dev-135356",
+      "StackId": "arn:aws:cloudformation:us-east-1:326733283482:stack/amplify-fruitfusion-dev-135356/cb88e6f0-39c9-11ed-a45b-12bd8a12c373",
+      "AmplifyAppId": "d3qvm5jlgvle6w"
+    },
+    "categories": {
+      "auth": {
+        "fruitfusionauth": {}
+      }
+    }
+  }
+}

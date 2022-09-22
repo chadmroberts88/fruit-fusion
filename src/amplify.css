@@ -1,0 +1,90 @@
+.amplify-button {
+  background-color: transparent;
+  border: none;
+  color: #1a7431;
+}
+
+.amplify-button:hover {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+}
+
+.amplify-button--fullwidth,
+.amplify-button--primary {
+  background-color: #f25c54;
+  color: #ffffff;
+}
+
+.amplify-button--fullwidth:hover,
+.amplify-button--primary:hover {
+  background-color: #ff847e;
+  color: #ffffff;
+}
+
+.amplify-button--link {
+  color: #1a7431;
+}
+
+.amplify-button--link:hover {
+  color: #f0fff2;
+  background-color: transparent;
+}
+
+.amplify-input {
+  background-color: #ffffff;
+}
+
+.amplify-field__show-password {
+  background-color: #ffffff;
+  border: 1px solid #838c95;
+  color: #838c95;
+}
+
+.amplify-field__show-password:hover {
+  background-color: #f0fff2;
+  border: 1px solid #838c95;
+  color: #838c95;
+}
+
+.amplify-field__show-password:focus {
+  background-color: #f0fff2;
+}
+
+.amplify-tabs {
+  border: none;
+}
+
+.amplify-tabs-item {
+  border-radius: 10px 10px 0 0;
+}
+
+.amplify-tabs-item[data-state="active"] {
+  background-color: #96e072;
+  border-color: #1a7431;
+  color: #1a7431;
+}
+
+.amplify-tabs-item[data-state="inactive"] {
+  background-color: #f0fff2;
+  border-color: #c0c0c0;
+  color: #c0c0c0;
+}
+
+[data-amplify-authenticator] [data-amplify-router] {
+  border-radius: 10px;
+  border: none;
+  background-color: #ffffef;
+}
+
+[data-amplify-router-content] {
+  background-color: #96e072;
+  border-radius: 0 0 10px 10px;
+}
+
+[data-amplify-authenticator-confirmsignup],
+[data-amplify-authenticator-resetpassword],
+[data-amplify-authenticator-confirmresetpassword] {
+  background-color: #96e072;
+  border-radius: 10px;
+}

@@ -5,14 +5,16 @@ import styled from 'styled-components'
 
 const Button = styled(IoMdRefresh)`
 	font-size: 2rem;
-	color: #1A7431;
+	color: #1a7431;
 	margin: 4px;
 	cursor: pointer;
+
+	:hover {
+		color: #299844;
+	}
 `;
 
 const ResetButton = () => {
-
-	const navigate = useNavigate();
 
 	return (
 		<Button onClick={() => { }} />

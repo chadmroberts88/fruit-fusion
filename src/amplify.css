@@ -71,10 +71,15 @@
   color: #c0c0c0;
 }
 
+[data-amplify-container] {
+  width: 90%;
+  max-width: 500px;
+}
+
 [data-amplify-authenticator] [data-amplify-router] {
   border-radius: 10px;
   border: none;
-  background-color: #ffffef;
+  background-color: #e8fccf;
 }
 
 [data-amplify-router-content] {

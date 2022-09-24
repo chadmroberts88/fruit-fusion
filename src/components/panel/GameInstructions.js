@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import SocialLink from './SocialLink';
+import { Typography } from '@mui/material';
+import React from 'react';
+import styled from 'styled-components';
 
 const Instructions = styled.div`
 	display: flex;
@@ -19,10 +19,6 @@ const Image = styled.img`
 	height: 7vmin;
 	width: 7vmin;
 	content: url(${props => props.imageUrl});
-`;
-
-const HorzRule = styled.hr`
-	margin: 10px 0px;
 `;
 
 const GameInstructions = () => {
@@ -48,68 +44,63 @@ const GameInstructions = () => {
 
 	return (
 		<Instructions>
-			<p>The objective of the game is to fuse as many pairs of like-colored fruit as possible until there are no more moves that can be made.</p>
-			<p>A pair of red fruit fuses to produce an orange fruit, a pair of orange fruit fuses into a yellow fruit, and so on. The number of points you earn for each fusion increases as you work your way through the colors of the rainbow.</p>
-			<strong>Red + Red = 10 pts.</strong>
+			<Typography>The objective of the game is to fuse as many pairs of like-colored fruit as possible until there are no more moves that can be made.</Typography>
+			<Typography>A pair of red fruit fuses to produce an orange fruit, a pair of orange fruit fuses into a yellow fruit, and so on. The number of points you earn for each fusion increases as you work your way through the colors of the rainbow.</Typography>
+			<Typography fontWeight='bold'>Red + Red = 10 pts.</Typography>
 			<ImageSection>
 				<Image imageUrl={apple} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={strawberry} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={cherries} alt="apple"></Image>
 			</ImageSection>
-			<strong>Orange + Orange = 20 pts.</strong>
+			<Typography fontWeight='bold'>Orange + Orange = 20 pts.</Typography>
 			<ImageSection>
 				<Image imageUrl={orange} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={pumpkin} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={mango} alt="apple"></Image>
 			</ImageSection>
-			<strong>Yellow + Yellow = 30 pts.</strong>
+			<Typography fontWeight='bold'>Yellow + Yellow = 30 pts.</Typography>
 			<ImageSection>
 				<Image imageUrl={bananas} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={lemon} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={pineapple} alt="apple"></Image>
 			</ImageSection>
-			<strong>Green + Green = 40 pts.</strong>
+			<Typography fontWeight='bold'>Green + Green = 40 pts.</Typography>
 			<ImageSection>
 				<Image imageUrl={pear} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={lime} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={melon} alt="apple"></Image>
 			</ImageSection>
-			<strong>Blue + Blue = 50 pts.</strong>
+			<Typography fontWeight='bold'>Blue + Blue = 50 pts.</Typography>
 			<ImageSection>
 				<Image imageUrl={blueberries} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={blueberry1} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={blueberry2} alt="apple"></Image>
 			</ImageSection>
-			<strong>Purple + Purple = 60 pts.</strong>
+			<Typography fontWeight='bold'>Purple + Purple = 60 pts.</Typography>
 			<ImageSection>
 				<Image imageUrl={grapes} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={plum} alt="apple"></Image>
-				<span>or</span>
+				<Typography>or</Typography>
 				<Image imageUrl={eggplant} alt="apple"></Image>
 			</ImageSection>
-			<p>Once you have made it through all six colors you will
+			<Typography>Once you have made it through all six colors you will
 				have collected a basket of fruit and your <strong>points multiplier </strong>
 				will increase. The more baskets of fruit you collect, the more points you can earn!
-				<strong> Baskets of fruit cannot be fused.</strong></p>
-			<p>Good luck!</p>
-			<HorzRule />
-			<p>
-				Fruit Fusion was developed by Chad Roberts. Check out more of my
-				work on <SocialLink link='https://www.linkedin.com/in/chadmroberts88'>LinkedIn</SocialLink> or <SocialLink link='https://github.com/chadmroberts88'>Github</SocialLink>.
-			</p>
+				<strong> Baskets of fruit cannot be fused.</strong></Typography>
+			<Typography>Good luck!</Typography>
 		</Instructions>
 	)
 }
 
-export default GameInstructions
+export default GameInstructions;

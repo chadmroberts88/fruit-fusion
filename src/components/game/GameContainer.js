@@ -1,16 +1,19 @@
-import { React } from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import BoardSpacer from './BoardSpacer'
-import GameBoard from './GameBoard'
-import HorzButtonContainer from './HorzButtonContainer'
-import VertButtonContainer from './VertButtonContainer'
-import GameOverModal from '../../modals/GameOverModal'
+import BoardSpacer from './BoardSpacer';
+import GameBoard from './GameBoard';
+import HorzButtonContainer from './HorzButtonContainer';
+import VertButtonContainer from './VertButtonContainer';
 
 const Container = styled.div`
 	display: grid;
 	align-items: center;
 	justify-content: center;
+
+	@media screen and (orientation: portrait) {
+		margin-top: 20px;
+	}
 `;
 
 const Grid = styled.div`
@@ -21,8 +24,6 @@ const Grid = styled.div`
     grid-template-rows: auto auto auto;
     overflow: hidden;
 `;
-
-
 
 const GameContainer = () => {
 
@@ -39,7 +40,6 @@ const GameContainer = () => {
 				<HorzButtonContainer buttonDir={'down'} />
 				<BoardSpacer />
 			</Grid>
-			<GameOverModal />
 		</Container>
 	)
 }

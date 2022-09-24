@@ -1,16 +1,20 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FaUserAlt } from 'react-icons/fa'
+import { IoSettingsSharp } from 'react-icons/io5'
 import styled from 'styled-components'
 
-const Button = styled(FaUserAlt)`
+const Button = styled(IoSettingsSharp)`
 	font-size: 1.7rem;
-	color: #1A7431;
+	color: #1a7431;
 	margin: 4px;
 	cursor: pointer;
+
+	:hover {
+		color: #299844;
+	}
 `;
 
-const UserButton = ({ path }) => {
+const SettingsButton = ({ path }) => {
 
 	const navigate = useNavigate();
 
@@ -19,4 +23,4 @@ const UserButton = ({ path }) => {
 	)
 }
 
-export default UserButton
+export default SettingsButton;

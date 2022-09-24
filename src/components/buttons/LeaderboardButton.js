@@ -5,9 +5,13 @@ import styled from 'styled-components'
 
 const Button = styled(MdLeaderboard)`
 	font-size: 2rem;
-	color: #1A7431;
+	color: #1a7431;
 	margin: 4px;
 	cursor: pointer;
+
+	:hover {
+		color: #299844;
+	}
 `;
 
 const LeaderboardButton = ({ path }) => {

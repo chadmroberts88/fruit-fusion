@@ -7,9 +7,7 @@ import StatSection from '../dashboard/StatSection'
 
 const Dashboard = styled.div`
 	display: grid;
-	column-gap: 1vmin;
-	row-gap: 1vmin;
-	padding: 1vmin;
+	gap: 6px;
 
 	@media screen and (orientation: landscape) {
 		grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -19,7 +17,6 @@ const Dashboard = styled.div`
 	@media screen and (orientation: portrait) {
 		grid-template-rows: 1fr;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
-
 	}
 `;
 

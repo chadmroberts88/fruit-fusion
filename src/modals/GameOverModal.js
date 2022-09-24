@@ -1,74 +1,75 @@
-import { React, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { UserDataContext } from '../context/UserDataContext'
-import { GameContext } from '../context/GameContext'
-import styled from 'styled-components'
-
-import Modal from '../components/modal/Modal'
-import PrimaryButton from '../components/panel/PrimaryButton'
+import React, { useContext } from 'react';
+import { Modal, Box, IconButton, Button } from '@mui/material';
+import { Close } from '@mui/icons-material';
+import styled from 'styled-components';
+import { GameContext } from '../context/GameContext';
 
 const ModalImage = styled.img`
 	justify-self: center;
-    width: 40vmin;
-    height: 28vmin;
+  width: 30vmin;
+  height: 21vmin;
 	margin: 1vmin 0;
-    content: url(${props => props.imageUrl});
+  content: url(${props => props.imageUrl});
 `;
 
-const ModalStats = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    margin: 2vmin 0;
-`;
+const PlayAgainButton = styled(Button)`
+		&& {
+			margin-top: 10px;
+			text-transform: none;
+			background-color: #f25c54;
+			width: 100%;
 
-const StatsSection = styled.div`
-    display: flex;
-    flex-direction: column;
-	row-gap: 1vmin;
-`;
+			:hover {
+				background-color: #ff847e;
+			}
+		}
+	`;
 
 const GameOverModal = () => {
 
-	const { userData, loggedIn } = useContext(UserDataContext);
-	const { gameData, gameOverModalOpen, closeGameOverModal } = useContext(GameContext);
-	const navigate = useNavigate();
+	const { gameOverModalOpen, closeGameOverModal } = useContext(GameContext);
+
+	const containerStyle = {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		width: '80%',
+		maxWidth: 300,
+		bgcolor: '#96e072',
+		borderRadius: '10px',
+		boxShadow: 24,
+		padding: '20px',
+	};
+
+	const headerStyle = {
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		marginBottom: '10px',
+	}
 
 	const modalImageUrl = require('../images/game-over.png');
 
 	return (
-		<> {gameOverModalOpen ?
-			<Modal
-				headerText={'Game Over'}
-				footerButtonText={'New Game'}
-				footerButtonHandler={closeGameOverModal}
-			>
-				<ModalStats>
-					<StatsSection>
-						<h3>Score:</h3>
-						<h4>{gameData.score}</h4>
-					</StatsSection>
-					<StatsSection>
-						<h3>Best:</h3>
-						<h4>{userData.best}</h4>
-					</StatsSection>
-				</ModalStats>
-
-				{
-					loggedIn ?
-						<ModalImage imageUrl={modalImageUrl} /> :
-						<p>Your score won't be posted to the leaderboard when playing as a Guest. Would you like to create an account so your best score will be saved?</p>
-				}
-
-				{
-					loggedIn ?
-						null :
-						<PrimaryButton text={'Create Account'} handleClick={() => { navigate('/create-account') }} />
-				}
-			</Modal>
-			: null}</>
+		<Modal open={gameOverModalOpen} onClose={() => { closeGameOverModal() }}>
+			<Box sx={containerStyle}>
+				<Box sx={headerStyle}>
+					<h2>Game Over...</h2>
+					<IconButton onClick={() => { closeGameOverModal() }}><Close /></IconButton>
+				</Box>
+				<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+					<ModalImage imageUrl={modalImageUrl} />
+				</Box>
+				<PlayAgainButton
+					variant='contained'
+					onClick={() => { closeGameOverModal() }}
+				>
+					Play Again
+				</PlayAgainButton>
+			</Box >
+		</Modal >
 	)
 }
 
-export default GameOverModal
+export default GameOverModal;

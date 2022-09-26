@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Modal, Box, IconButton, Button } from '@mui/material';
+import { Modal, Box, IconButton, Button, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import styled from 'styled-components';
 import { GameContext } from '../context/GameContext';
@@ -55,7 +55,7 @@ const GameOverModal = () => {
 		<Modal open={gameOverModalOpen} onClose={() => { closeGameOverModal() }}>
 			<Box sx={containerStyle}>
 				<Box sx={headerStyle}>
-					<h2>Game Over...</h2>
+					<Typography variant='h2'>Game Over...</Typography>
 					<IconButton onClick={() => { closeGameOverModal() }}><Close /></IconButton>
 				</Box>
 				<Box sx={{ display: 'flex', justifyContent: 'center' }}>

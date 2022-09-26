@@ -1,21 +1,7 @@
 import React, { useState } from 'react';
-import { Modal, Box, Switch, FormGroup, FormControlLabel, IconButton, Icon } from '@mui/material';
+import { Modal, Box, Switch, FormGroup, FormControlLabel, IconButton, Icon, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import styled from 'styled-components';
-
-const SubmitButton = styled(LoadingButton)`
-		&& {
-			margin-top: 10px;
-			text-transform: none;
-			background-color: #f25c54;
-			width: 100%;
-
-			:hover {
-				background-color: #ff847e;
-			}
-		}
-	`;
 
 const SettingsModal = ({ open, handleClose }) => {
 
@@ -30,8 +16,8 @@ const SettingsModal = ({ open, handleClose }) => {
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
 		width: '80%',
-		maxWidth: 300,
-		bgcolor: '#96e072',
+		maxWidth: '300px',
+		backgroundColor: 'primary.main',
 		borderRadius: '10px',
 		boxShadow: 24,
 		padding: '20px',
@@ -44,13 +30,20 @@ const SettingsModal = ({ open, handleClose }) => {
 		marginBottom: '10px',
 	}
 
+	const buttonStyle = {
+		marginTop: '10px',
+		textTransform: 'none',
+		width: '100%'
+	}
+
 	return (
 		<Modal open={open} onClose={handleClose}>
 			<Box sx={containerStyle}>
 				<Box sx={headerStyle}>
-					<h2>Settings</h2>
+					<Typography variant='h2'>Settings</Typography>
 					<IconButton onClick={() => { handleClose() }}><Close /></IconButton>
 				</Box>
+
 				<FormGroup>
 					<FormControlLabel
 						label="Sound Effects"
@@ -77,15 +70,17 @@ const SettingsModal = ({ open, handleClose }) => {
 						/>}
 					/>
 				</FormGroup>
-				<SubmitButton
+				<LoadingButton
 					variant='contained'
+					color='secondary'
+					sx={buttonStyle}
 					loading={isSaving}
 					loadingPosition="start"
 					startIcon={<Icon>save</Icon>}
 					onClick={() => { console.log("Clicked") }}
 				>
 					Save Changes
-				</SubmitButton>
+				</LoadingButton>
 			</Box >
 		</Modal >
 	)

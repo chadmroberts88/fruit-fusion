@@ -1,22 +1,23 @@
-import { React, useContext, useState } from 'react';
-import { UserDataContext } from '../context/UserDataContext';
+import React, { useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import styled from 'styled-components';
 
-import GameDashboard from '../components/game/GameDashboard';
-import GameContainer from '../components/game/GameContainer';
-import GameMenu from '../components/game/GameMenu';
+import Dashboard from '../components/main/Dashboard';
+import Game from '../components/main/Game';
 import SettingsModal from '../modals/SettingsModal';
-import HowToModal from '../modals/HowToModal';
+import HowToPlayModal from '../modals/HowToPlayModal';
 import LeaderboardModal from '../modals/LeaderboardModal';
 import GameOverModal from '../modals/GameOverModal';
-import ResetModal from '../modals/ResetModal';
-import Controls from '../components/game/Controls';
+import ResetGameModal from '../modals/ResetGameModal';
 
 const Page = styled.div`
+	background-color: ${props => props.bgColor};
 	padding: 10px;
 	width: 100vw;
-	height: 100vh;
 	gap: 6px;
+	height: fill-available;
+	height: -webkit-fill-available;
+	height: -moz-fill-available;
 
 	@media screen and (orientation: landscape){
 		display: grid;
@@ -27,16 +28,12 @@ const Page = styled.div`
 	@media screen and (orientation: portrait) {
 		display: flex;
 		flex-direction: column;
-		
-		@supports (-webkit-touch-callout: none) {
-			height: -webkit-fill-available;
-		}
 	}
 
 `;
 
 const GamePage = () => {
-	const { userData } = useContext(UserDataContext);
+	const theme = useTheme();
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const [howToOpen, setHowToOpen] = useState(false);
 	const [leaderboardOpen, setLeaderboardOpen] = useState(false);
@@ -51,16 +48,21 @@ const GamePage = () => {
 	const openReset = () => { setResetOpen(true) };
 
 	return (
-		<Page id="game-page" bgColor={userData.darkModeOn ? '#000000' : '#E8FCCF'}>
-			<Controls />
-			<GameContainer />
+		<Page bgColor={theme.palette.background.default}>
+			<Dashboard menuHandlers={{
+				openSettings,
+				openHowTo,
+				openLeaderboard,
+				openReset
+			}} />
+			<Game />
 			<SettingsModal open={settingsOpen} handleClose={closeSettings} />
-			<HowToModal open={howToOpen} handleClose={closeHowTo} />
+			<HowToPlayModal open={howToOpen} handleClose={closeHowTo} />
 			<LeaderboardModal open={leaderboardOpen} handleClose={closeLeaderboard} />
-			<ResetModal open={resetOpen} handleClose={closeReset} />
+			<ResetGameModal open={resetOpen} handleClose={closeReset} />
 			<GameOverModal />
 		</Page>
 	)
 }
 
-export default GamePage
+export default GamePage;

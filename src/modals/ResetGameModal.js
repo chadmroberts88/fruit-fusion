@@ -1,23 +1,9 @@
 import React, { useContext } from 'react';
 import { Modal, Box, Button, IconButton, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import styled from 'styled-components';
 import { GameContext } from '../context/GameContext';
 
-const ResetButton = styled(Button)`
-		&& {
-			margin-top: 10px;
-			text-transform: none;
-			background-color: #f25c54;
-			width: 100%;
-
-			:hover {
-				background-color: #ff847e;
-			}
-		}
-	`;
-
-const ResetModal = ({ open, handleClose }) => {
+const ResetGameModal = ({ open, handleClose }) => {
 
 	const { handleGameAction } = useContext(GameContext);
 
@@ -28,7 +14,7 @@ const ResetModal = ({ open, handleClose }) => {
 		transform: 'translate(-50%, -50%)',
 		width: '80%',
 		maxWidth: 300,
-		bgcolor: '#96e072',
+		bgcolor: 'primary.main',
 		borderRadius: '10px',
 		boxShadow: 24,
 		padding: '20px',
@@ -41,29 +27,37 @@ const ResetModal = ({ open, handleClose }) => {
 		marginBottom: '10px',
 	}
 
+	const buttonStyle = {
+		marginTop: '10px',
+		textTransform: 'none',
+		width: '100%'
+	}
+
 	return (
 		<Modal open={open} onClose={handleClose}>
 			<Box sx={containerStyle}>
 				<Box sx={headerStyle}>
-					<h2>Reset Game</h2>
+					<Typography variant='h2'>Reset Game?</Typography>
 					<IconButton onClick={() => { handleClose() }}><Close /></IconButton>
 				</Box>
 				<Typography>
 					You are about to throw your fruit in the trash and start a new game.
 					Are you sure?
 				</Typography>
-				<ResetButton
+				<Button
 					variant='contained'
+					color='secondary'
+					sx={buttonStyle}
 					onClick={() => {
 						handleGameAction('newGame');
 						handleClose();
 					}}
 				>
 					Reset
-				</ResetButton>
+				</Button>
 			</Box >
 		</Modal >
 	)
 }
 
-export default ResetModal;
+export default ResetGameModal;

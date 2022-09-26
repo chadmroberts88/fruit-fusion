@@ -1,38 +1,32 @@
 import React from 'react';
-import { Modal, Box, IconButton, Typography } from '@mui/material';
+import { Modal, Box, IconButton, Typography, useTheme } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import styled from 'styled-components';
-import LeaderboardEntry from '../components/panel/LeaderboardEntry';
+import LeaderboardEntry from '../components/content/LeaderboardEntry';
 
 const ContentSection = styled.div`
+	background-color: ${props => props.bgColor};
 	height: 76%;
-	background-color: #F0FFF2;
 	padding: 10px;
 	border-radius: 0 0 10px 10px;
 	overflow: hidden auto;
 `;
 
 const LeaderboardHeader = styled.div`
-    display: grid;
-    grid-template-columns: 20% 38% 30%;
-    column-gap: 4%;
-    align-items: center;
-    padding: 4px 10px;
-		background-color: #1a7431;
-		border-radius: 10px 10px 0 0;
+	background-color: ${props => props.bgColor};
+	display: grid;
+	grid-template-columns: 20% 38% 30%;
+	column-gap: 4%;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 10px 10px 0 0;
 `;
 
-const LeaderBoardHeaderSection = styled.div`
+const LeaderboardHeaderSection = styled.div`
 	width: 100%;
 	overflow: hidden;
 	padding: 0 10px;
-`;
-
-const HeaderText = styled(Typography)`
-	&& {
-		color: #FFFFFF;
-		font-weight: bold;
-	}
+	margin-top: 2px;
 `;
 
 const Leaderboard = styled.div`
@@ -45,6 +39,8 @@ const Leaderboard = styled.div`
 
 const LeaderboardModal = ({ open, handleClose }) => {
 
+	const theme = useTheme();
+
 	const containerStyle = {
 		position: 'absolute',
 		top: '50%',
@@ -54,7 +50,7 @@ const LeaderboardModal = ({ open, handleClose }) => {
 		height: '60%',
 		maxWidth: '600px',
 		maxHeight: '600px',
-		bgcolor: '#96e072',
+		backgroundColor: 'primary.main',
 		borderRadius: '10px',
 		boxShadow: 24,
 		padding: '20px',
@@ -79,17 +75,7 @@ const LeaderboardModal = ({ open, handleClose }) => {
 	let sortedObjects = userObjects.sort((a, b) => b.best - a.best);
 
 	let leaderboardEntries = [
-		<LeaderboardEntry key={99} rank={99} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
-		<LeaderboardEntry key={100} rank={100} username={'Testy'} score={12345} />,
+		<LeaderboardEntry key={99} rank={99} username={'Testy'} score={12345} />
 	];
 
 	for (let i = 0; i < sortedObjects.length; i++) {
@@ -102,21 +88,25 @@ const LeaderboardModal = ({ open, handleClose }) => {
 		<Modal open={open} onClose={handleClose}>
 			<Box sx={containerStyle}>
 				<Box sx={headerStyle}>
-					<h2>Leaderboard</h2>
-					<IconButton onClick={() => { handleClose() }}><Close /></IconButton>
+					<Typography variant='h2'>Leaderboard</Typography>
+					<IconButton onClick={() => { handleClose() }}>
+						<Close />
+					</IconButton>
 				</Box>
-				<LeaderboardHeader>
-					<LeaderBoardHeaderSection>
-						<HeaderText>Rank</HeaderText>
-					</LeaderBoardHeaderSection>
-					<LeaderBoardHeaderSection>
-						<HeaderText>Player</HeaderText>
-					</LeaderBoardHeaderSection>
-					<LeaderBoardHeaderSection>
-						<HeaderText>Score</HeaderText>
-					</LeaderBoardHeaderSection>
+
+				<LeaderboardHeader bgColor={theme.palette.primary.dark}>
+					<LeaderboardHeaderSection>
+						<Typography variant='h6'>Rank</Typography>
+					</LeaderboardHeaderSection>
+					<LeaderboardHeaderSection>
+						<Typography variant='h6'>Player</Typography>
+					</LeaderboardHeaderSection>
+					<LeaderboardHeaderSection>
+						<Typography variant='h6'>Score</Typography>
+					</LeaderboardHeaderSection>
 				</LeaderboardHeader>
-				<ContentSection>
+
+				<ContentSection bgColor={theme.palette.background.paper}>
 					<Leaderboard>
 						{leaderboardEntries}
 					</Leaderboard>

@@ -2,9 +2,10 @@ import { React, useState, memo, useContext } from 'react'
 import { UserDataContext } from '../../context/UserDataContext'
 import { GameContext } from '../../context/GameContext'
 import styled from 'styled-components'
+import { useTheme } from '@mui/system';
 
 const Cell = styled.div`
-    background-color: ${props => props.color};
+    background-color: ${props => props.bgColor};
     border-radius: 2vmin;
 		touch-action: none;
 `;
@@ -15,6 +16,7 @@ const BoardCell = ({ cellRow, cellCol }) => {
 	const [touchStartY, setTouchStartY] = useState(null);
 	const { handleGameAction } = useContext(GameContext);
 	const { userData } = useContext(UserDataContext);
+	const theme = useTheme();
 
 	const minSwipeDistance = 50;
 
@@ -65,7 +67,7 @@ const BoardCell = ({ cellRow, cellCol }) => {
 			className="cell"
 			onTouchStart={userData.useSwipeOn ? handleTouchStart : null}
 			onTouchEnd={userData.useSwipeOn ? handleTouchEnd : null}
-			color={userData.darkModeOn ? '#404040' : '#F0FFF2'}
+			bgColor={theme.palette.background.paper}
 		>
 		</Cell>
 	)

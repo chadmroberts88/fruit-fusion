@@ -1,37 +1,59 @@
-import { React, memo, useContext } from 'react'
-import { UserDataContext } from '../../context/UserDataContext'
-import styled from 'styled-components'
+import React, { useContext } from 'react';
+import { Typography, Button, useTheme } from '@mui/material';
+import { AuthContext } from '../../context/AuthContext';
+import styled from 'styled-components';
 
-import PhotoSection from '../panel/PhotoSection'
-
-const Section = styled.div`
+const Container = styled.div`
+	background-color: ${props => props.bgColor};
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-`;
-
-const Username = styled.div`
+	justify-content: space-between;
+	border-radius: 10px;
+	padding: 10px;
 	white-space: nowrap;
-	color: ${props => props.color};
 	overflow: hidden;
-	text-overflow: ellipsis;
-	text-align: center;
+	gap: 10px;
 `;
 
-const UserSection = ({ children }) => {
+const WelcomeSection = styled.div`
+	display: flex;
+	white-space: nowrap;
+	overflow: hidden;
 
-	const { userData } = useContext(UserDataContext);
+	@media screen and (orientation: landscape){
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	@media screen and (orientation: portrait) {
+		flex-direction: row;
+		align-items: center;
+		gap: 6px;
+	}
+`;
+
+const UserSection = () => {
+
+	const { signOut, user } = useContext(AuthContext);
+	const theme = useTheme();
 
 	return (
-		<Section id='user-section'>
-			<PhotoSection size={'10vmin'} />
-			{/* <Username color={userData.darkModeOn ? 'white' : 'black'}>
-				{userData.username}
-			</Username> */}
-			{children}
-		</Section >
+		<Container bgColor={theme.palette.primary.dark}>
+			<WelcomeSection>
+				<Typography variant='h3'>Welcome 👋</Typography>
+				<Typography variant='body2'>{`${user.attributes.preferred_username}`}</Typography>
+			</WelcomeSection>
+			<Button
+				variant='contained'
+				color='secondary'
+				size='small'
+				sx={{ textTransform: 'none' }}
+				onClick={() => { signOut() }}
+			>
+				Sign Out
+			</Button>
+		</Container>
 	)
 }
 
-export default memo(UserSection)
+export default UserSection;

@@ -17,7 +17,7 @@ const GameProvider = ({ children }) => {
 	const [gapSize] = useState('1vmin');
 	const [cellSize, setCellSize] = useState(userData.useSwipeOn ? '15vmin' : '14vmin');
 	const [newGame, setNewGame] = useState(true);
-	const [gameOverModalOpen, setGameOverModalOpen] = useState(true);
+	const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
 
 	function initializeTiles(qty) {
 

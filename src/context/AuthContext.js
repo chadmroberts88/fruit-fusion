@@ -15,12 +15,9 @@ const AuthContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: 100vh;
-	background-color: #e8fccf;
-	
-	@supports (-webkit-touch-callout: none) {
-		height: -webkit-fill-available;
-	}
+	height: fill-available;
+	height: -webkit-fill-available;
+	height: -moz-fill-available;
 `;
 
 const HeaderContainer = styled.div`
@@ -41,11 +38,9 @@ const FooterContainer = styled.div`
 	font-size: 0.75rem;
 `;
 
-const StyledIconButton = styled(IconButton)`
-	&& {
-		color: #000000;
-	}
-`;
+const iconStyles = {
+	color: '#000000',
+}
 
 const formFields = {
 	signUp: {
@@ -71,15 +66,15 @@ const components = {
 			<FooterContainer>
 				Developed by Chad Roberts.
 				<Box>
-					<StyledIconButton href='https://github.com/chadmroberts88' target='_blank'>
+					<IconButton sx={iconStyles} href='https://github.com/chadmroberts88' target='_blank'>
 						<GitHub fontSize='inherit' />
-					</StyledIconButton>
-					<StyledIconButton href={"https://www.linkedin.com/in/chadmroberts88"} target="_blank">
+					</IconButton>
+					<IconButton sx={iconStyles} href={"https://www.linkedin.com/in/chadmroberts88"} target="_blank">
 						<LinkedIn fontSize='inherit' />
-					</StyledIconButton>
-					<StyledIconButton href={"https://chadroberts.webflow.io"} target="_blank">
+					</IconButton>
+					<IconButton sx={iconStyles} href={"https://chadroberts.webflow.io"} target="_blank">
 						<Language fontSize='inherit' />
-					</StyledIconButton>
+					</IconButton>
 				</Box>
 			</FooterContainer>
 		)

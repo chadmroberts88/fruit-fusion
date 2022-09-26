@@ -1,11 +1,11 @@
-import { React, memo, useContext } from 'react'
-import { GameContext } from '../../context/GameContext'
-import { UserDataContext } from '../../context/UserDataContext'
-import styled from 'styled-components'
-import BoardCell from '../../components/game/BoardCell'
+import React, { memo, useContext } from 'react';
+import { GameContext } from '../../context/GameContext';
+import styled from 'styled-components';
+import BoardCell from '../../components/game/BoardCell';
+import { useTheme } from '@mui/system';
 
 const Container = styled.div`
-    background-color: ${props => props.color};
+    background-color: ${props => props.bgColor};
 		display: grid;
     grid-template-columns: repeat(${props => props.gridSize}, ${props => props.cellSize});
     grid-template-rows: repeat(${props => props.gridSize}, ${props => props.cellSize});
@@ -20,7 +20,7 @@ const Container = styled.div`
 const CellsContainer = () => {
 
 	const { gridSize, cellSize, gapSize } = useContext(GameContext);
-	const { userData } = useContext(UserDataContext)
+	const theme = useTheme();
 	const cellComponents = [];
 
 	for (let i = 0; i < gridSize; i++) {
@@ -30,7 +30,7 @@ const CellsContainer = () => {
 	}
 
 	return (
-		<Container id="cells-container" color={userData.darkModeOn ? '#282828' : '#96E072'} gridSize={gridSize} cellSize={cellSize} gapSize={gapSize}>
+		<Container id="cells-container" bgColor={theme.palette.primary.dark} gridSize={gridSize} cellSize={cellSize} gapSize={gapSize}>
 			{cellComponents}
 		</Container>
 	)

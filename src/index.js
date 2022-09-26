@@ -4,20 +4,20 @@ import './index.css';
 import App from './App';
 import UserDataProvider from './context/UserDataContext';
 import GameProvider from './context/GameContext';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
 import AuthProvider from './context/AuthContext';
+import { ThemeProvider } from '@mui/material/styles';
+import { setTheme } from './Themes';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-	<AuthProvider>
-		<UserDataProvider>
-			<GameProvider>
-				<App />
-			</GameProvider>
-		</UserDataProvider>
-	</AuthProvider>
+	<ThemeProvider theme={setTheme('dark')}>
+		<AuthProvider>
+			<UserDataProvider>
+				<GameProvider>
+					<App />
+				</GameProvider>
+			</UserDataProvider>
+		</AuthProvider>
+	</ ThemeProvider >
 );

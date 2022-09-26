@@ -1,15 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import BoardSpacer from './BoardSpacer';
-import GameBoard from './GameBoard';
-import HorzButtonContainer from './HorzButtonContainer';
-import VertButtonContainer from './VertButtonContainer';
+import BoardSpacer from '../game/BoardSpacer'
+import GameBoard from '../game/GameBoard';
+import HorzButtonContainer from '../game/HorzButtonContainer';
+import VertButtonContainer from '../game/VertButtonContainer';
 
 const Container = styled.div`
 	display: grid;
 	align-items: center;
 	justify-content: center;
+
+	@media screen and (orientation: landscape) {
+		height: 96vh;
+	}
 
 	@media screen and (orientation: portrait) {
 		margin-top: 20px;
@@ -28,7 +32,7 @@ const Grid = styled.div`
 const GameContainer = () => {
 
 	return (
-		<Container id="game-container">
+		<Container>
 			<Grid>
 				<BoardSpacer />
 				<HorzButtonContainer buttonDir={'up'} />

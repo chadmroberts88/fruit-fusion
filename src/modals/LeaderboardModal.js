@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Modal, Box, IconButton, Typography, useTheme } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import styled from 'styled-components';
 import LeaderboardEntry from '../components/content/LeaderboardEntry';
+import { UserContext } from '../context/UserContext';
 
 const ContentSection = styled.div`
 	background-color: ${props => props.bgColor};
-	height: 76%;
+	flex: 1;
 	padding: 10px;
 	border-radius: 0 0 10px 10px;
 	overflow: hidden auto;
@@ -40,9 +41,13 @@ const Leaderboard = styled.div`
 const LeaderboardModal = ({ open, handleClose }) => {
 
 	const theme = useTheme();
+	const [entries, setEntries] = useState([]);
+	const { fetchLeaders } = useContext(UserContext);
 
 	const containerStyle = {
 		position: 'absolute',
+		display: 'flex',
+		flexDirection: 'column',
 		top: '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
@@ -63,26 +68,25 @@ const LeaderboardModal = ({ open, handleClose }) => {
 		marginBottom: '10px',
 	}
 
-	let userObjects = [];
-	let usersList = JSON.parse(localStorage.getItem("UsersList"));
-	Object.entries(usersList).forEach(entry => {
-		const [key, value] = entry;
-		if (key !== 'Guest') {
-			userObjects.push(value);
-		}
-	});
+	const generateEntries = (leaders) => {
+		const entries = [];
+		leaders.forEach((leader, index) => {
+			entries.push(
+				<LeaderboardEntry key={index} rank={index + 1} username={leader.username} score={leader.best} />
+			);
+		});
+		return entries;
+	};
 
-	let sortedObjects = userObjects.sort((a, b) => b.best - a.best);
-
-	let leaderboardEntries = [
-		<LeaderboardEntry key={99} rank={99} username={'Testy'} score={12345} />
-	];
-
-	for (let i = 0; i < sortedObjects.length; i++) {
-		leaderboardEntries.push(
-			<LeaderboardEntry key={i} rank={i + 1} username={sortedObjects[i].username} score={sortedObjects[i].best} />
-		)
-	}
+	useEffect(() => {
+		fetchLeaders()
+			.then((leaders) => {
+				setEntries(generateEntries(leaders));
+			})
+			.catch((error) => {
+				console.log(error)
+			})
+	}, [fetchLeaders]);
 
 	return (
 		<Modal open={open} onClose={handleClose}>
@@ -108,7 +112,7 @@ const LeaderboardModal = ({ open, handleClose }) => {
 
 				<ContentSection bgColor={theme.palette.background.paper}>
 					<Leaderboard>
-						{leaderboardEntries}
+						{entries}
 					</Leaderboard>
 				</ContentSection>
 			</Box >

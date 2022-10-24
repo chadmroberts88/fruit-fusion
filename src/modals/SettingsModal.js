@@ -1,14 +1,46 @@
-import React, { useState } from 'react';
-import { Modal, Box, Switch, FormGroup, FormControlLabel, IconButton, Icon, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { Modal, Box, Switch, FormGroup, FormControlLabel, IconButton, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import LoadingButton from '@mui/lab/LoadingButton';
+import { UserContext } from '../context/UserContext';
 
-const SettingsModal = ({ open, handleClose }) => {
+const SettingsModal = ({ open, handleClose, userData }) => {
 
-	const [isSaving] = useState(false);
-	const [soundEffectsOn, setSoundEffectsOn] = useState(true);
-	const [darkModeOn, setDarkModeOn] = useState(true);
-	const [useSwipeOn, setUseSwipeOn] = useState(true);
+	const { updateUser } = useContext(UserContext);
+	const [soundOn, setSoundOn] = useState(false);
+	const [darkModeOn, setDarkModeOn] = useState(false);
+	const [useSwipeOn, setUseSwipeOn] = useState(false);
+
+	useEffect(() => {
+		if (userData !== undefined) {
+			setSoundOn(userData.soundOn);
+			setDarkModeOn(userData.darkModeOn);
+			setUseSwipeOn(userData.useSwipeOn);
+		}
+	}, [userData]);
+
+	const handleChangeSoundEffects = () => {
+		setSoundOn(!soundOn);
+		updateUser(userData.id, { soundOn: !soundOn })
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	const handleChangeDarkMode = () => {
+		setDarkModeOn(!darkModeOn);
+		updateUser(userData.id, { darkModeOn: !darkModeOn })
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	const handleChangeUseSwipe = () => {
+		setUseSwipeOn(!useSwipeOn);
+		updateUser(userData.id, { useSwipeOn: !useSwipeOn })
+			.catch((error) => {
+				console.log(error);
+			});
+	}
 
 	const containerStyle = {
 		position: 'absolute',
@@ -30,12 +62,6 @@ const SettingsModal = ({ open, handleClose }) => {
 		marginBottom: '10px',
 	}
 
-	const buttonStyle = {
-		marginTop: '10px',
-		textTransform: 'none',
-		width: '100%'
-	}
-
 	return (
 		<Modal open={open} onClose={handleClose}>
 			<Box sx={containerStyle}>
@@ -49,8 +75,10 @@ const SettingsModal = ({ open, handleClose }) => {
 						label="Sound Effects"
 						control={<Switch
 							color='success'
-							checked={soundEffectsOn}
-							onChange={() => { setSoundEffectsOn(!soundEffectsOn) }}
+							checked={soundOn}
+							onChange={() => {
+								handleChangeSoundEffects();
+							}}
 						/>}
 					/>
 					<FormControlLabel
@@ -58,7 +86,9 @@ const SettingsModal = ({ open, handleClose }) => {
 						control={<Switch
 							color='success'
 							checked={darkModeOn}
-							onChange={() => { setDarkModeOn(!darkModeOn) }}
+							onChange={() => {
+								handleChangeDarkMode();
+							}}
 						/>}
 					/>
 					<FormControlLabel
@@ -66,21 +96,12 @@ const SettingsModal = ({ open, handleClose }) => {
 						control={<Switch
 							color='success'
 							checked={useSwipeOn}
-							onChange={() => { setUseSwipeOn(!useSwipeOn) }}
+							onChange={() => {
+								handleChangeUseSwipe();
+							}}
 						/>}
 					/>
 				</FormGroup>
-				<LoadingButton
-					variant='contained'
-					color='secondary'
-					sx={buttonStyle}
-					loading={isSaving}
-					loadingPosition="start"
-					startIcon={<Icon>save</Icon>}
-					onClick={() => { console.log("Clicked") }}
-				>
-					Save Changes
-				</LoadingButton>
 			</Box >
 		</Modal >
 	)

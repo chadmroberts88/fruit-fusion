@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { UserDataContext } from '../../context/UserDataContext';
+import { UserContext } from '../../context/UserContext';
 import { GameContext } from '../../context/GameContext';
 import { Typography, useTheme } from '@mui/material';
 import styled from 'styled-components';
@@ -35,7 +35,7 @@ const Section = styled.div`
 
 const StatsSection = () => {
 
-	const { userData } = useContext(UserDataContext);
+	const { userData, rank } = useContext(UserContext);
 	const { gameData } = useContext(GameContext);
 	const theme = useTheme();
 
@@ -58,7 +58,7 @@ const StatsSection = () => {
 
 			<Section bgColor={theme.palette.primary.main}>
 				<Typography variant='h5'>Rank</Typography>
-				<Typography variant='h4'>{userData.rank}</Typography>
+				<Typography variant='h4'>{rank}</Typography>
 			</Section>
 		</Container>
 	)

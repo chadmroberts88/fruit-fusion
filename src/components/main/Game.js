@@ -29,7 +29,7 @@ const Grid = styled.div`
     overflow: hidden;
 `;
 
-const GameContainer = () => {
+const Game = () => {
 
 	return (
 		<Container>
@@ -48,4 +48,4 @@ const GameContainer = () => {
 	)
 }
 
-export default GameContainer
+export default Game;

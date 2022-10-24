@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import styled from 'styled-components';
 
@@ -9,6 +9,8 @@ import HowToPlayModal from '../modals/HowToPlayModal';
 import LeaderboardModal from '../modals/LeaderboardModal';
 import GameOverModal from '../modals/GameOverModal';
 import ResetGameModal from '../modals/ResetGameModal';
+import { AuthContext } from '../context/AuthContext';
+import { UserContext } from '../context/UserContext';
 
 const Page = styled.div`
 	background-color: ${props => props.bgColor};
@@ -34,6 +36,10 @@ const Page = styled.div`
 
 const GamePage = () => {
 	const theme = useTheme();
+
+	const { user } = useContext(AuthContext);
+	const { userData } = useContext(UserContext);
+
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const [howToOpen, setHowToOpen] = useState(false);
 	const [leaderboardOpen, setLeaderboardOpen] = useState(false);
@@ -56,7 +62,7 @@ const GamePage = () => {
 				openReset
 			}} />
 			<Game />
-			<SettingsModal open={settingsOpen} handleClose={closeSettings} />
+			<SettingsModal open={settingsOpen} handleClose={closeSettings} userData={userData} />
 			<HowToPlayModal open={howToOpen} handleClose={closeHowTo} />
 			<LeaderboardModal open={leaderboardOpen} handleClose={closeLeaderboard} />
 			<ResetGameModal open={resetOpen} handleClose={closeReset} />

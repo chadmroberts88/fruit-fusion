@@ -1,23 +1,63 @@
-import { createContext, useContext, useState, useEffect } from "react"
-import { UserDataContext } from '../context/UserDataContext'
+import { createContext, useContext, useState, useEffect } from 'react';
+import { AuthContext } from './AuthContext';
+import { UserContext } from './UserContext';
 
-import moveTiles from '../sounds/moveTiles.mp3'
-import incMultiplier from '../sounds/incMultiplier.mp3'
-import gameOver from '../sounds/gameOver.mp3'
+import moveTiles from '../sounds/moveTiles.mp3';
+import incMultiplier from '../sounds/incMultiplier.mp3';
+import gameOver from '../sounds/gameOver.mp3';
 
 export const GameContext = createContext({})
 
 const GameProvider = ({ children }) => {
 
-	const { userData, updateUserData, getCurrentUser } = useContext(UserDataContext);
+	const { user } = useContext(AuthContext);
+	const { userData } = useContext(UserContext);
+	const standardHeaders = { 'Content-Type': 'application/json' };
+
 	const [moveTilesSound] = useState(new Audio(moveTiles));
 	const [incMultiplierSound] = useState(new Audio(incMultiplier));
 	const [gameOverSound] = useState(new Audio(gameOver));
 	const [gridSize] = useState(5);
 	const [gapSize] = useState('1vmin');
-	const [cellSize, setCellSize] = useState(userData.useSwipeOn ? '15vmin' : '14vmin');
+	const [cellSize, setCellSize] = useState('14vmin');
 	const [newGame, setNewGame] = useState(true);
 	const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
+	const [gameData, setGameData] = useState({
+		score: 0,
+		multiplier: 1,
+		tileCount: 2,
+		tiles: initializeTiles(2),
+	});
+
+	const fetchGame = async (id) => {
+		const response = await fetch(`${process.env.REACT_APP_ENDPOINT_URL}/game/${id}`, {
+			method: 'GET',
+			headers: standardHeaders,
+		});
+		return response.json();
+	};
+
+	useEffect(() => {
+		if (userData !== undefined) {
+			setCellSize(userData.useSwipeOn ? '15vmin' : '14vmin');
+		}
+	}, [userData]);
+
+	useEffect(() => {
+		if (user !== undefined) {
+			fetchGame(user.attributes.sub)
+				.then((gameData) => {
+					setGameData({
+						...gameData,
+						tiles: initializeTiles(2)
+					});
+					console.log(gameData);
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+		}
+	}, [user]);
 
 	function initializeTiles(qty) {
 
@@ -67,68 +107,9 @@ const GameProvider = ({ children }) => {
 		score: 0
 	}
 
-	if (!localStorage.getItem("GamesList")) {
-		localStorage.setItem("GamesList", JSON.stringify({
-			Guest: newGameTemplate
-		}));
-	}
-
-	const [gameData, setGameData] = useState(JSON.parse(localStorage.getItem("GamesList"))[getCurrentUser()]);
-
-	const getGamesList = () => {
-		return JSON.parse(localStorage.getItem("GamesList"));
-	}
-
-	const setGamesList = (gamesList) => {
-		localStorage.setItem("GamesList", JSON.stringify(gamesList));
-	}
-
-	const createGame = (username) => {
-		let gamesList = getGamesList();
-		gamesList[username] = {
-			...gameData
-		}
-		gamesList['Guest'] = newGameTemplate;
-		setGameData(gamesList[username]);
-		setGamesList(gamesList);
-	}
-
-	const deleteGame = (username) => {
-		let gamesList = getGamesList();
-		delete gamesList[username];
-		setGamesList(gamesList);
-	}
-
-	const updateGameData = (dataObject) => {
-		let gamesList = getGamesList(); // get list of games
-		Object.entries(dataObject).forEach(entry => {
-			const [key, value] = entry;
-			gamesList[userData.username][key] = value;
-		});
-		setGameData(gamesList[userData.username]); // update state
-		setGamesList(gamesList); // overwrite games list
-	}
-
-	const updateGamesListName = (newUsername) => {
-		let gamesList = getGamesList(); // get list of games
-		gamesList[newUsername] = gamesList[userData.username]; // copy data from prev user object
-		delete gamesList[userData.username]; // delete prev game object
-		setGamesList(gamesList); // overwrite games list
-	}
-
 	const closeGameOverModal = () => {
 		handleGameAction('newGame');
 		setGameOverModalOpen(false);
-	}
-
-	useEffect(() => {
-		setCellSize(userData.useSwipeOn ? '15vmin' : '14vmin');
-	}, [userData.useSwipeOn]);
-
-	const fetchGameData = (username) => {
-		let gamesList = getGamesList();
-		setGameData(gamesList[username]);
-		console.log("Game Dat fetched");
 	}
 
 	const handleGameAction = (actionId) => {
@@ -359,16 +340,16 @@ const GameProvider = ({ children }) => {
 
 		}
 
-		updateGameData({
-			tiles: currentTiles,
-			tileIds: currentTileIds,
-			multiplier: currentMultiplier,
-			score: currentScore,
-		});
+		// updateGameData({
+		// 	tiles: currentTiles,
+		// 	tileIds: currentTileIds,
+		// 	multiplier: currentMultiplier,
+		// 	score: currentScore,
+		// });
 
-		updateUserData({
-			best: currentBest
-		})
+		// updateUserData({
+		// 	best: currentBest
+		// })
 
 	}
 
@@ -379,16 +360,12 @@ const GameProvider = ({ children }) => {
 				cellSize,
 				gapSize,
 				newGame,
+				gameData,
+				fetchGame,
 				setNewGame,
 				handleGameAction,
 				gameOverModalOpen,
 				closeGameOverModal,
-				gameData,
-				setGameData,
-				createGame,
-				deleteGame,
-				fetchGameData,
-				updateGamesListName
 			}}
 		>
 			{children}

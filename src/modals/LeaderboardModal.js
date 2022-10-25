@@ -31,18 +31,18 @@ const LeaderboardHeaderSection = styled.div`
 `;
 
 const Leaderboard = styled.div`
-		display: flex;
-		flex-direction: column;
-		row-gap: 10px;
-    height: 100%;
-    overflow: hidden overlay;
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+	height: 100%;
+	overflow: hidden overlay;
 `;
 
 const LeaderboardModal = ({ open, handleClose }) => {
 
 	const theme = useTheme();
 	const [entries, setEntries] = useState([]);
-	const { fetchLeaders } = useContext(UserContext);
+	const { username, fetchLeaders } = useContext(UserContext);
 
 	const containerStyle = {
 		position: 'absolute',
@@ -70,9 +70,19 @@ const LeaderboardModal = ({ open, handleClose }) => {
 
 	const generateEntries = (leaders) => {
 		const entries = [];
+		let isPlayer = false;
 		leaders.forEach((leader, index) => {
+			if (leader.username === username) {
+				isPlayer = true;
+			} else {
+				isPlayer = false;
+			}
 			entries.push(
-				<LeaderboardEntry key={index} rank={index + 1} username={leader.username} score={leader.best} />
+				<LeaderboardEntry
+					key={index} rank={index + 1}
+					username={leader.username}
+					score={leader.best}
+					isPlayer={isPlayer} />
 			);
 		});
 		return entries;

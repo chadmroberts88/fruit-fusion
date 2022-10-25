@@ -1,26 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Modal, Box, Switch, FormGroup, FormControlLabel, IconButton, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { UserContext } from '../context/UserContext';
 
-const SettingsModal = ({ open, handleClose, userData }) => {
+const SettingsModal = ({ open, handleClose }) => {
 
-	const { updateUser } = useContext(UserContext);
-	const [soundOn, setSoundOn] = useState(false);
-	const [darkModeOn, setDarkModeOn] = useState(false);
-	const [useSwipeOn, setUseSwipeOn] = useState(false);
-
-	useEffect(() => {
-		if (userData !== undefined) {
-			setSoundOn(userData.soundOn);
-			setDarkModeOn(userData.darkModeOn);
-			setUseSwipeOn(userData.useSwipeOn);
-		}
-	}, [userData]);
+	const {
+		userId,
+		soundOn,
+		darkModeOn,
+		useSwipeOn,
+		setSoundOn,
+		setDarkModeOn,
+		setUseSwipeOn,
+		updateUser,
+	} = useContext(UserContext);
 
 	const handleChangeSoundEffects = () => {
 		setSoundOn(!soundOn);
-		updateUser(userData.id, { soundOn: !soundOn })
+		updateUser(userId, { soundOn: !soundOn })
 			.catch((error) => {
 				console.log(error);
 			});
@@ -28,7 +26,7 @@ const SettingsModal = ({ open, handleClose, userData }) => {
 
 	const handleChangeDarkMode = () => {
 		setDarkModeOn(!darkModeOn);
-		updateUser(userData.id, { darkModeOn: !darkModeOn })
+		updateUser(userId, { darkModeOn: !darkModeOn })
 			.catch((error) => {
 				console.log(error);
 			});
@@ -36,7 +34,7 @@ const SettingsModal = ({ open, handleClose, userData }) => {
 
 	const handleChangeUseSwipe = () => {
 		setUseSwipeOn(!useSwipeOn);
-		updateUser(userData.id, { useSwipeOn: !useSwipeOn })
+		updateUser(userId, { useSwipeOn: !useSwipeOn })
 			.catch((error) => {
 				console.log(error);
 			});

@@ -11,13 +11,16 @@ import awsExports from '../aws-exports';
 export const AuthContext = createContext({});
 Amplify.configure(awsExports);
 
+const backgroundImage = require('../images/background.png');
+
 const AuthContainer = styled.div`
+  background-image: url(${props => props.image});
+  background-size: cover;
+  background-repeat: repeat;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: fill-available;
-	height: -webkit-fill-available;
-	height: -moz-fill-available;
+	height: 100vh;
 `;
 
 const HeaderContainer = styled.div`
@@ -84,7 +87,7 @@ const components = {
 const AuthProvider = ({ children }) => {
 
 	return (
-		<AuthContainer>
+		<AuthContainer image={backgroundImage}>
 			<Authenticator formFields={formFields} components={components}>
 				{({ signOut, user }) => (
 					<AuthContext.Provider value={{ signOut, user }}>

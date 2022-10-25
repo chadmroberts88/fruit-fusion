@@ -1,7 +1,7 @@
-import { React, useState, memo, useContext } from 'react'
-import { UserDataContext } from '../../context/UserDataContext'
-import { GameContext } from '../../context/GameContext'
-import styled from 'styled-components'
+import { React, useState, memo, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
+import { GameContext } from '../../context/GameContext';
+import styled from 'styled-components';
 import { useTheme } from '@mui/system';
 
 const Cell = styled.div`
@@ -15,7 +15,7 @@ const BoardCell = ({ cellRow, cellCol }) => {
 	const [touchStartX, setTouchStartX] = useState(null);
 	const [touchStartY, setTouchStartY] = useState(null);
 	const { handleGameAction } = useContext(GameContext);
-	const { userData } = useContext(UserDataContext);
+	const { useSwipeOn } = useContext(UserContext);
 	const theme = useTheme();
 
 	const minSwipeDistance = 50;
@@ -65,12 +65,12 @@ const BoardCell = ({ cellRow, cellCol }) => {
 			key={`cell-${cellRow}-${cellCol}`}
 			id={`cell-${cellRow}-${cellCol}`}
 			className="cell"
-			onTouchStart={userData.useSwipeOn ? handleTouchStart : null}
-			onTouchEnd={userData.useSwipeOn ? handleTouchEnd : null}
+			onTouchStart={useSwipeOn ? handleTouchStart : null}
+			onTouchEnd={useSwipeOn ? handleTouchEnd : null}
 			bgColor={theme.palette.background.paper}
 		>
 		</Cell>
 	)
 }
 
-export default memo(BoardCell)
+export default memo(BoardCell);

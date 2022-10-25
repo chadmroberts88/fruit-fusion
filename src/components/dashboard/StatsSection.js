@@ -35,30 +35,34 @@ const Section = styled.div`
 
 const StatsSection = () => {
 
-	const { userData, rank } = useContext(UserContext);
+	const { best, rank } = useContext(UserContext);
 	const { gameData } = useContext(GameContext);
 	const theme = useTheme();
+
+	const fontStyle = {
+		fontSize: '2.5vmax'
+	};
 
 	return (
 		<Container>
 			<Section bgColor={theme.palette.primary.main}>
 				<Typography variant='h5'>Multiplier</Typography>
-				<Typography variant='h4'>{`X ${gameData.multiplier}`}</Typography>
+				<Typography variant='h4' sx={fontStyle}>{`X ${gameData?.multiplier ?? '1'}`}</Typography>
 			</Section>
 
 			<Section bgColor={theme.palette.primary.main}>
 				<Typography variant='h5'>Score</Typography>
-				<Typography variant='h4'>{gameData.score}</Typography>
+				<Typography variant='h4' sx={fontStyle}>{gameData?.score ?? '0'}</Typography>
 			</Section>
 
 			<Section bgColor={theme.palette.primary.main}>
 				<Typography variant='h5'>Best</Typography>
-				<Typography variant='h4'>{userData.best}</Typography>
+				<Typography variant='h4' sx={fontStyle}>{best ?? '0'}</Typography>
 			</Section>
 
 			<Section bgColor={theme.palette.primary.main}>
 				<Typography variant='h5'>Rank</Typography>
-				<Typography variant='h4'>{rank}</Typography>
+				<Typography variant='h4' sx={fontStyle}>{rank ?? '0'}</Typography>
 			</Section>
 		</Container>
 	)

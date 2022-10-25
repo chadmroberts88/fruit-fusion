@@ -1,7 +1,8 @@
-import { React, memo, useContext } from 'react'
-import styled from 'styled-components'
-import { keyframes } from 'styled-components'
-import { GameContext } from '../../context/GameContext'
+import { React, memo, useContext } from 'react';
+import styled from 'styled-components';
+import { keyframes } from 'styled-components';
+import { GameContext } from '../../context/GameContext';
+import { UserContext } from '../../context/UserContext';
 
 const heartbeat = keyframes`
 	from {
@@ -49,8 +50,10 @@ const Img = styled.img`
 
 const GameButton = ({ id, buttonDir }) => {
 
+	const { darkModeOn } = useContext(UserContext);
 	const { handleGameAction } = useContext(GameContext);
-	const imageUrl = require('../../images/game-button.png');
+	const lightImageUrl = require('../../images/game-button-light.png');
+	const darkImageUrl = require('../../images/game-button-dark.png');
 
 	let imgStyle = {};
 
@@ -72,7 +75,7 @@ const GameButton = ({ id, buttonDir }) => {
 
 	return (
 		<Button id={id} onClick={() => { handleGameAction(id) }} >
-			<Img imageUrl={imageUrl} style={imgStyle} />
+			<Img imageUrl={darkModeOn ? darkImageUrl : lightImageUrl} style={imgStyle} />
 		</Button>
 	)
 }

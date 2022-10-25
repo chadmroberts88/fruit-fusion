@@ -9,8 +9,8 @@ import HowToPlayModal from '../modals/HowToPlayModal';
 import LeaderboardModal from '../modals/LeaderboardModal';
 import GameOverModal from '../modals/GameOverModal';
 import ResetGameModal from '../modals/ResetGameModal';
-import { AuthContext } from '../context/AuthContext';
 import { UserContext } from '../context/UserContext';
+import GlobalStyle from '../GlobalStyles';
 
 const Page = styled.div`
 	background-color: ${props => props.bgColor};
@@ -34,12 +34,29 @@ const Page = styled.div`
 
 `;
 
+const LoadingGraphicContainer = styled.div`
+	background-color: #eaf8e2;		
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
+const LoadingImage = styled.img`
+	width: 80vw;
+	height: 80vw;
+	max-width: 400px;
+	max-height: 400px;
+  content: url(${props => props.imageURL});
+`;
+
 const GamePage = () => {
 	const theme = useTheme();
+	const loadingImageURL = require('../images/loading-graphic.gif');
 
-	const { user } = useContext(AuthContext);
-	const { userData } = useContext(UserContext);
-
+	const { userId } = useContext(UserContext);
+	const [isLoading, setIsLoading] = useState(true);
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const [howToOpen, setHowToOpen] = useState(false);
 	const [leaderboardOpen, setLeaderboardOpen] = useState(false);
@@ -53,21 +70,34 @@ const GamePage = () => {
 	const closeReset = () => { setResetOpen(false) };
 	const openReset = () => { setResetOpen(true) };
 
+	useEffect(() => {
+		if (userId !== undefined) {
+			setIsLoading(false);
+		}
+	}, [userId])
+
 	return (
-		<Page bgColor={theme.palette.background.default}>
-			<Dashboard menuHandlers={{
-				openSettings,
-				openHowTo,
-				openLeaderboard,
-				openReset
-			}} />
-			<Game />
-			<SettingsModal open={settingsOpen} handleClose={closeSettings} userData={userData} />
-			<HowToPlayModal open={howToOpen} handleClose={closeHowTo} />
-			<LeaderboardModal open={leaderboardOpen} handleClose={closeLeaderboard} />
-			<ResetGameModal open={resetOpen} handleClose={closeReset} />
-			<GameOverModal />
-		</Page>
+		isLoading
+			? <LoadingGraphicContainer>
+				<LoadingImage imageURL={loadingImageURL} />
+			</LoadingGraphicContainer>
+			: <>
+				<GlobalStyle />
+				<Page bgColor={theme.palette.background.default}>
+					<Dashboard menuHandlers={{
+						openSettings,
+						openHowTo,
+						openLeaderboard,
+						openReset
+					}} />
+					<Game />
+					<SettingsModal open={settingsOpen} handleClose={closeSettings} />
+					<HowToPlayModal open={howToOpen} handleClose={closeHowTo} />
+					<LeaderboardModal open={leaderboardOpen} handleClose={closeLeaderboard} />
+					<ResetGameModal open={resetOpen} handleClose={closeReset} />
+					<GameOverModal />
+				</Page>
+			</>
 	)
 }
 

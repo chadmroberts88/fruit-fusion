@@ -40,7 +40,7 @@ const UserSection = () => {
 	return (
 		<Container bgColor={theme.palette.primary.dark}>
 			<WelcomeSection>
-				<Typography variant='h3'>Welcome 👋</Typography>
+				<Typography variant='h3' paddingBottom="2px">Welcome 👋</Typography>
 				<Typography variant='body2'>{`${user.attributes.preferred_username}`}</Typography>
 			</WelcomeSection>
 			<Button

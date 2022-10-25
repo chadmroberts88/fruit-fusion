@@ -1,9 +1,9 @@
-import { React, memo, useContext } from 'react'
-import { UserDataContext } from '../../context/UserDataContext'
-import { GameContext } from '../../context/GameContext'
-import styled from 'styled-components'
+import { React, memo, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
+import { GameContext } from '../../context/GameContext';
+import styled from 'styled-components';
 
-import GameButton from '../../components/game/GameButton'
+import GameButton from '../../components/game/GameButton';
 
 const Container = styled.div`
     display: grid;
@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const VertButtonContainer = ({ buttonDir }) => {
 
-	const { userData } = useContext(UserDataContext);
+	const { useSwipeOn } = useContext(UserContext);
 	const { gridSize, cellSize, gapSize } = useContext(GameContext);
 
 	const buttons = [];
@@ -24,7 +24,7 @@ const VertButtonContainer = ({ buttonDir }) => {
 		buttons.push(<GameButton key={`${buttonDir}-${i}`} id={`${buttonDir}-${i}`} buttonDir={buttonDir} />)
 	};
 
-	if (userData.useSwipeOn) {
+	if (useSwipeOn) {
 		return (
 			<div>
 			</div>
@@ -39,4 +39,4 @@ const VertButtonContainer = ({ buttonDir }) => {
 	}
 }
 
-export default memo(VertButtonContainer)
+export default memo(VertButtonContainer);

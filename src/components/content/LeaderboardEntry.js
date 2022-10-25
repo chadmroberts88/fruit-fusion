@@ -27,13 +27,13 @@ const Section = styled.div`
 	padding: 0 10px;
 `;
 
-const LeaderboardEntry = ({ rank, username, score }) => {
+const LeaderboardEntry = ({ rank, username, score, isPlayer }) => {
 
 	const theme = useTheme();
 
 	return (
 		<Container>
-			<Grid bgColor={theme.palette.secondary.main}>
+			<Grid bgColor={isPlayer ? 'green' : theme.palette.secondary.main}>
 				<Section>
 					<Typography variant='body2'>{rank}</Typography>
 				</Section>

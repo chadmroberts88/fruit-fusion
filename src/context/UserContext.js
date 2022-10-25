@@ -5,8 +5,13 @@ export const UserContext = createContext({});
 const UserProvider = ({ children }) => {
 
 	const { user } = useContext(AuthContext);
-	const [userData, setUserData] = useState();
-	const [rank, setRank] = useState();
+	const [userId, setUserId] = useState();
+	const [username, setUsername] = useState('');
+	const [soundOn, setSoundOn] = useState(false);
+	const [darkModeOn, setDarkModeOn] = useState(false);
+	const [useSwipeOn, setUseSwipeOn] = useState(false);
+	const [best, setBest] = useState(0);
+	const [rank, setRank] = useState(0);
 	const standardHeaders = { 'Content-Type': 'application/json' };
 
 	const fetchUserData = async (id) => {
@@ -46,7 +51,12 @@ const UserProvider = ({ children }) => {
 		if (user !== undefined) {
 			fetchUserData(user.attributes.sub)
 				.then((userData) => {
-					setUserData(userData);
+					setUserId(userData.id);
+					setUsername(userData.username);
+					setSoundOn(userData.soundOn);
+					setDarkModeOn(userData.darkModeOn);
+					setUseSwipeOn(userData.useSwipeOn);
+					setBest(userData.best);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -54,7 +64,6 @@ const UserProvider = ({ children }) => {
 
 			fetchRank(user.attributes.sub)
 				.then((rank) => {
-					console.log(rank);
 					setRank(rank);
 				})
 				.catch((error) => {
@@ -66,8 +75,20 @@ const UserProvider = ({ children }) => {
 	return (
 		<UserContext.Provider
 			value={{
-				userData,
+				userId,
+				username,
+				soundOn,
+				darkModeOn,
+				useSwipeOn,
+				best,
 				rank,
+				setUserId,
+				setUsername,
+				setBest,
+				setRank,
+				setSoundOn,
+				setDarkModeOn,
+				setUseSwipeOn,
 				fetchUserData,
 				fetchRank,
 				fetchLeaders,

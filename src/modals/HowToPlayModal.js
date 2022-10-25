@@ -7,7 +7,7 @@ import GameInstructions from '../components/content/GameInstructions';
 
 const ContentSection = styled.div`
 	background-color: ${props => props.bgColor};
-	height: 84%;
+	flex: 1;
 	padding: 10px;
 	border-radius: 10px;
 	overflow: hidden auto;
@@ -19,6 +19,8 @@ const HowToPlayModal = ({ open, handleClose }) => {
 
 	const containerStyle = {
 		position: 'absolute',
+		display: 'flex',
+		flexDirection: 'column',
 		top: '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',

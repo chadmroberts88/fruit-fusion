@@ -6,24 +6,11 @@ import { GameContext } from '../context/GameContext';
 
 const ModalImage = styled.img`
 	justify-self: center;
-  width: 30vmin;
-  height: 21vmin;
-	margin: 1vmin 0;
+  width: 30vh;
+  height: 30vh;
+	margin: -30px;
   content: url(${props => props.imageUrl});
 `;
-
-const PlayAgainButton = styled(Button)`
-		&& {
-			margin-top: 10px;
-			text-transform: none;
-			background-color: #f25c54;
-			width: 100%;
-
-			:hover {
-				background-color: #ff847e;
-			}
-		}
-	`;
 
 const GameOverModal = () => {
 
@@ -36,7 +23,7 @@ const GameOverModal = () => {
 		transform: 'translate(-50%, -50%)',
 		width: '80%',
 		maxWidth: 300,
-		bgcolor: '#96e072',
+		bgcolor: 'primary.main',
 		borderRadius: '10px',
 		boxShadow: 24,
 		padding: '20px',
@@ -49,7 +36,13 @@ const GameOverModal = () => {
 		marginBottom: '10px',
 	}
 
-	const modalImageUrl = require('../images/game-over.png');
+	const buttonStyle = {
+		marginTop: '10px',
+		textTransform: 'none',
+		width: '100%'
+	}
+
+	const modalImageUrl = require('../images/game-over.gif');
 
 	return (
 		<Modal open={gameOverModalOpen} onClose={() => { closeGameOverModal() }}>
@@ -61,12 +54,14 @@ const GameOverModal = () => {
 				<Box sx={{ display: 'flex', justifyContent: 'center' }}>
 					<ModalImage imageUrl={modalImageUrl} />
 				</Box>
-				<PlayAgainButton
+				<Button
 					variant='contained'
+					color='secondary'
+					sx={buttonStyle}
 					onClick={() => { closeGameOverModal() }}
 				>
 					Play Again
-				</PlayAgainButton>
+				</Button>
 			</Box >
 		</Modal >
 	)

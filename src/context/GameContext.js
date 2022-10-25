@@ -11,7 +11,16 @@ export const GameContext = createContext({})
 const GameProvider = ({ children }) => {
 
 	const { user } = useContext(AuthContext);
-	const { userData } = useContext(UserContext);
+	const {
+		best,
+		soundOn,
+		useSwipeOn,
+		setBest,
+		setRank,
+		updateUser,
+		fetchRank,
+	} = useContext(UserContext);
+
 	const standardHeaders = { 'Content-Type': 'application/json' };
 
 	const [moveTilesSound] = useState(new Audio(moveTiles));
@@ -21,7 +30,7 @@ const GameProvider = ({ children }) => {
 	const [gapSize] = useState('1vmin');
 	const [cellSize, setCellSize] = useState('14vmin');
 	const [newGame, setNewGame] = useState(true);
-	const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
+	const [gameOverModalOpen, setGameOverModalOpen] = useState(true);
 	const [gameData, setGameData] = useState({
 		score: 0,
 		multiplier: 1,
@@ -37,21 +46,31 @@ const GameProvider = ({ children }) => {
 		return response.json();
 	};
 
+	const updateGame = async (id, data) => {
+		const response = await fetch(`${process.env.REACT_APP_ENDPOINT_URL}/game/${id}`, {
+			method: 'PATCH',
+			headers: standardHeaders,
+			body: JSON.stringify(data),
+		});
+		return response.json();
+	};
+
 	useEffect(() => {
-		if (userData !== undefined) {
-			setCellSize(userData.useSwipeOn ? '15vmin' : '14vmin');
-		}
-	}, [userData]);
+		setCellSize(useSwipeOn ? '15vmin' : '14vmin');
+	}, [useSwipeOn]);
 
 	useEffect(() => {
 		if (user !== undefined) {
 			fetchGame(user.attributes.sub)
 				.then((gameData) => {
-					setGameData({
-						...gameData,
-						tiles: initializeTiles(2)
-					});
-					console.log(gameData);
+					if (gameData.tiles.length === 0) {
+						setGameData({
+							...gameData,
+							tiles: initializeTiles(2)
+						});
+					} else {
+						setGameData(gameData);
+					}
 				})
 				.catch((error) => {
 					console.log(error);
@@ -62,7 +81,7 @@ const GameProvider = ({ children }) => {
 	function initializeTiles(qty) {
 
 		let initialTiles = [];
-		let initialTileIds = 0;
+		let initialTileCount = 0;
 
 		for (let i = 0; i < gridSize; i++) {
 			initialTiles[i] = [];
@@ -87,9 +106,9 @@ const GameProvider = ({ children }) => {
 				const randomIndex = Math.floor(Math.random() * blankTiles.length);
 				const x = blankTiles[randomIndex].x;
 				const y = blankTiles[randomIndex].y;
-				initialTileIds++;
+				initialTileCount++;
 				initialTiles[x][y] = {
-					id: initialTileIds,
+					id: initialTileCount,
 					colorCode: Math.random() > 0.4 ? 0 : 1,
 					typeCode: Math.floor(Math.random() * 3)
 				};
@@ -100,13 +119,6 @@ const GameProvider = ({ children }) => {
 
 	}
 
-	const newGameTemplate = {
-		tiles: initializeTiles(2),
-		tileIds: 2,
-		multiplier: 1,
-		score: 0
-	}
-
 	const closeGameOverModal = () => {
 		handleGameAction('newGame');
 		setGameOverModalOpen(false);
@@ -115,10 +127,10 @@ const GameProvider = ({ children }) => {
 	const handleGameAction = (actionId) => {
 
 		let currentTiles = copyTiles();
-		let currentTileIds = gameData.tileIds;
+		let currentTileCount = gameData.tileCount;
 		let currentMultiplier = gameData.multiplier;
 		let currentScore = gameData.score;
-		let currentBest = userData.best;
+		let currentBest = best;
 		let blankTiles = getBlankTiles();
 		let pairAvailable = false;
 
@@ -153,9 +165,9 @@ const GameProvider = ({ children }) => {
 					const randomIndex = Math.floor(Math.random() * blankTiles.length);
 					const x = blankTiles[randomIndex].x;
 					const y = blankTiles[randomIndex].y;
-					currentTileIds++;
+					currentTileCount++;
 					currentTiles[x][y] = {
-						id: currentTileIds,
+						id: currentTileCount,
 						colorCode: Math.random() > 0.4 ? 0 : 1,
 						typeCode: Math.floor(Math.random() * 3)
 					};
@@ -167,10 +179,10 @@ const GameProvider = ({ children }) => {
 		// handle new game
 
 		if (actionId === 'newGame') {
-			currentTiles = initializeTiles(2);
-			currentTileIds = 2;
-			currentMultiplier = 1;
 			currentScore = 0;
+			currentMultiplier = 1;
+			currentTileCount = 2;
+			currentTiles = initializeTiles(2);
 		}
 
 		// handle game click or swipe
@@ -233,7 +245,7 @@ const GameProvider = ({ children }) => {
 
 							if (line[i].colorCode === 5) {
 								currentMultiplier++;
-								if (userData.soundOn) {
+								if (soundOn) {
 									incMultiplierSound.play();
 								}
 							}
@@ -288,7 +300,7 @@ const GameProvider = ({ children }) => {
 			// if a tile moved, play sound, set tiles, score, multiplier, and best
 
 			if (tileMoved) {
-				if (userData.soundOn) {
+				if (soundOn) {
 					moveTilesSound.play();
 				}
 
@@ -330,7 +342,7 @@ const GameProvider = ({ children }) => {
 				// if there are no blank cells and no pairs availabe, game over
 
 				if (getBlankTiles().length === 0 && !pairAvailable) {
-					if (userData.soundOn) {
+					if (soundOn) {
 						gameOverSound.play();
 					}
 					setGameOverModalOpen(true);
@@ -340,18 +352,41 @@ const GameProvider = ({ children }) => {
 
 		}
 
-		// updateGameData({
-		// 	tiles: currentTiles,
-		// 	tileIds: currentTileIds,
-		// 	multiplier: currentMultiplier,
-		// 	score: currentScore,
-		// });
+		setGameData({
+			score: currentScore,
+			multiplier: currentMultiplier,
+			tileCount: currentTileCount,
+			tiles: currentTiles,
+		});
 
-		// updateUserData({
-		// 	best: currentBest
-		// })
+		setBest(currentBest);
 
-	}
+		updateGame(user.attributes.sub, {
+			score: currentScore,
+			multiplier: currentMultiplier,
+			tileCount: currentTileCount,
+			tiles: currentTiles,
+		})
+			.catch((error) => {
+				console.log(error);
+			});
+
+		updateUser(user.attributes.sub, {
+			best: currentBest,
+		})
+			.catch((error) => {
+				console.log(error);
+			});
+
+		fetchRank(user.attributes.sub)
+			.then((rank) => {
+				setRank(rank);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+
+	};
 
 	return (
 		<GameContext.Provider

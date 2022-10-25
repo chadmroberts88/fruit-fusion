@@ -1,10 +1,11 @@
 {
   "files": {
-    "main.css": "/fruit-fusion/static/css/main.9dd36abc.css",
-    "main.js": "/fruit-fusion/static/js/main.a69d93dc.js",
-    "static/media/game-over.png": "/fruit-fusion/static/media/game-over.a9778d4f252639366882.png",
+    "main.css": "/fruit-fusion/static/css/main.1a4e082c.css",
+    "main.js": "/fruit-fusion/static/js/main.cfcfd023.js",
+    "static/media/loading-graphic.gif": "/fruit-fusion/static/media/loading-graphic.820ba745321d6185c2fe.gif",
+    "static/media/background.png": "/fruit-fusion/static/media/background.f28423fc8344baaa26ae.png",
+    "static/media/game-over.gif": "/fruit-fusion/static/media/game-over.46b25952f47a4c027fbc.gif",
     "static/media/gameOver.mp3": "/fruit-fusion/static/media/gameOver.0e5d1baa6eb720ffe642.mp3",
-    "static/media/error.png": "/fruit-fusion/static/media/error.036403bc4a43f3a2678d.png",
     "static/media/incMultiplier.mp3": "/fruit-fusion/static/media/incMultiplier.f22df6a71592f02464d1.mp3",
     "static/media/green-2.png": "/fruit-fusion/static/media/green-2.beed4b825a93edc4c03f.png",
     "static/media/basket.png": "/fruit-fusion/static/media/basket.2c53461ab381561c1212.png",
@@ -15,11 +16,11 @@
     "static/media/blue-0.png": "/fruit-fusion/static/media/blue-0.28ee0034cf275044e8cc.png",
     "static/media/moveTiles.mp3": "/fruit-fusion/static/media/moveTiles.6966c9debbcc2cf051d6.mp3",
     "index.html": "/fruit-fusion/index.html",
-    "main.9dd36abc.css.map": "/fruit-fusion/static/css/main.9dd36abc.css.map",
-    "main.a69d93dc.js.map": "/fruit-fusion/static/js/main.a69d93dc.js.map"
+    "main.1a4e082c.css.map": "/fruit-fusion/static/css/main.1a4e082c.css.map",
+    "main.cfcfd023.js.map": "/fruit-fusion/static/js/main.cfcfd023.js.map"
   },
   "entrypoints": [
-    "static/css/main.9dd36abc.css",
-    "static/js/main.a69d93dc.js"
+    "static/css/main.1a4e082c.css",
+    "static/js/main.cfcfd023.js"
   ]
 }

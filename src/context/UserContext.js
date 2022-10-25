@@ -12,7 +12,10 @@ const UserProvider = ({ children }) => {
 	const [useSwipeOn, setUseSwipeOn] = useState(false);
 	const [best, setBest] = useState(0);
 	const [rank, setRank] = useState(0);
-	const standardHeaders = { 'Content-Type': 'application/json' };
+	const standardHeaders = {
+		'Content-Type': 'application/json',
+		'x-api-key': process.env.REACT_APP_API_KEY,
+	};
 
 	const fetchUserData = async (id) => {
 		const response = await fetch(`${process.env.REACT_APP_ENDPOINT_URL}/user/${id}`, {

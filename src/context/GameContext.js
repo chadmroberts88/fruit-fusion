@@ -21,7 +21,10 @@ const GameProvider = ({ children }) => {
 		fetchRank,
 	} = useContext(UserContext);
 
-	const standardHeaders = { 'Content-Type': 'application/json' };
+	const standardHeaders = {
+		'Content-Type': 'application/json',
+		'x-api-key': process.env.REACT_APP_API_KEY,
+	};
 
 	const [moveTilesSound] = useState(new Audio(moveTiles));
 	const [incMultiplierSound] = useState(new Audio(incMultiplier));
@@ -30,7 +33,7 @@ const GameProvider = ({ children }) => {
 	const [gapSize] = useState('1vmin');
 	const [cellSize, setCellSize] = useState('14vmin');
 	const [newGame, setNewGame] = useState(true);
-	const [gameOverModalOpen, setGameOverModalOpen] = useState(true);
+	const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
 	const [gameData, setGameData] = useState({
 		score: 0,
 		multiplier: 1,

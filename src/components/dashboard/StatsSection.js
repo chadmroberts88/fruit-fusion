@@ -40,7 +40,7 @@ const StatsSection = () => {
 	const theme = useTheme();
 
 	const fontStyle = {
-		fontSize: '2.5vmax'
+		fontSize: '2.25vmax'
 	};
 
 	return (

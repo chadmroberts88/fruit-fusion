@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { Modal, Box, IconButton, Button, Typography } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Modal, Box, Typography } from '@mui/material';
 import styled from 'styled-components';
 import { GameContext } from '../context/GameContext';
 
@@ -21,13 +20,13 @@ const GameOverModal = () => {
 		top: '50%',
 		left: '50%',
 		transform: 'translate(-50%, -50%)',
-		width: '80%',
-		maxWidth: 300,
-		bgcolor: 'primary.main',
-		borderRadius: '10px',
-		boxShadow: 24,
-		padding: '20px',
-	};
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		outline: 'none',
+		pointerEvents: 'none',
+	}
 
 	const headerStyle = {
 		display: 'flex',
@@ -36,10 +35,11 @@ const GameOverModal = () => {
 		marginBottom: '10px',
 	}
 
-	const buttonStyle = {
-		marginTop: '10px',
-		textTransform: 'none',
-		width: '100%'
+	const textStyle = {
+		color: 'white',
+		fontWeight: 'bold',
+		fontSize: '2rem',
+		textAlign: 'center',
 	}
 
 	const modalImageUrl = require('../images/game-over.gif');
@@ -47,21 +47,12 @@ const GameOverModal = () => {
 	return (
 		<Modal open={gameOverModalOpen} onClose={() => { closeGameOverModal() }}>
 			<Box sx={containerStyle}>
-				<Box sx={headerStyle}>
-					<Typography variant='h2'>Game Over...</Typography>
-					<IconButton onClick={() => { closeGameOverModal() }}><Close /></IconButton>
-				</Box>
 				<Box sx={{ display: 'flex', justifyContent: 'center' }}>
 					<ModalImage imageUrl={modalImageUrl} />
 				</Box>
-				<Button
-					variant='contained'
-					color='secondary'
-					sx={buttonStyle}
-					onClick={() => { closeGameOverModal() }}
-				>
-					Play Again
-				</Button>
+				<Box sx={headerStyle}>
+					<Typography sx={textStyle}>GAME OVER</Typography>
+				</Box>
 			</Box >
 		</Modal >
 	)

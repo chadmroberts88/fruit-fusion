@@ -44,7 +44,7 @@ const GameInstructions = () => {
 
 	return (
 		<Instructions>
-			<Typography>To play, shift the fruit in any of the rows to the right or the left. You may also shift the fruit in any of the columns to the top or the bottom. Adjacent fruit of like-colors will fuse to produce another color: a pair of red fruit fuses to produce an orange fruit, a pair of orange fruit fuses into a yellow fruit, and so on. The number of points you earn for each fusion increases as you work your way through the colors of the rainbow.</Typography>
+			<Typography>To play, shift the fruit in any row to the right or to the left. You may also shift the fruit in any column to the top or to the bottom. Adjacent fruit of like-colors will fuse to produce a fruit of a different color. A pair of red fruit fuses to produce an orange fruit, a pair of orange fruit fuses to produce a yellow fruit, and so on. The number of points you earn for each fusion increases as you work your way through the colors of the rainbow.</Typography>
 			<Typography fontWeight='bold'>Red + Red = 10 pts.</Typography>
 			<ImageSection>
 				<Image imageUrl={apple} alt="apple"></Image>
@@ -94,8 +94,8 @@ const GameInstructions = () => {
 				<Image imageUrl={eggplant} alt="apple"></Image>
 			</ImageSection>
 			<Typography>Once you have made it through all six colors you will
-				have collected a basket of fruit and your <strong>points multiplier </strong>
-				will increase. The more baskets of fruit you collect, the more points you can collect!
+				collect a fruit basket and your <strong>points multiplier </strong>
+				will increase. The more fruit baskets you collect, the more points you accumulate!
 				<strong> Baskets of fruit cannot be fused.</strong></Typography>
 			<Typography>Fuse as many pairs of fruit as you can before running out of moves. Your highest score will be published to the leaderboard.</Typography>
 			<Typography>Good luck!</Typography>
